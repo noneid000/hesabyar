@@ -1,0 +1,4058 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#6657e8" />
+    <title>حساب‌یار | مدیریت مالی شخصی</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+      :root {
+        --bg: #f6f7fc;
+        --surface: #fff;
+        --surface2: #f0efff;
+        --text: #191927;
+        --muted: #7c7d8e;
+        --primary: #6959ea;
+        --primary2: #8d80ff;
+        --green: #16a579;
+        --red: #e95767;
+        --orange: #ef9d28;
+        --border: #e7e6ef;
+        --shadow: 0 12px 35px rgba(36, 30, 82, 0.08);
+        --radius: 22px;
+      }
+      [data-theme="dark"] {
+        --bg: #10111a;
+        --surface: #191b28;
+        --surface2: #24223b;
+        --text: #f6f6fb;
+        --muted: #a6a7b7;
+        --border: #2b2d3c;
+        --shadow: 0 12px 35px rgba(0, 0, 0, 0.27);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        font-family: Vazirmatn, Tahoma, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      body {
+        padding-bottom: 100px;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        border: 0;
+        cursor: pointer;
+      }
+      .app {
+        max-width: 1180px;
+        margin: auto;
+        padding: 17px 20px 35px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .logo {
+        width: 45px;
+        height: 45px;
+        border-radius: 15px;
+        display: grid;
+        place-items: center;
+        color: white;
+        font-size: 22px;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--primary), var(--primary2));
+        box-shadow: 0 8px 23px #6959ea42;
+      }
+      .brand b {
+        font-size: 18px;
+      }
+      .brand small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .icon-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 15px;
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+        font-size: 19px;
+      }
+      .page {
+        display: none;
+        animation: fade 0.22s ease;
+      }
+      .page.active {
+        display: block;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0.4;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .hero {
+        position: relative;
+        overflow: visible;
+        padding: 24px;
+        border-radius: 28px;
+        color: white;
+        background: linear-gradient(135deg, #6051df, #8b7cff);
+        box-shadow: 0 17px 42px #6959ea3b;
+      }
+      /* Decorative hero circle removed: it was overflowing outside the balance card. */
+      .hero:after {
+        display: none;
+      }
+      .hero-label {
+        font-size: 12px;
+        opacity: 0.8;
+      }
+      .balance {
+        font-size: 34px;
+        font-weight: 800;
+        margin: 5px 0;
+      }
+      .balance span {
+        font-size: 13px;
+        font-weight: 500;
+        opacity: 0.8;
+      }
+      .balance-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        position: relative;
+        max-width: 100%;
+      }
+      .balance-row .balance { min-width: 0; }
+      .balance-currency-control {
+        position: relative;
+        flex: 0 0 auto;
+        z-index: 5;
+      }
+      .balance-currency-trigger {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(255,255,255,.14);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,.16);
+        box-shadow: 0 5px 14px rgba(0,0,0,.10);
+        transition: background .18s ease, transform .18s ease;
+      }
+      .balance-currency-trigger:hover,
+      .balance-currency-trigger:focus-visible {
+        background: rgba(255,255,255,.22);
+        outline: none;
+      }
+      .balance-currency-trigger:active { transform: scale(.94); }
+      .balance-currency-chevron {
+        width: 8px;
+        height: 8px;
+        border-right: 1.8px solid currentColor;
+        border-bottom: 1.8px solid currentColor;
+        transform: rotate(45deg) translateY(-2px);
+        transition: transform .18s ease;
+      }
+      .balance-currency-trigger[aria-expanded="true"] .balance-currency-chevron {
+        transform: rotate(225deg) translate(-1px, -1px);
+      }
+      .balance-currency-menu {
+        position: absolute;
+        top: calc(100% + 9px);
+        right: 0;
+        width: 178px;
+        padding: 6px;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 16px;
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: 0 16px 38px rgba(28,24,68,.18);
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-5px) scale(.98);
+        transform-origin: top right;
+        transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+      }
+      .balance-currency-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+      }
+      .balance-currency-option {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 11px;
+        border-radius: 11px;
+        background: transparent;
+        color: var(--text);
+        text-align: right;
+        font-size: 11px;
+      }
+      .balance-currency-option + .balance-currency-option { margin-top: 4px; }
+      .balance-currency-option:hover { background: var(--surface2); }
+      .balance-currency-option.active {
+        background: var(--surface2);
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .currency-option-main {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+      .currency-option-symbol {
+        width: 27px;
+        height: 27px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        font-weight: 800;
+        font-size: 11px;
+      }
+      .currency-option-check { font-size: 13px; opacity: 0; }
+      .balance-currency-option.active .currency-option-check { opacity: 1; }
+      .balance-fx-status {
+        padding: 6px 10px 8px;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.7;
+        border-top: 1px solid var(--border);
+        margin-top: 4px;
+      }
+      @media (max-width: 390px) {
+        .balance-row { gap: 5px; max-width: calc(100vw - 42px); }
+        .balance-currency-trigger { width: 28px; height: 28px; border-radius: 9px; }
+        .balance-currency-menu { width: 170px; right: -2px; }
+      }
+
+      .hero-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+      }
+      .date {
+        font-size: 11px;
+        opacity: 0.75;
+      }
+      .hero-plus {
+        width: 52px;
+        height: 52px;
+        border-radius: 18px;
+        background: white;
+        color: #6354df;
+        font-size: 29px;
+        box-shadow: 0 8px 20px #0002;
+        position: relative;
+        z-index: 1;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+      }
+      .stat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 15px;
+      }
+      .stat small {
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .stat strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 18px;
+      }
+      .income {
+        color: var(--green);
+      }
+      .expense {
+        color: var(--red);
+      }
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 24px 2px 11px;
+      }
+      .section-head h2 {
+        font-size: 16px;
+        margin: 0;
+      }
+      .section-head button {
+        background: none;
+        color: var(--primary);
+        font-size: 12px;
+      }
+      .cards-scroll {
+        display: flex;
+        gap: 13px;
+        overflow: auto;
+        padding: 2px 2px 8px;
+        scrollbar-width: none;
+      }
+      .cards-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .money-card {
+        min-width: 265px;
+        height: 153px;
+        border-radius: 23px;
+        padding: 17px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 11px 28px #0002;
+        background: linear-gradient(135deg, #25283a, #454a64);
+      }
+      .money-card:after {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border: 1px solid #ffffff16;
+        border-radius: 50%;
+        left: -45px;
+        bottom: -60px;
+      }
+      .bank-blue {
+        background: linear-gradient(135deg, #2856a7, #4f86e8);
+      }
+      .bank-red {
+        background: linear-gradient(135deg, #9d3048, #e05d73);
+      }
+      .bank-green {
+        background: linear-gradient(135deg, #137b65, #30b28e);
+      }
+      .card-top,
+      .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+      .bank-name {
+        font-size: 12px;
+      }
+      .bank-icon {
+        font-size: 22px;
+      }
+      .card-number {
+        font-family: monospace;
+        direction: ltr;
+        text-align: right;
+        font-size: 15px;
+        letter-spacing: 2px;
+        margin: 26px 0 8px;
+      }
+      .card-balance {
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .money-card {
+        cursor: pointer;
+      }
+      .money-card:active {
+        transform: scale(0.985);
+      }
+      .tx-list {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .tx {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .tx-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: var(--surface2);
+        display: grid;
+        place-items: center;
+        font-size: 19px;
+        flex: none;
+      }
+      .tx-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .tx-main b {
+        font-size: 13px;
+      }
+      .tx-main small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tx-amount {
+        font-weight: 800;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      .empty {
+        background: var(--surface);
+        border: 1px dashed var(--border);
+        padding: 24px;
+        border-radius: 20px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .asset-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .asset {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        padding: 15px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 48px 1fr auto;
+        grid-template-areas: "icon info value";
+        align-items: center;
+        gap: 13px;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease;
+      }
+      .asset:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: #d8d5f7;
+      }
+      .asset:active {
+        transform: scale(0.992);
+      }
+      .asset-icon {
+        grid-area: icon;
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        background: var(--surface2);
+        display: grid;
+        place-items: center;
+        font-size: 22px;
+      }
+      .asset-info {
+        grid-area: info;
+        min-width: 0;
+      }
+      .asset-info b {
+        display: block;
+        margin: 0;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .asset-info small {
+        color: var(--muted);
+        display: block;
+        margin-top: 4px;
+        font-size: 10px;
+      }
+      .asset-value-wrap {
+        grid-area: value;
+        text-align: left;
+        min-width: 150px;
+      }
+      .asset-value {
+        font-weight: 800;
+        margin: 0;
+        font-size: 14px;
+      }
+      .asset-unit-price {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .asset-menu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--surface2);
+        color: var(--text);
+        width: 31px;
+        height: 31px;
+        border-radius: 10px;
+        z-index: 2;
+      }
+      .asset-change {
+        font-size: 11px;
+        font-weight: 700;
+        margin-top: 5px;
+      }
+      .asset-change.up {
+        color: #16834b;
+      }
+      .asset-change.down {
+        color: #c0392b;
+      }
+      .asset-change.flat {
+        color: var(--muted);
+      }
+      .asset-source {
+        font-size: 9px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      .asset-detail {
+        padding: 0 1px;
+      }
+      .asset-detail-hero {
+        padding: 18px;
+        border-radius: 21px;
+        background: linear-gradient(135deg, var(--surface2), var(--surface));
+        border: 1px solid var(--border);
+        margin-bottom: 13px;
+      }
+      .asset-detail-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .asset-detail-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 17px;
+        background: var(--surface);
+        display: grid;
+        place-items: center;
+        font-size: 25px;
+        box-shadow: 0 7px 20px #00000010;
+      }
+      .asset-detail-title {
+        flex: 1;
+        min-width: 0;
+      }
+      .asset-detail-title b {
+        display: block;
+        font-size: 17px;
+      }
+      .asset-detail-title small {
+        display: block;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .asset-detail-price {
+        text-align: left;
+      }
+      .asset-detail-price b {
+        display: block;
+        font-size: 17px;
+      }
+      .asset-detail-price small {
+        color: var(--muted);
+        font-size: 9px;
+      }
+      .asset-detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin: 12px 0;
+      }
+      .asset-kpi {
+        padding: 13px;
+        border-radius: 17px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+      }
+      .asset-kpi small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .asset-kpi b {
+        display: block;
+        margin-top: 5px;
+        font-size: 13px;
+      }
+      .tech-card {
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        background: var(--surface);
+        padding: 15px;
+        margin-top: 12px;
+      }
+      .tech-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .tech-head b {
+        font-size: 13px;
+      }
+      .tech-badge {
+        padding: 6px 9px;
+        border-radius: 10px;
+        background: var(--surface2);
+        color: var(--primary);
+        font-size: 10px;
+        font-weight: 700;
+      }
+      .tech-chart {
+        height: auto;
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--surface2), transparent);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-sizing: border-box;
+      }
+      .tech-chart svg {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 720/430;
+        display: block;
+      }
+      .tech-chart text {
+        font-family: inherit;
+      }
+      .tech-chart .chart-grid {
+        stroke: var(--border);
+        stroke-width: 1;
+      }
+      .tech-chart .chart-label {
+        fill: var(--muted);
+        font-size: 12px;
+      }
+      .tech-chart .chart-price {
+        fill: var(--text);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .tech-chart .price-badge {
+        filter: drop-shadow(0 5px 12px #00000018);
+      }
+      .tech-note {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-top: 9px;
+      }
+      .detail-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        margin-top: 12px;
+      }
+      @media (max-width: 650px) {
+        .asset {
+          grid-template-columns: 46px 1fr auto;
+          gap: 10px;
+          padding: 14px;
+        }
+        .asset-value-wrap {
+          min-width: 105px;
+        }
+        .asset-value {
+          font-size: 12px;
+        }
+        .asset-unit-price {
+          font-size: 9px;
+        }
+        .asset-info b {
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 390px) {
+        .asset {
+          grid-template-columns: 44px 1fr;
+        }
+        .asset-value-wrap {
+          grid-column: 2;
+          text-align: right;
+          margin-top: -3px;
+        }
+        .asset {
+          grid-template-areas: "icon info" "icon value";
+        }
+        .asset-value-wrap {
+          min-width: 0;
+        }
+      }
+      .asset {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        padding: 17px;
+        position: relative;
+      }
+      .asset-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 15px;
+        background: var(--surface2);
+        display: grid;
+        place-items: center;
+        font-size: 22px;
+      }
+      .asset b {
+        display: block;
+        margin-top: 10px;
+      }
+      .asset small {
+        color: var(--muted);
+      }
+      .asset-value {
+        font-weight: 800;
+        margin-top: 10px;
+      }
+      .asset-menu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--surface2);
+        color: var(--text);
+        width: 31px;
+        height: 31px;
+        border-radius: 10px;
+      }
+      .filterbar {
+        display: flex;
+        gap: 8px;
+        overflow: auto;
+        margin: 12px 0;
+      }
+      .chip {
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        padding: 8px 13px;
+        white-space: nowrap;
+        font-size: 11px;
+      }
+      .chip.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+      }
+      .chart-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 18px;
+        margin-bottom: 14px;
+      }
+      .chart-title {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .bars {
+        height: 190px;
+        display: flex;
+        align-items: end;
+        gap: 10px;
+        padding: 15px 5px 3px;
+        border-bottom: 1px solid var(--border);
+        margin-top: 10px;
+      }
+      .bar-col {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        gap: 4px;
+      }
+      .bar {
+        width: 13px;
+        min-height: 3px;
+        border-radius: 8px 8px 2px 2px;
+      }
+      .bar.in {
+        background: var(--green);
+      }
+      .bar.out {
+        background: var(--red);
+      }
+      .bar-label {
+        font-size: 9px;
+        color: var(--muted);
+        text-align: center;
+        margin-top: 5px;
+      }
+      .budget-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .budget {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 16px;
+      }
+      .budget-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .progress {
+        height: 9px;
+        background: var(--surface2);
+        border-radius: 99px;
+        overflow: hidden;
+        margin: 12px 0 5px;
+      }
+      .progress i {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--primary);
+      }
+      .debt-page-subtitle {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+      }
+      .debt-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin: 4px 0 14px;
+      }
+      .debt-summary {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 13px;
+        min-width: 0;
+      }
+      .debt-summary span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .debt-summary strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .debt-summary.receivable strong { color: var(--green); }
+      .debt-summary.payable strong { color: var(--red); }
+      .debt-summary.net strong { color: var(--primary); }
+      .debt-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 13px;
+      }
+      .debt-filterbar { margin: 0; overflow: auto; scrollbar-width: none; }
+      .debt-filterbar::-webkit-scrollbar { display: none; }
+      #debtAccountFilter {
+        flex: 0 0 145px;
+        min-width: 0;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        border-radius: 13px;
+        padding: 9px 10px;
+        outline: none;
+        font-size: 10px;
+      }
+      .debt-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      .debt-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        padding: 15px;
+        position: relative;
+        overflow: hidden;
+      }
+      .debt-card::before {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0; right: 0;
+        width: 4px;
+        background: var(--primary);
+      }
+      .debt-card.receivable::before { background: var(--green); }
+      .debt-card.payable::before { background: var(--red); }
+      .debt-card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .debt-title-wrap { min-width: 0; }
+      .debt-title { font-size: 13px; font-weight: 800; }
+      .debt-person { color: var(--muted); font-size: 10px; margin-top: 4px; }
+      .debt-type {
+        flex: 0 0 auto;
+        border-radius: 10px;
+        padding: 6px 9px;
+        font-size: 9px;
+        font-weight: 700;
+      }
+      .debt-type.receivable { background: #dff8ed; color: var(--green); }
+      .debt-type.payable { background: #ffe7eb; color: var(--red); }
+      [data-theme="dark"] .debt-type.receivable { background: #14382c; }
+      [data-theme="dark"] .debt-type.payable { background: #3d2027; }
+      .debt-amount-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 10px;
+        margin-top: 13px;
+      }
+      .debt-remaining { font-size: 17px; font-weight: 800; }
+      .debt-total { color: var(--muted); font-size: 9px; margin-top: 3px; }
+      .debt-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .debt-meta span {
+        background: var(--surface2);
+        color: var(--muted);
+        border-radius: 9px;
+        padding: 6px 8px;
+        font-size: 9px;
+      }
+      .debt-progress { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; margin-top: 12px; }
+      .debt-progress i { display: block; height: 100%; border-radius: inherit; background: var(--primary); }
+      .debt-card.receivable .debt-progress i { background: var(--green); }
+      .debt-card.payable .debt-progress i { background: var(--red); }
+      .debt-actions { display: flex; gap: 7px; margin-top: 12px; }
+      .debt-actions button { flex: 1; padding: 9px 10px; border-radius: 12px; font-size: 10px; }
+      .debt-pay-btn { background: var(--primary); color: #fff; }
+      .debt-more-btn { background: var(--surface2); color: var(--text); }
+      .debt-overdue { color: var(--red) !important; }
+      .debt-settled { opacity: .72; }
+      .debt-settled .debt-title { text-decoration: line-through; text-decoration-thickness: 1px; }
+      @media (max-width: 650px) {
+        .debt-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .debt-summary.net { grid-column: 1 / -1; }
+        .debt-toolbar { align-items: stretch; flex-direction: column; }
+        #debtAccountFilter { flex: 1 1 auto; width: 100%; }
+      }
+
+      .bottom-nav {
+        position: fixed;
+        z-index: 20;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        max-width: 1180px;
+        margin: auto;
+        box-sizing: border-box;
+        padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+        background: #ffffffeb;
+        backdrop-filter: blur(18px);
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 4px;
+      }
+      [data-theme="dark"] .bottom-nav {
+        background: #191b28eb;
+      }
+      .nav-btn {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        background: none;
+        color: var(--muted);
+        padding: 6px 2px;
+        border-radius: 13px;
+        font-size: 10px;
+        line-height: 1.2;
+      }
+      .nav-btn span {
+        display: block;
+        font-size: 19px;
+        line-height: 20px;
+        margin-bottom: 2px;
+      }
+      .nav-btn.active {
+        color: var(--primary);
+        background: var(--surface2);
+        font-weight: 700;
+      }
+      .fab {
+        position: fixed;
+        z-index: 25;
+        bottom: 78px;
+        right: max(20px, calc((100vw - 1180px) / 2 + 20px));
+        width: 58px;
+        height: 58px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, var(--primary), #9185ff);
+        color: #fff;
+        font-size: 29px;
+        box-shadow: 0 12px 30px #6959ea59;
+      }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: #0808178a;
+        z-index: 50;
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      .overlay.show {
+        display: flex;
+      }
+      .sheet {
+        width: min(700px, 100%);
+        max-height: 92vh;
+        overflow: auto;
+        background: var(--surface);
+        border-radius: 28px 28px 0 0;
+        padding: 21px;
+      }
+      .sheet-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 17px;
+      }
+      .sheet-head h3 {
+        margin: 0;
+        font-size: 17px;
+      }
+      .close {
+        background: var(--surface2);
+        color: var(--text);
+        width: 35px;
+        height: 35px;
+        border-radius: 12px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field.full {
+        grid-column: 1/-1;
+      }
+      .field label {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .field input,
+      .field select {
+        width: 100%;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        border-radius: 14px;
+        padding: 12px;
+        outline: none;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-color: var(--primary);
+      }
+      .primary {
+        width: 100%;
+        background: var(--primary);
+        color: #fff;
+        border-radius: 15px;
+        padding: 13px;
+        font-weight: 700;
+        margin-top: 16px;
+      }
+      .secondary {
+        background: var(--surface2);
+        color: var(--primary);
+        border-radius: 14px;
+        padding: 11px 15px;
+      }
+      .danger {
+        background: #ffecef;
+        color: var(--red);
+      }
+      .settings-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 15px;
+      }
+      .settings-row:last-child {
+        border: 0;
+      }
+      .settings-row small {
+        display: block;
+        color: var(--muted);
+        margin-top: 3px;
+        font-size: 10px;
+      }
+      .toggle {
+        width: 47px;
+        height: 27px;
+        border-radius: 99px;
+        background: var(--border);
+        padding: 3px;
+      }
+      .toggle i {
+        display: block;
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        background: #fff;
+        transition: 0.2s;
+      }
+      .toggle.on {
+        background: var(--primary);
+      }
+      .toggle.on i {
+        transform: translateX(-20px);
+      }
+      .toast {
+        position: fixed;
+        z-index: 100;
+        bottom: 105px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: #22232f;
+        color: #fff;
+        padding: 11px 17px;
+        border-radius: 14px;
+        font-size: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.25s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%);
+      }
+      .switch-info {
+        background: var(--surface2);
+        border-radius: 16px;
+        padding: 12px;
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 12px;
+      }
+      @media (max-width: 650px) {
+        .bottom-nav {
+          padding-left: 5px;
+          padding-right: 5px;
+          gap: 2px;
+        }
+        .nav-btn {
+          font-size: 9px;
+          padding: 5px 1px;
+          border-radius: 11px;
+        }
+        .nav-btn span {
+          font-size: 18px;
+          line-height: 18px;
+          margin-bottom: 2px;
+        }
+        .app {
+          padding-bottom: 88px;
+        }
+      }
+      @media (max-width: 390px) {
+        .bottom-nav {
+          padding-left: 3px;
+          padding-right: 3px;
+          gap: 1px;
+        }
+        .nav-btn {
+          font-size: 8px;
+          padding: 4px 0;
+        }
+        .nav-btn span {
+          font-size: 17px;
+          line-height: 17px;
+        }
+        .app {
+          padding-bottom: 82px;
+        }
+      }
+
+      @media (min-width: 800px) {
+        .bottom-nav {
+          bottom: 18px;
+          border: 1px solid var(--border);
+          border-radius: 23px;
+          width: 650px;
+          right: 50%;
+          left: auto;
+          transform: translateX(50%);
+          padding-bottom: 8px;
+        }
+        .fab {
+          bottom: 100px;
+        }
+        .overlay {
+          align-items: center;
+        }
+        .sheet {
+          border-radius: 28px;
+          max-height: 86vh;
+        }
+        .app {
+          padding-top: 25px;
+        }
+        .hero {
+          padding: 30px;
+        }
+        .balance {
+          font-size: 40px;
+        }
+        .grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 650px) {
+        .app {
+          padding: 14px 13px 25px;
+        }
+        .asset-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .field.full {
+          grid-column: auto;
+        }
+        .hero {
+          border-radius: 23px;
+        }
+        .fab {
+          display: none !important;
+        }
+        .sheet {
+          width: 100%;
+          max-height: 94vh;
+          padding: 15px;
+          border-radius: 23px 23px 0 0;
+        }
+        .asset-detail {
+          padding: 0;
+        }
+        .asset-detail-hero {
+          padding: 14px;
+          border-radius: 18px;
+        }
+        .asset-detail-top {
+          gap: 9px;
+          align-items: center;
+        }
+        .asset-detail-icon {
+          width: 46px;
+          height: 46px;
+          border-radius: 14px;
+          font-size: 22px;
+        }
+        .asset-detail-title b {
+          font-size: 15px;
+        }
+        .asset-detail-title small {
+          font-size: 9px;
+        }
+        .asset-detail-price {
+          text-align: left;
+        }
+        .asset-detail-price b {
+          font-size: 14px;
+        }
+        .asset-detail-grid {
+          gap: 7px;
+          margin: 9px 0;
+        }
+        .asset-kpi {
+          padding: 10px;
+          border-radius: 14px;
+        }
+        .asset-kpi b {
+          font-size: 11px;
+        }
+        .tech-card {
+          padding: 10px;
+          border-radius: 18px;
+        }
+        .tech-head {
+          padding: 1px 2px;
+        }
+        .tech-chart {
+          margin-top: 8px;
+          padding: 5px;
+          border-radius: 15px;
+        }
+        .tech-legend {
+          gap: 7px;
+          padding: 8px 2px 0;
+          font-size: 9px;
+        }
+        .tech-legend strong {
+          margin-right: 0;
+          margin-left: auto;
+          padding: 5px 7px;
+        }
+        .tech-note {
+          font-size: 9px;
+          line-height: 1.75;
+        }
+        .detail-actions {
+          grid-template-columns: 1fr 1fr;
+          gap: 7px;
+        }
+        .detail-actions button {
+          font-size: 11px;
+          padding: 11px 7px;
+        }
+      }
+      @media (max-width: 390px) {
+        .asset-grid {
+          grid-template-columns: 1fr;
+        }
+        .money-card {
+          min-width: 245px;
+        }
+        .balance {
+          font-size: 29px;
+        }
+        .sheet {
+          padding: 12px;
+        }
+        .asset-detail-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .asset-detail-top {
+          display: grid;
+          grid-template-columns: 44px 1fr;
+          align-items: center;
+        }
+        .asset-detail-price {
+          grid-column: 1/-1;
+          text-align: right;
+          padding-top: 4px;
+        }
+        .tech-head b {
+          font-size: 12px;
+        }
+        .tech-badge {
+          font-size: 9px;
+          padding: 5px 7px;
+        }
+        .tech-legend {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        .tech-legend strong {
+          grid-column: 1/-1;
+          justify-self: stretch;
+          text-align: center;
+        }
+        .detail-actions {
+          grid-template-columns: 1fr;
+        }
+        .detail-actions .primary {
+          order: -1;
+        }
+      }
+
+      .technical-svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        min-height: 0;
+        overflow: visible;
+      }
+      .tech-section-title {
+        fill: var(--muted);
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .tech-legend {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 4px 2px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .tech-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .tech-legend i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .tech-legend strong {
+        margin-right: auto;
+        padding: 6px 9px;
+        border-radius: 10px;
+        background: var(--surface2);
+      }
+      .tech-legend strong.up {
+        color: #17c58b;
+      }
+      .tech-legend strong.down {
+        color: #f05b70;
+      }
+      .tech-loading {
+        min-height: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--muted);
+        text-align: center;
+      }
+      .tech-loading span {
+        font-size: 28px;
+        color: var(--primary);
+        animation: spin 1s linear infinite;
+      }
+      .tech-loading b {
+        color: var(--text);
+        font-size: 12px;
+      }
+      .tech-loading small {
+        font-size: 10px;
+      }
+      .tech-fallback {
+        min-height: 260px;
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-content: end;
+        padding: 28px 12px 10px;
+      }
+      .tech-fallback > div:not(.fallback-line) {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 10px;
+      }
+      .tech-fallback small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .tech-fallback strong {
+        display: block;
+        margin-top: 5px;
+        font-size: 13px;
+      }
+      .fallback-line {
+        position: absolute;
+        right: 9%;
+        left: 9%;
+        top: 70px;
+        height: 120px;
+      }
+      .fallback-line:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 50%;
+        height: 2px;
+        background: linear-gradient(90deg, #8b7cff, #17c58b);
+        transform: rotate(-2deg);
+        border-radius: 99px;
+      }
+      .fallback-line span,
+      .fallback-line i,
+      .fallback-line b {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+        top: calc(50% - 5px);
+        box-shadow: 0 0 0 5px var(--surface2);
+      }
+      .fallback-line span {
+        left: 0;
+      }
+      .fallback-line b {
+        right: 0;
+        background: #17c58b;
+      }
+      .fallback-line i {
+        left: 50%;
+        background: #8b7cff;
+      }
+      .tech-note {
+        line-height: 1.9;
+      }
+      .tech-chart {
+        overflow: hidden;
+      }
+      .asset-detail-price b {
+        white-space: nowrap;
+      }
+      .asset-kpi b {
+        white-space: nowrap;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    
+      .sms-automation-card { margin-top: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface2); }
+      .sms-rule { display:grid; grid-template-columns: 1fr 1fr auto; gap:8px; align-items:end; margin-top:10px; }
+      .sms-rule .field { margin:0; }
+      .sms-rule-remove { height:40px; min-width:40px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--danger,#e55); cursor:pointer; }
+      .sms-status { display:flex; align-items:center; gap:8px; margin-top:9px; font-size:11px; color:var(--muted); line-height:1.8; }
+      .sms-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); flex:0 0 auto; }
+      .sms-dot.on { background:#18b981; box-shadow:0 0 0 4px rgba(24,185,129,.12); }
+      .sms-test-box { margin-top:12px; }
+      .sms-test-box textarea { min-height:110px; resize:vertical; }
+      .sms-pending { margin-top:10px; padding:10px; border-radius:13px; border:1px dashed var(--border); background:var(--surface); font-size:11px; line-height:1.9; }
+      @media (max-width:640px){ .sms-rule{grid-template-columns:1fr;}.sms-rule-remove{width:100%;} }
+
+
+/* FINAL MOBILE NAV FIX */
+@media (max-width: 650px) {
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  .app { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; padding-left: 10px; padding-right: 10px; padding-bottom: 92px; }
+  .bottom-nav {
+    left: 0; right: 0; bottom: 0; width: 100%; max-width: none;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+  }
+  .nav-btn {
+    min-width: 0; max-width: 100%; width: 100%;
+    padding: 5px 0; margin: 0;
+    font-size: clamp(7px, 2.5vw, 10px);
+    line-height: 1.15;
+    overflow: hidden;
+  }
+  .nav-btn span { font-size: clamp(16px, 5vw, 19px); line-height: 18px; margin-bottom: 2px; }
+  .nav-btn span, .nav-btn { text-align: center; }
+}
+@media (max-width: 380px) {
+  .bottom-nav { padding-left: 2px; padding-right: 2px; gap: 1px; }
+  .nav-btn { font-size: 7px; }
+  .nav-btn span { font-size: 16px; line-height: 17px; }
+}
+</style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">₿</div>
+          <div><b>حساب‌یار</b><small>مدیریت ساده و هوشمند پول</small></div>
+        </div>
+        <button class="icon-btn" onclick="openSettings()">⚙️</button>
+      </header>
+
+      <main id="home" class="page active">
+        <section class="hero">
+          <div class="hero-label">موجودی کل حساب‌های فعال</div>
+          <div class="balance-row">
+            <div class="balance" id="totalBalance">۰ <span>تومان</span></div>
+            <div class="balance-currency-control" id="balanceCurrencyControl">
+              <button type="button" class="balance-currency-trigger"
+                id="balanceCurrencyTrigger" onclick="toggleBalanceCurrencyMenu(event)"
+                aria-label="تغییر واحد نمایش موجودی" aria-expanded="false">
+                <span class="balance-currency-chevron" aria-hidden="true"></span>
+              </button>
+              <div class="balance-currency-menu" id="balanceCurrencyMenu" role="menu"></div>
+            </div>
+          </div>
+          <div class="hero-row">
+            <div class="date" id="today"></div>
+            <button class="hero-plus" onclick="openTx()">+</button>
+          </div>
+        </section>
+        <div class="grid" style="margin-top: 15px">
+          <div class="stat">
+            <small>درآمد این ماه</small
+            ><strong class="income" id="monthIncome">۰</strong>
+          </div>
+          <div class="stat">
+            <small>هزینه این ماه</small
+            ><strong class="expense" id="monthExpense">۰</strong>
+          </div>
+        </div>
+        <div class="section-head">
+          <h2>حساب‌ها و کارت‌ها</h2>
+          <button onclick="openAccount()">+ افزودن حساب</button>
+        </div>
+        <div id="accounts" class="cards-scroll"></div>
+        <div class="section-head">
+          <h2>تراکنش‌های اخیر</h2>
+          <button onclick="showPage('reports')">مشاهده همه</button>
+        </div>
+        <div id="recentTx" class="tx-list"></div>
+      </main>
+
+      <main id="assets" class="page">
+        <div class="section-head">
+          <h2>دارایی‌ها</h2>
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              id="assetsRefreshBtn"
+              class="secondary"
+              onclick="refreshMarketPrices(true)"
+            >
+              🔄 بروزرسانی قیمت‌ها
+            </button>
+            <button onclick="openAsset()">+ افزودن دارایی</button>
+          </div>
+        </div>
+        <div
+          id="assetsApiStatus"
+          style="font-size: 12px; color: var(--muted); margin: -4px 0 12px"
+        ></div>
+        <div class="empty" style="margin-bottom: 15px">
+          برای هر سرمایه واحد نگهداری را مشخص کنید؛ مثلاً طلا برحسب گرم، سوت یا
+          کیلوگرم. قیمت API بر اساس واحد پایه تبدیل می‌شود و ارزش کل دقیقاً از
+          مقدار شما محاسبه خواهد شد.
+        </div>
+        <div id="assetGrid" class="asset-grid"></div>
+      </main>
+
+      <main id="reports" class="page">
+        <div class="section-head">
+          <h2>گزارش مالی</h2>
+          <button onclick="openReportFilter()">⚙ فیلتر</button>
+        </div>
+        <div class="filterbar">
+          <button class="chip active" onclick="setPeriod(this, 'day')">
+            روزانه</button
+          ><button class="chip" onclick="setPeriod(this, 'week')">هفتگی</button
+          ><button class="chip" onclick="setPeriod(this, 'month')">
+            ماهانه</button
+          ><button class="chip" onclick="setPeriod(this, 'year')">سالانه</button
+          ><button class="chip" onclick="setPeriod(this, 'all')">همه</button>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">مقایسه درآمد و هزینه</div>
+          <div id="chart" class="bars"></div>
+        </div>
+        <div class="grid">
+          <div class="stat">
+            <small>مجموع درآمد</small
+            ><strong class="income" id="reportIncome">۰</strong>
+          </div>
+          <div class="stat">
+            <small>مجموع هزینه</small
+            ><strong class="expense" id="reportExpense">۰</strong>
+          </div>
+        </div>
+        <div class="section-head"><h2>جزئیات</h2></div>
+        <div id="reportTx" class="tx-list"></div>
+      </main>
+
+      <main id="budgets" class="page">
+        <div class="section-head">
+          <h2>بودجه‌بندی</h2>
+          <button onclick="openBudget()">+ بودجه جدید</button>
+        </div>
+        <div class="empty" style="margin-bottom: 15px">
+          برای هر حساب و دسته‌بندی سقف هزینه تعیین کنید.
+        </div>
+        <div id="budgetList" class="budget-list"></div>
+        <div class="section-head">
+          <h2>دسته‌بندی‌ها</h2>
+          <button onclick="openCategory()">+ دسته‌بندی</button>
+        </div>
+        <div
+          id="categories"
+          class="filterbar"
+          style="flex-wrap: wrap; overflow: visible"
+        ></div>
+      </main>
+
+      <main id="debts" class="page">
+        <div class="section-head">
+          <div>
+            <h2>بدهی‌ها و طلب‌ها</h2>
+            <small class="debt-page-subtitle">تعهدات هر حساب را یکجا مدیریت کنید.</small>
+          </div>
+          <button onclick="openDebt()">+ ثبت مورد</button>
+        </div>
+
+        <div class="debt-summary-grid">
+          <div class="debt-summary receivable"><span>طلب‌های باز</span><strong id="debtReceivableTotal">۰</strong></div>
+          <div class="debt-summary payable"><span>بدهی‌های باز</span><strong id="debtPayableTotal">۰</strong></div>
+          <div class="debt-summary net"><span>خالص</span><strong id="debtNetTotal">۰</strong></div>
+        </div>
+
+        <div class="debt-toolbar">
+          <div class="filterbar debt-filterbar">
+            <button class="chip active" data-debt-filter="all" onclick="setDebtFilter(this,'all')">همه</button>
+            <button class="chip" data-debt-filter="receivable" onclick="setDebtFilter(this,'receivable')">طلب‌ها</button>
+            <button class="chip" data-debt-filter="payable" onclick="setDebtFilter(this,'payable')">بدهی‌ها</button>
+          </div>
+          <select id="debtAccountFilter" onchange="setDebtAccountFilter(this.value)" aria-label="فیلتر حساب">
+            <option value="all">همه حساب‌ها</option>
+          </select>
+        </div>
+
+        <div id="debtList" class="debt-list"></div>
+      </main>
+    </div>
+
+    <button class="fab" onclick="openTx()">+</button>
+    <nav class="bottom-nav">
+      <button
+        class="nav-btn active"
+        data-page="home"
+        onclick="showPage('home')"
+      >
+        <span>⌂</span>خانه
+      </button>
+      <button class="nav-btn" data-page="assets" onclick="showPage('assets')">
+        <span>◈</span>دارایی
+      </button>
+      <button class="nav-btn" data-page="reports" onclick="showPage('reports')">
+        <span>▥</span>گزارش
+      </button>
+      <button class="nav-btn" data-page="budgets" onclick="showPage('budgets')">
+        <span>◎</span>بودجه
+      </button>
+      <button class="nav-btn" data-page="debts" onclick="showPage('debts')">
+        <span>⇄</span>بدهی/طلب
+      </button>
+    </nav>
+    <div
+      id="overlay"
+      class="overlay"
+      onclick="if (event.target === this) closeSheet();"
+    >
+      <div id="sheet" class="sheet"></div>
+    </div>
+    <div id="toast" class="toast"></div>
+
+    <script>
+      /* ===================== DATA ===================== */
+      const KEY = "hesabyar_v2";
+      const defaultCategories = [
+        ["🍔", "غذا و رستوران"],
+        ["🚕", "رفت‌وآمد"],
+        ["📱", "شارژ و اینترنت"],
+        ["🛒", "خرید"],
+        ["🏠", "خانه و اجاره"],
+        ["💡", "قبض‌ها"],
+        ["💊", "سلامت و درمان"],
+        ["🎓", "آموزش"],
+        ["🎮", "تفریح"],
+        ["👕", "پوشاک"],
+        ["⛽", "سوخت"],
+        ["🎁", "هدیه"],
+        ["💰", "حقوق و درآمد"],
+        ["☕", "کافه"],
+        ["🧾", "خدمات"],
+        ["📦", "سایر"],
+      ];
+      let state = JSON.parse(localStorage.getItem(KEY) || "null") || {
+        settings: {
+          theme: "light",
+          currency: "تومان",
+          includeAssets: false,
+          dateMode: "jalali",
+        },
+        accounts: [],
+        assets: [],
+        transactions: [],
+        budgets: [],
+        debts: [],
+        categories: defaultCategories.map((x) => ({
+          icon: x[0],
+          name: x[1],
+          custom: false,
+        })),
+      };
+      state.settings = Object.assign(
+        {
+          theme: "light",
+          currency: "تومان",
+          includeAssets: false,
+          dateMode: "jalali",
+          apiLastUpdate: "",
+          balanceDisplayCurrency: "default",
+          usdToToman: null,
+          usdRateUpdatedAt: "",
+          smsAutomation: { enabled: false, rules: [], processed: [], pending: [] },
+        },
+        state.settings || {},
+      );
+      if (!state.settings.balanceDisplayCurrency)
+        state.settings.balanceDisplayCurrency = "default";
+      if (!Object.prototype.hasOwnProperty.call(state.settings, "usdToToman"))
+        state.settings.usdToToman = null;
+      if (!Object.prototype.hasOwnProperty.call(state.settings, "usdRateFetchedAt"))
+        state.settings.usdRateFetchedAt = 0;
+      if (!Object.prototype.hasOwnProperty.call(state.settings, "usdRateUpdatedAt"))
+        state.settings.usdRateUpdatedAt = "";
+      if (!Array.isArray(state.debts)) state.debts = [];
+
+      let debtFilter = "all", debtAccountFilter = "all";
+
+      let reportPeriod = "day",
+        reportAccount = "all",
+        reportType = "all",
+        reportStart = "",
+        reportEnd = "";
+
+      /* ===================== PERSIAN CALENDAR ===================== */
+      /* Gregorian <-> Jalali conversion, used internally so all stored dates remain stable ISO dates. */
+      function div(a, b) {
+        return Math.floor(a / b);
+      }
+      function gregorianToJalali(gy, gm, gd) {
+        let parts = new Intl.DateTimeFormat("en-US-u-ca-persian", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(new Date(gy, gm - 1, gd, 12));
+        let y = Number(parts.find((x) => x.type === "year").value),
+          m = Number(parts.find((x) => x.type === "month").value),
+          d = Number(parts.find((x) => x.type === "day").value);
+        return [y, m, d];
+      }
+      function jalaliToGregorian(jy, jm, jd) {
+        let mod = (a, b) => a - Math.floor(a / b) * b;
+        let epbase = jy - (jy >= 0 ? 474 : 473),
+          epyear = 474 + mod(epbase, 2820);
+        let jdn =
+          jd +
+          (jm <= 7 ? (jm - 1) * 31 : (jm - 1) * 30 + 6) +
+          Math.floor((epyear * 682 - 110) / 2816) +
+          (epyear - 1) * 365 +
+          Math.floor(epbase / 2820) * 1029983 +
+          1948320;
+        let j = jdn + 68569,
+          n = Math.floor((4 * j) / 146097);
+        j = j - Math.floor((146097 * n + 3) / 4);
+        let gy = Math.floor((4000 * (j + 1)) / 1461001);
+        j = j - Math.floor((1461 * gy) / 4) + 31;
+        let gm = Math.floor((80 * j) / 2447),
+          gd = j - Math.floor((2447 * gm) / 80);
+        j = Math.floor(gm / 11);
+        gm = gm + 2 - 12 * j;
+        gy = 100 * (n - 49) + gy + j;
+        return [gy, gm, gd];
+      }
+      function isoToJalali(iso) {
+        let p = iso.split("-").map(Number);
+        if (p.length !== 3 || p.some(isNaN)) return "";
+        let j = gregorianToJalali(p[0], p[1], p[2]);
+        return j[0] + "/" + pad(j[1]) + "/" + pad(j[2]);
+      }
+      function jalaliToIso(s) {
+        let m = String(s).replace(/-/g, "/").trim().split("/").map(Number);
+        if (m.length !== 3 || m.some(isNaN)) return "";
+        let [jy, jm, jd] = m;
+        if (jy < 1000 || jm < 1 || jm > 12 || jd < 1 || jd > 31) return "";
+        let x = jalaliToGregorian(jy, jm, jd);
+        if (x[1] < 1 || x[1] > 12 || x[2] < 1 || x[2] > 31) return "";
+        let back = gregorianToJalali(x[0], x[1], x[2]);
+        if (back[0] !== jy || back[1] !== jm || back[2] !== jd) return "";
+        return `${x[0]}-${pad(x[1])}-${pad(x[2])}`;
+      }
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+      function todayISO() {
+        let d = new Date();
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      }
+      function displayDate(iso) {
+        if (!iso) return "";
+        return state.settings.dateMode === "jalali" ? isoToJalali(iso) : iso;
+      }
+      function dateLabel(iso) {
+        if (!iso) return "";
+
+        const date = new Date(iso + "T12:00:00");
+        const week = new Intl.DateTimeFormat("fa-IR", {
+          weekday: "long",
+        }).format(date);
+
+        if (state.settings.dateMode === "jalali") {
+          const [jy, jm, jd] = gregorianToJalali(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            date.getDate(),
+          );
+          const names = [
+            "فروردین",
+            "اردیبهشت",
+            "خرداد",
+            "تیر",
+            "مرداد",
+            "شهریور",
+            "مهر",
+            "آبان",
+            "آذر",
+            "دی",
+            "بهمن",
+            "اسفند",
+          ];
+          return `${week}، ${faNum(jd)} ${names[jm - 1]} ${String(jy).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d])}`;
+        }
+
+        // Gregorian calendar: keep the date Gregorian while displaying
+        // Persian names/digits for a consistent Persian UI.
+        const parts = new Intl.DateTimeFormat("fa-IR", {
+          calendar: "gregory",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }).formatToParts(date);
+
+        const year = parts.find((p) => p.type === "year")?.value || "";
+        const month = parts.find((p) => p.type === "month")?.value || "";
+        const day = parts.find((p) => p.type === "day")?.value || "";
+
+        return `${week}، ${day} ${month} ${year}`;
+      }
+      function faNum(n) {
+        return new Intl.NumberFormat("fa-IR").format(
+          Math.round(Number(n) || 0),
+        );
+      }
+      function currencyFactor() {
+        return state.settings.currency === "ریال" ? 10 : 1;
+      }
+      function displayAmount(n) {
+        return (Number(n) || 0) * currencyFactor();
+      }
+      function balanceCurrencyOptions() {
+        const configured = state.settings.currency === "ریال" ? "ریال" : "تومان";
+        return [
+          { key: "default", label: configured, symbol: configured === "ریال" ? "﷼" : "ت", kind: "تنظیمات" },
+          { key: "usd", label: "دلار آمریکا", symbol: "$", kind: "USD" },
+        ];
+      }
+
+      function balanceCurrencyLabel() {
+        return balanceCurrencyOptions().find(
+          x => x.key === (state.settings.balanceDisplayCurrency || "default")
+        ) || balanceCurrencyOptions()[0];
+      }
+
+      function formatUsd(n) {
+        const value = Number(n) || 0;
+        const digits = Math.abs(value) >= 1000 ? 0 : Math.abs(value) >= 100 ? 1 : 2;
+        return new Intl.NumberFormat("fa-IR", {
+          minimumFractionDigits: digits,
+          maximumFractionDigits: digits
+        }).format(value);
+      }
+
+      function getTotalBalanceBaseToman() {
+        let total = state.accounts.reduce((s, a) => s + (Number(a.balance) || 0), 0);
+        if (state.settings.includeAssets)
+          total += state.assets.reduce(
+            (s, a) => s + (Number(a.qty) || 0) * (Number(a.price) || 0), 0
+          );
+        return total;
+      }
+
+      function getUsdRateFromMarketData(data) {
+        return getApiBasePrice(data, "USD_IRR_FREE", null)?.price || null;
+      }
+
+      function renderBalanceCurrencyMenu() {
+        const menu = document.getElementById("balanceCurrencyMenu");
+        const trigger = document.getElementById("balanceCurrencyTrigger");
+        if (!menu || !trigger) return;
+        const active = state.settings.balanceDisplayCurrency || "default";
+        menu.innerHTML = balanceCurrencyOptions().map(o => `
+          <button type="button" class="balance-currency-option ${active === o.key ? "active" : ""}"
+            role="menuitem" onclick="selectBalanceCurrency('${o.key}')">
+            <span class="currency-option-main">
+              <span class="currency-option-symbol">${esc(o.symbol)}</span>
+              <span>${esc(o.label)} <small style="color:var(--muted);font-size:8px">(${esc(o.kind)})</small></span>
+            </span>
+            <span class="currency-option-check">✓</span>
+          </button>
+        `).join("") + (active === "usd"
+          ? `<div class="balance-fx-status">${
+              state.settings.usdToToman
+                ? `نرخ مبنا: ۱ دلار ≈ ${faNum(state.settings.usdToToman)} تومان`
+                : "برای تبدیل دلار، نرخ ارز از API دریافت می‌شود."
+            }</div>` : "");
+        trigger.setAttribute("aria-expanded", menu.classList.contains("show") ? "true" : "false");
+      }
+
+      function toggleBalanceCurrencyMenu(event) {
+        event?.stopPropagation();
+        const menu = document.getElementById("balanceCurrencyMenu");
+        const trigger = document.getElementById("balanceCurrencyTrigger");
+        if (!menu || !trigger) return;
+        const open = menu.classList.toggle("show");
+        trigger.setAttribute("aria-expanded", open ? "true" : "false");
+        if (open) renderBalanceCurrencyMenu();
+      }
+
+      function closeBalanceCurrencyMenu() {
+        const menu = document.getElementById("balanceCurrencyMenu");
+        const trigger = document.getElementById("balanceCurrencyTrigger");
+        if (menu) menu.classList.remove("show");
+        if (trigger) trigger.setAttribute("aria-expanded", "false");
+      }
+
+      async function ensureUsdRate() {
+        const now = Date.now();
+        if (state.settings.usdToToman &&
+            now - (Number(state.settings.usdRateFetchedAt) || 0) < MARKET_API_INTERVAL)
+          return Number(state.settings.usdToToman);
+
+        try {
+          const response = await fetch(MARKET_API_URL, { cache: "no-store" });
+          if (!response.ok) throw new Error("market api");
+          const data = await response.json();
+          const rate = getUsdRateFromMarketData(data);
+          if (!rate) throw new Error("USD rate unavailable");
+          state.settings.usdToToman = Number(rate);
+          state.settings.usdRateFetchedAt = now;
+          state.settings.usdRateUpdatedAt = new Date().toISOString();
+          save();
+          return Number(rate);
+        } catch (error) {
+          return Number(state.settings.usdToToman) || null;
+        }
+      }
+
+      async function selectBalanceCurrency(key) {
+        if (!["default", "usd"].includes(key)) return;
+        if (key === "usd") {
+          closeBalanceCurrencyMenu();
+          const rate = await ensureUsdRate();
+          if (!rate) {
+            toast("نرخ دلار از API دریافت نشد");
+            renderBalanceCurrencyMenu();
+            return;
+          }
+        }
+        state.settings.balanceDisplayCurrency = key;
+        save();
+        render();
+        toast(key === "usd" ? "نمایش موجودی به دلار تغییر کرد" : "نمایش موجودی به واحد تنظیمات برگشت");
+      }
+
+      function renderTotalBalance() {
+        const el = document.getElementById("totalBalance");
+        if (!el) return;
+        const total = getTotalBalanceBaseToman();
+        const selected = balanceCurrencyLabel();
+        if (selected.key === "usd" && Number(state.settings.usdToToman) > 0) {
+          el.innerHTML = `${formatUsd(total / Number(state.settings.usdToToman))} <span>دلار</span>`;
+        } else {
+          el.innerHTML = `${faNum(displayAmount(total))} <span>${esc(state.settings.currency)}</span>`;
+        }
+        renderBalanceCurrencyMenu();
+      }
+
+      function inputAmount(n) {
+        return cleanGroupedNumber(n) / currencyFactor();
+      }
+      function money(n) {
+        return faNum(displayAmount(n)) + " " + state.settings.currency;
+      }
+      function esc(s) {
+        return String(s ?? "").replace(
+          /[&<>"']/g,
+          (m) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#039;",
+            })[m],
+        );
+      }
+      function save() {
+        localStorage.setItem(KEY, JSON.stringify(state));
+      }
+      function toast(t) {
+        let x = document.getElementById("toast");
+        x.textContent = t;
+        x.classList.add("show");
+        setTimeout(() => x.classList.remove("show"), 2200);
+      }
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((x) => x.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((x) => x.classList.toggle("active", x.dataset.page === id));
+        render();
+      }
+      function openSheet(h) {
+        document.getElementById("sheet").innerHTML = h;
+        document.getElementById("overlay").classList.add("show");
+      }
+      function closeSheet() {
+        document.getElementById("overlay").classList.remove("show");
+      }
+
+      document.addEventListener("click", (event) => {
+        const control = document.getElementById("balanceCurrencyControl");
+        if (control && !control.contains(event.target)) closeBalanceCurrencyMenu();
+      });
+
+      /* ===================== BANKS ===================== */
+      const banks = {
+        603799: ["بانک ملی ایران", "🏦", "bank-blue"],
+        589210: ["بانک سپه", "🏦", "bank-green"],
+        627648: ["توسعه صادرات", "🏦", "bank-blue"],
+        627961: ["صنعت و معدن", "🏦", "bank-green"],
+        603770: ["بانک کشاورزی", "🌱", "bank-green"],
+        628023: ["بانک مسکن", "🏠", "bank-blue"],
+        627760: ["پست بانک ایران", "📮", "bank-green"],
+        502229: ["پاسارگاد", "P", "bank-blue"],
+        610433: ["بانک ملت", "M", "bank-red"],
+        603769: ["بانک صادرات", "S", "bank-blue"],
+        627353: ["بانک تجارت", "T", "bank-blue"],
+        589463: ["بانک رفاه", "R", "bank-red"],
+        502908: ["توسعه تعاون", "T", "bank-green"],
+        504172: ["بانک رسالت", "R", "bank-green"],
+        502938: ["بانک دی", "D", "bank-blue"],
+        505785: ["ایران زمین", "I", "bank-blue"],
+        622106: ["پارسیان", "P", "bank-red"],
+        639194: ["پارسیان", "P", "bank-red"],
+        639217: ["بانک کشاورزی", "🌱", "bank-green"],
+        639346: ["بانک سینا", "S", "bank-blue"],
+        639607: ["بانک سرمایه", "S", "bank-red"],
+        502806: ["بانک شهر", "ش", "bank-blue"],
+        504706: ["بانک شهر", "ش", "bank-blue"],
+        505416: ["گردشگری", "G", "bank-blue"],
+        505426: ["کوثر", "K", "bank-green"],
+        636949: ["حکمت ایرانیان", "H", "bank-blue"],
+        639370: ["مهر اقتصاد", "M", "bank-green"],
+        628157: ["موسسه توسعه", "D", "bank-blue"],
+        639599: ["قوامین", "Q", "bank-blue"],
+        639347: ["پاسارگاد", "P", "bank-blue"],
+      };
+      function detectBank(num) {
+        return (
+          banks[String(num).replace(/\D/g, "").slice(0, 6)] || [
+            "بانک شناسایی نشد",
+            "💳",
+            "bank-blue",
+          ]
+        );
+      }
+
+      /* ===================== ACCOUNT ===================== */
+      function cashAccount() {
+        return state.accounts.find((a) => a.type === "cash");
+      }
+      function openAccount(id = null) {
+        let a = id ? state.accounts.find((x) => x.id === id) : null;
+        if (!a && !state.accounts.length) {
+        }
+        let editing = !!a;
+        openSheet(`<div class="sheet-head"><h3>${editing ? "ویرایش حساب" : "افزودن حساب"}</h3><button class="close" onclick="closeSheet()">×</button></div>
+ <div class="form-grid">
+  <div class="field full"><label>نوع حساب</label><select id="aType" onchange="accountTypeChanged()" ${editing ? "disabled" : ""}>
+   <option value="card" ${a?.type === "card" ? "selected" : ""}>💳 کارت / حساب بانکی</option>
+   <option value="cash" ${a?.type === "cash" ? "selected" : ""}>💵 نقدی</option>
+  </select></div>
+  <div class="field full" id="cardNumberWrap" style="${a?.type === "cash" ? "display:none" : ""}"><label>شماره کارت (۱۶ رقم)</label><input id="aNum" inputmode="numeric" maxlength="16" data-group-formatting="off" value="${esc(a?.number || "")}" placeholder="6037990012345678" oninput="previewBank()"></div>
+  <div class="field full"><label>نام اختیاری</label><input id="aName" value="${esc(a?.name || "")}" placeholder="مثلاً کارت روزمره"></div>
+  <div class="field full"><label>موجودی فعلی</label><input id="aBal" type="text" inputmode="decimal" value="${displayAmount(a?.balance ?? 0)}"></div>
+ </div>
+ <div id="bankPreview" class="empty" style="margin-top:12px">${a?.type === "cash" ? "💵 <b>حساب نقدی</b><br><small>حساب نقدی در برنامه فقط یک مورد خواهد بود.</small>" : "شماره کارت را وارد کنید تا بانک تشخیص داده شود."}</div>
+ <button class="primary" onclick="saveAccount(${id || 0})">${editing ? "ذخیره تغییرات" : "افزودن حساب"}</button>
+ ${editing ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteAccount(${id})">حذف حساب</button>` : ""}`);
+        if (a && a.type === "card") previewBank();
+      }
+      function accountTypeChanged() {
+        let t = document.getElementById("aType").value;
+        document.getElementById("cardNumberWrap").style.display =
+          t === "cash" ? "none" : "block";
+        document.getElementById("bankPreview").innerHTML =
+          t === "cash"
+            ? "💵 <b>حساب نقدی</b><br><small>برای نقدی فقط یک حساب مجاز است.</small>"
+            : "شماره کارت را وارد کنید تا بانک تشخیص داده شود.";
+      }
+      function previewBank() {
+        let r = detectBank(document.getElementById("aNum").value);
+        document.getElementById("bankPreview").innerHTML =
+          `${r[1]} <b>${r[0]}</b><br><small>بانک از روی پیش‌شماره کارت تشخیص داده شد.</small>`;
+      }
+      function saveAccount(id) {
+        let type = document.getElementById("aType").value,
+          num = (document.getElementById("aNum")?.value || "").replace(
+            /\D/g,
+            "",
+          );
+        if (type === "cash" && !id && cashAccount()) {
+          toast("حساب نقدی از قبل وجود دارد");
+          return;
+        }
+        if (type === "card" && num.length !== 16) {
+          toast("شماره کارت باید ۱۶ رقم باشد");
+          return;
+        }
+        let b = detectBank(num),
+          name = document.getElementById("aName").value.trim();
+        if (type === "cash") {
+          b = ["نقدی", "💵", "bank-green"];
+          num = "";
+          name = name || "نقدی";
+        }
+        if (id) {
+          let a = state.accounts.find((x) => x.id === id);
+          a.number = num;
+          a.name = name || b[0];
+          a.balance = inputAmount(document.getElementById("aBal").value);
+          a.bank = b[0];
+          a.icon = b[1];
+          a.style = b[2];
+        } else
+          state.accounts.push({
+            id: Date.now(),
+            type,
+            number: num,
+            name: name || b[0],
+            balance: inputAmount(document.getElementById("aBal").value),
+            bank: b[0],
+            icon: b[1],
+            style: b[2],
+          });
+        save();
+        closeSheet();
+        render();
+        toast(id ? "حساب ویرایش شد" : "حساب اضافه شد");
+      }
+      function deleteAccount(id) {
+        if (state.accounts.length <= 1) {
+          toast("حداقل یک حساب باید باقی بماند");
+          return;
+        }
+        let has = state.transactions.some(
+          (t) => t.accountId === id || t.toAccountId === id,
+        );
+        if (has) {
+          toast(
+            "این حساب تراکنش دارد و فعلاً قابل حذف نیست؛ موجودی آن را صفر کنید.",
+          );
+          return;
+        }
+        if (confirm("این حساب حذف شود؟")) {
+          state.accounts = state.accounts.filter((a) => a.id !== id);
+          save();
+          closeSheet();
+          render();
+          toast("حساب حذف شد");
+        }
+      }
+
+      /* ===================== TRANSACTIONS ===================== */
+      function openTx() {
+        if (!state.accounts.length) {
+          openAccount();
+          toast("ابتدا یک حساب اضافه کنید");
+          return;
+        }
+        let cats = state.categories
+            .map(
+              (c, i) =>
+                `<option value="${i}">${c.icon} ${esc(c.name)}</option>`,
+            )
+            .join(""),
+          accs = state.accounts
+            .map(
+              (a) =>
+                `<option value="${a.id}">${a.icon} ${esc(a.name)}</option>`,
+            )
+            .join("");
+        openSheet(`<div class="sheet-head"><h3>ثبت تراکنش</h3><button class="close" onclick="closeSheet()">×</button></div>
+ <div class="filterbar"><button class="chip active" id="tExpense" onclick="txType('expense')">− خرج</button><button class="chip" id="tIncome" onclick="txType('income')">+ دخل</button><button class="chip" id="tTransfer" onclick="txType('transfer')">⇄ جابه‌جایی</button></div>
+ <input type="hidden" id="txType" value="expense">
+ <div class="form-grid">
+  <div class="field"><label>مبلغ</label><input id="txAmount" type="text" inputmode="decimal" placeholder="مبلغ به ${state.settings.currency}"></div>
+  <div class="field"><label>تاریخ ${state.settings.dateMode === "jalali" ? "شمسی" : "میلادی"}</label><input id="txDateText" value="${displayDate(todayISO())}" placeholder="${state.settings.dateMode === "jalali" ? "1405/07/15" : "2026/10/07"}"></div>
+  <div class="field"><label>حساب</label><select id="txAccount">${accs}</select></div>
+  <div class="field" id="toWrap" style="display:none"><label>حساب مقصد</label><select id="txTo">${accs}</select></div>
+  <div class="field" id="catWrap"><label>دسته‌بندی</label><select id="txCat">${cats}</select></div>
+  <div class="field full"><label>توضیحات</label><input id="txNote" placeholder="مثلاً خرید ناهار"></div>
+ </div>
+ <div class="switch-info">تاریخ با فرمت <b>${state.settings.dateMode === "jalali" ? "سال/ماه/روز شمسی" : "سال/ماه/روز میلادی"}</b> وارد شود.</div>
+ <button class="primary" onclick="addTx()">ثبت تراکنش</button>`);
+      }
+      function txType(t) {
+        document.getElementById("txType").value = t;
+        ["Expense", "Income", "Transfer"].forEach((x) =>
+          document.getElementById("t" + x)?.classList.remove("active"),
+        );
+        document
+          .getElementById("t" + t[0].toUpperCase() + t.slice(1))
+          ?.classList.add("active");
+        document.getElementById("toWrap").style.display =
+          t === "transfer" ? "flex" : "none";
+        document.getElementById("catWrap").style.display =
+          t === "transfer" ? "none" : "flex";
+      }
+      function validIsoDate(iso) {
+        let m = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!m) return false;
+        let y = Number(m[1]),
+          mo = Number(m[2]),
+          d = Number(m[3]);
+        if (mo < 1 || mo > 12 || d < 1) return false;
+        let max = [
+          31,
+          y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0) ? 29 : 28,
+          31,
+          30,
+          31,
+          30,
+          31,
+          31,
+          30,
+          31,
+          30,
+          31,
+        ][mo - 1];
+        return d <= max;
+      }
+      function addTx() {
+        let type = document.getElementById("txType").value,
+          amount = inputAmount(document.getElementById("txAmount").value),
+          text = document.getElementById("txDateText").value.trim();
+        let date =
+          state.settings.dateMode === "jalali" ? jalaliToIso(text) : text;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !validIsoDate(date)) {
+          toast("تاریخ صحیح وارد کنید");
+          return;
+        }
+        let acc = state.accounts.find(
+          (a) => a.id == document.getElementById("txAccount").value,
+        );
+        if (!amount || amount <= 0 || !acc) {
+          toast("مبلغ و حساب را درست وارد کنید");
+          return;
+        }
+        // خرج و انتقال نباید باعث منفی شدن موجودی حساب مبدأ شوند.
+        if (
+          (type === "expense" || type === "transfer") &&
+          amount > Number(acc.balance)
+        ) {
+          toast("موجودی حساب کافی نیست");
+          return;
+        }
+        if (type === "expense") acc.balance -= amount;
+        if (type === "income") acc.balance += amount;
+        let to = null;
+        if (type === "transfer") {
+          to = state.accounts.find(
+            (a) => a.id == document.getElementById("txTo").value,
+          );
+          if (!to || to.id === acc.id) {
+            toast("حساب مقصد را درست انتخاب کنید");
+            return;
+          }
+          acc.balance -= amount;
+          to.balance += amount;
+        }
+        let cat =
+          type === "transfer"
+            ? null
+            : state.categories[Number(document.getElementById("txCat").value)];
+        state.transactions.unshift({
+          id: Date.now(),
+          type,
+          amount,
+          date,
+          accountId: acc.id,
+          toAccountId: to?.id || null,
+          category: cat?.name || "انتقال",
+          icon: cat?.icon || "⇄",
+          note: document.getElementById("txNote").value,
+        });
+        save();
+        closeSheet();
+        render();
+        toast("تراکنش ثبت شد");
+      }
+      function txHtml(t) {
+        let a = state.accounts.find((x) => x.id === t.accountId),
+          sign = t.type === "income" ? "+" : t.type === "expense" ? "−" : "⇄",
+          cls =
+            t.type === "income"
+              ? "income"
+              : t.type === "expense"
+                ? "expense"
+                : "";
+        return `<div class="tx"><div class="tx-icon">${t.icon || "◈"}</div><div class="tx-main"><b>${esc(t.category || "انتقال")}</b><small>${esc(t.note || "بدون توضیح")} · ${esc(a?.name || "حساب حذف‌شده")} · ${displayDate(t.date)}</small></div><div class="tx-amount ${cls}">${sign} ${money(t.amount)}</div></div>`;
+      }
+
+      /* ===================== ASSETS ===================== */
+      const ASSET_UNITS = {
+        gold: [
+          ["gram", "گرم", 1],
+          ["sot", "سوت", 0.001],
+          ["kg", "کیلوگرم", 1000],
+        ],
+        usd: [["unit", "دلار", 1]],
+        eur: [["unit", "یورو", 1]],
+        gbp: [["unit", "پوند", 1]],
+        aed: [["unit", "درهم", 1]],
+        try: [["unit", "لیر", 1]],
+        cad: [["unit", "دلار کانادا", 1]],
+        nok: [["unit", "کرون نروژ", 1]],
+        crypto: [["unit", "واحد", 1]],
+        other: [["unit", "واحد", 1]],
+      };
+
+      const ASSET_API_CODES = {
+        usd: "usd",
+        eur: "eur",
+        gbp: "gbp",
+        aed: "aed",
+        try: "try",
+        cad: "cad",
+        nok: "nok",
+        crypto: "btc",
+      };
+
+      function assetUnitOptions(type, selected) {
+        return (ASSET_UNITS[type] || ASSET_UNITS.other)
+          .map(
+            (u) =>
+              `<option value="${u[0]}" ${selected === u[0] ? "selected" : ""}>${u[1]}</option>`,
+          )
+          .join("");
+      }
+
+      function updateAssetUnitUI() {
+        const type = document.getElementById("asType")?.value || "other";
+        const unit = document.getElementById("asUnit");
+        const wrap = document.getElementById("asUnitWrap");
+        const name = document.getElementById("asName");
+        const codeWrap = document.getElementById("asCodeWrap");
+        const code = document.getElementById("asCode");
+
+        if (unit) {
+          const current = unit.value;
+          unit.innerHTML = assetUnitOptions(type, current);
+          if (!(ASSET_UNITS[type] || []).some((x) => x[0] === current))
+            unit.value = ASSET_UNITS[type]?.[0]?.[0] || "unit";
+        }
+        if (wrap) wrap.style.display = "block";
+        if (codeWrap)
+          codeWrap.style.display = type === "crypto" ? "block" : "none";
+
+        if (name && !name.value) {
+          const labels = {
+            gold: "طلای ۱۸ عیار",
+            usd: "دلار آمریکا",
+            eur: "یورو",
+            gbp: "پوند انگلیس",
+            aed: "درهم امارات",
+            try: "لیر ترکیه",
+            cad: "دلار کانادا",
+            nok: "کرون نروژ",
+            crypto: "بیت‌کوین",
+            other: "دارایی",
+          };
+          name.placeholder = labels[type] || "دارایی";
+        }
+
+        if (code && type === "crypto" && !code.value) code.value = "btc";
+      }
+
+      function assetUnitLabel(asset) {
+        const found = (ASSET_UNITS[asset?.type] || ASSET_UNITS.other).find(
+          (x) => x[0] === asset?.unit,
+        );
+        return found ? found[1] : asset?.unit || "واحد";
+      }
+
+      function assetUnitFactor(asset) {
+        const found = (ASSET_UNITS[asset?.type] || ASSET_UNITS.other).find(
+          (x) => x[0] === asset?.unit,
+        );
+        return found ? Number(found[2]) || 1 : 1;
+      }
+
+      function openAsset(id = null) {
+        let a = id ? state.assets.find((x) => x.id === id) : null,
+          edit = !!a;
+        const type = a?.type || "gold";
+        const unit = a?.unit || (ASSET_UNITS[type] || ASSET_UNITS.gold)[0][0];
+        const code = a?.code || "btc";
+
+        openSheet(`<div class="sheet-head">
+   <h3>${edit ? "ویرایش سرمایه" : "افزودن سرمایه / دارایی"}</h3>
+   <button class="close" onclick="closeSheet()">×</button>
+  </div>
+
+  <div class="form-grid">
+   <div class="field full">
+    <label>نوع دارایی</label>
+    <select id="asType" onchange="updateAssetUnitUI()">
+     <option value="gold" ${type === "gold" ? "selected" : ""}>🥇 طلا ۱۸ عیار</option>
+     <option value="usd" ${type === "usd" ? "selected" : ""}>💵 دلار آمریکا</option>
+     <option value="eur" ${type === "eur" ? "selected" : ""}>💶 یورو</option>
+     <option value="gbp" ${type === "gbp" ? "selected" : ""}>💷 پوند انگلیس</option>
+     <option value="aed" ${type === "aed" ? "selected" : ""}>🇦🇪 درهم امارات</option>
+     <option value="try" ${type === "try" ? "selected" : ""}>🇹🇷 لیر ترکیه</option>
+     <option value="cad" ${type === "cad" ? "selected" : ""}>🇨🇦 دلار کانادا</option>
+     <option value="nok" ${type === "nok" ? "selected" : ""}>🇳🇴 کرون نروژ</option>
+     <option value="crypto" ${type === "crypto" ? "selected" : ""}>₿ ارز دیجیتال</option>
+     <option value="other" ${type === "other" ? "selected" : ""}>◈ سایر</option>
+    </select>
+   </div>
+
+   <div class="field full" id="asCodeWrap" style="${type === "crypto" ? "" : "display:none"}">
+    <label>رمزارز</label>
+    <select id="asCode">
+     <option value="btc" ${code === "btc" ? "selected" : ""}>Bitcoin (BTC)</option>
+     <option value="eth" ${code === "eth" ? "selected" : ""}>Ethereum (ETH)</option>
+     <option value="usdt" ${code === "usdt" ? "selected" : ""}>Tether (USDT)</option>
+     <option value="sol" ${code === "sol" ? "selected" : ""}>Solana (SOL)</option>
+    </select>
+   </div>
+
+   <div class="field">
+    <label>نام سرمایه</label>
+    <input id="asName" value="${esc(a?.name || "")}" placeholder="مثلاً طلای آب‌شده">
+   </div>
+
+   <div class="field">
+    <label>مقدار</label>
+    <input id="asQty" type="text" min="0" step="any" value="${a?.qty ?? 0}" placeholder="مثلاً 2.5">
+   </div>
+
+   <div class="field">
+    <label>واحد مقدار</label>
+    <select id="asUnit"></select>
+   </div>
+
+   <div class="field">
+    <label>قیمت هر واحد</label>
+    <input id="asPrice" type="text" min="0" step="any" value="${displayAmount(a?.price ?? 0)}" placeholder="قیمت دستی؛ API جایگزین می‌کند">
+   </div>
+
+   <div class="field full">
+    <div id="asUnitHelp" class="switch-info">
+     برای طلا: ۱ گرم = ۱۰۰۰ سوت و ۱ کیلوگرم = ۱۰۰۰ گرم.
+     قیمت API طلای ۱۸ عیار به ازای هر گرم دریافت می‌شود و سپس به واحد انتخابی تبدیل می‌شود.
+    </div>
+   </div>
+  </div>
+
+  <div class="switch-info">اگر API قیمت این دارایی را داشته باشد، قیمت دستی با قیمت بازار جایگزین می‌شود. در صورت قطع API، آخرین قیمت معتبر حفظ می‌شود.</div>
+  <button class="primary" onclick="saveAsset(${id || 0})">${edit ? "ذخیره تغییرات" : "ذخیره دارایی"}</button>
+  ${edit ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteAsset(${id})">حذف سرمایه</button>` : ""}`);
+
+        setTimeout(() => {
+          updateAssetUnitUI();
+          const u = document.getElementById("asUnit");
+          if (u) u.value = unit;
+        }, 0);
+      }
+
+      function saveAsset(id) {
+        let type = document.getElementById("asType").value;
+        let unit = document.getElementById("asUnit").value || "unit";
+        let code = document.getElementById("asCode")?.value || "";
+        let obj = {
+          type,
+          code,
+          name: document.getElementById("asName").value.trim() || "دارایی",
+          qty: Math.max(0, Number(document.getElementById("asQty").value) || 0),
+          price: Math.max(
+            0,
+            inputAmount(document.getElementById("asPrice").value),
+          ),
+          unit,
+        };
+
+        if (id) {
+          const old = state.assets.find((x) => x.id === id);
+          if (old)
+            Object.assign(old, obj, {
+              priceSource: "manual",
+              priceUpdatedAt: "",
+              apiBasePrice: null,
+            });
+        } else {
+          state.assets.push({
+            id: Date.now(),
+            ...obj,
+            priceSource: "manual",
+            priceUpdatedAt: "",
+            apiBasePrice: null,
+          });
+        }
+
+        save();
+        closeSheet();
+        render();
+        toast(id ? "دارایی ویرایش شد" : "دارایی اضافه شد");
+      }
+
+      function deleteAsset(id) {
+        if (confirm("این سرمایه/دارایی حذف شود؟")) {
+          state.assets = state.assets.filter((a) => a.id !== id);
+          save();
+          closeSheet();
+          render();
+          toast("دارایی حذف شد");
+        }
+      }
+
+      /* ===================== REPORTS ===================== */
+      function setPeriod(el, p) {
+        document
+          .querySelectorAll(".filterbar .chip")
+          .forEach((x) => x.classList.remove("active"));
+        el.classList.add("active");
+        reportPeriod = p;
+        renderReports();
+      }
+      function filteredTx() {
+        let arr = [...state.transactions],
+          now = new Date();
+        if (reportAccount !== "all")
+          arr = arr.filter(
+            (t) => String(t.accountId) === String(reportAccount),
+          );
+        if (reportType !== "all")
+          arr = arr.filter((t) => t.type === reportType);
+        if (reportStart && reportEnd)
+          arr = arr.filter((t) => t.date >= reportStart && t.date <= reportEnd);
+        else if (reportPeriod === "day")
+          arr = arr.filter((t) => t.date === todayISO());
+        else if (reportPeriod === "week") {
+          let d = new Date();
+          d.setDate(d.getDate() - 7);
+          let s = d.toISOString().slice(0, 10);
+          arr = arr.filter((t) => t.date >= s);
+        } else if (reportPeriod === "month") {
+          let s = todayISO().slice(0, 7);
+          arr = arr.filter((t) => t.date.startsWith(s));
+        } else if (reportPeriod === "year")
+          arr = arr.filter((t) => t.date.startsWith(now.getFullYear() + "-"));
+        return arr;
+      }
+      function renderReports() {
+        let arr = filteredTx(),
+          inc = arr
+            .filter((t) => t.type === "income")
+            .reduce((s, t) => s + t.amount, 0),
+          out = arr
+            .filter((t) => t.type === "expense")
+            .reduce((s, t) => s + t.amount, 0);
+        document.getElementById("reportIncome").textContent = money(inc);
+        document.getElementById("reportExpense").textContent = money(out);
+        document.getElementById("reportTx").innerHTML = arr.length
+          ? arr.slice(0, 50).map(txHtml).join("")
+          : `<div class="empty">برای این فیلتر تراکنشی وجود ندارد.</div>`;
+        let max = Math.max(1, inc, out),
+          n = reportPeriod === "year" ? 12 : 7,
+          html = "";
+        for (let i = 0; i < n; i++) {
+          let iv = (inc * (i + 1)) / ((n * (n + 1)) / 2),
+            ov = (out * (n - i)) / ((n * (n + 1)) / 2);
+          html += `<div style="flex:1"><div class="bar-col"><i class="bar in" style="height:${Math.max(4, (iv / max) * 135)}px"></i><i class="bar out" style="height:${Math.max(4, (ov / max) * 135)}px"></i></div><div class="bar-label">${faNum(i + 1)}</div></div>`;
+        }
+        document.getElementById("chart").innerHTML = html;
+      }
+      function openReportFilter() {
+        let accs =
+          '<option value="all">همه حساب‌ها</option>' +
+          state.accounts
+            .map(
+              (a) =>
+                `<option value="${a.id}" ${String(reportAccount) === String(a.id) ? "selected" : ""}>${a.icon} ${esc(a.name)}</option>`,
+            )
+            .join("");
+        openSheet(`<div class="sheet-head"><h3>فیلتر گزارش</h3><button class="close" onclick="closeSheet()">×</button></div><div class="form-grid">
+ <div class="field"><label>حساب</label><select id="rfAcc">${accs}</select></div><div class="field"><label>نوع</label><select id="rfType"><option value="all">دخل و خرج</option><option value="income">فقط دخل</option><option value="expense">فقط خرج</option></select></div>
+ <div class="field"><label>از تاریخ</label><input id="rfStart" placeholder="${state.settings.dateMode === "jalali" ? "1405/07/01" : "2026/10/01"}" value="${reportStart ? displayDate(reportStart) : ""}"></div>
+ <div class="field"><label>تا تاریخ</label><input id="rfEnd" placeholder="${state.settings.dateMode === "jalali" ? "1405/07/30" : "2026/10/30"}" value="${reportEnd ? displayDate(reportEnd) : ""}"></div>
+ </div><button class="primary" onclick="applyReportFilter()">اعمال فیلتر</button><button class="secondary" style="width:100%;margin-top:8px" onclick="clearReportFilter()">پاک کردن فیلتر</button>`);
+      }
+      function applyReportFilter() {
+        reportAccount = document.getElementById("rfAcc").value;
+        reportType = document.getElementById("rfType").value;
+        let s = document.getElementById("rfStart").value.trim(),
+          e = document.getElementById("rfEnd").value.trim();
+        reportStart = s
+          ? state.settings.dateMode === "jalali"
+            ? jalaliToIso(s)
+            : s
+          : "";
+        reportEnd = e
+          ? state.settings.dateMode === "jalali"
+            ? jalaliToIso(e)
+            : e
+          : "";
+        if ((s && !reportStart) || (e && !reportEnd)) {
+          toast("تاریخ بازه صحیح نیست");
+          return;
+        }
+        closeSheet();
+        renderReports();
+      }
+      function clearReportFilter() {
+        reportStart = "";
+        reportEnd = "";
+        reportAccount = "all";
+        reportType = "all";
+        closeSheet();
+        renderReports();
+      }
+
+      /* ===================== BUDGET / CATEGORIES ===================== */
+      function renderBudgets() {
+        document.getElementById("categories").innerHTML = state.categories
+          .map((c) => `<span class="chip">${c.icon} ${esc(c.name)}</span>`)
+          .join("");
+        document.getElementById("budgetList").innerHTML = state.budgets.length
+          ? state.budgets
+              .map((b) => {
+                let used = state.transactions
+                    .filter(
+                      (t) =>
+                        t.type === "expense" &&
+                        t.category === b.category &&
+                        String(t.accountId) === String(b.accountId),
+                    )
+                    .reduce((s, t) => s + t.amount, 0),
+                  pct = Math.min(100, (used / b.amount) * 100),
+                  a = state.accounts.find((x) => x.id == b.accountId);
+                return `<div class="budget"><div class="budget-head"><div><b>${b.icon} ${esc(b.category)}</b><small style="display:block;color:var(--muted);margin-top:4px">${esc(a?.name || "")}</small></div><b>${money(used)} / ${money(b.amount)}</b></div><div class="progress"><i style="width:${pct}%"></i></div><small style="color:var(--muted)">${faNum(pct)}٪ مصرف</small></div>`;
+              })
+              .join("")
+          : `<div class="empty">هنوز بودجه‌ای تعریف نشده است.</div>`;
+      }
+      function openBudget() {
+        if (!state.accounts.length) {
+          toast("اول حساب اضافه کنید");
+          return;
+        }
+        let cats = state.categories
+            .map(
+              (c, i) =>
+                `<option value="${i}">${c.icon} ${esc(c.name)}</option>`,
+            )
+            .join(""),
+          acc = state.accounts
+            .map(
+              (a) =>
+                `<option value="${a.id}">${a.icon} ${esc(a.name)}</option>`,
+            )
+            .join("");
+        openSheet(
+          `<div class="sheet-head"><h3>بودجه جدید</h3><button class="close" onclick="closeSheet()">×</button></div><div class="form-grid"><div class="field"><label>دسته‌بندی</label><select id="bCat">${cats}</select></div><div class="field"><label>حساب</label><select id="bAcc">${acc}</select></div><div class="field full"><label>سقف بودجه</label><input id="bAmount" type="text" placeholder="مبلغ به ${state.settings.currency}"></div></div><button class="primary" onclick="addBudget()">ذخیره بودجه</button>`,
+        );
+      }
+      function addBudget() {
+        let c = state.categories[Number(document.getElementById("bCat").value)],
+          amount = inputAmount(document.getElementById("bAmount").value);
+        if (!amount) return toast("مبلغ را وارد کنید");
+        state.budgets.push({
+          id: Date.now(),
+          category: c.name,
+          icon: c.icon,
+          accountId: Number(document.getElementById("bAcc").value),
+          amount,
+        });
+        save();
+        closeSheet();
+        render();
+        toast("بودجه ذخیره شد");
+      }
+      function openCategory() {
+        openSheet(
+          `<div class="sheet-head"><h3>دسته‌بندی جدید</h3><button class="close" onclick="closeSheet()">×</button></div><div class="form-grid"><div class="field"><label>آیکون</label><input id="cIcon" value="📌" maxlength="3"></div><div class="field"><label>نام دسته‌بندی</label><input id="cName" placeholder="مثلاً ورزش"></div></div><button class="primary" onclick="addCategory()">افزودن</button>`,
+        );
+      }
+      function addCategory() {
+        let n = document.getElementById("cName").value.trim(),
+          i = document.getElementById("cIcon").value || "📌";
+        if (!n) return toast("نام را وارد کنید");
+        state.categories.push({ icon: i, name: n, custom: true });
+        save();
+        closeSheet();
+        render();
+        toast("دسته‌بندی اضافه شد");
+      }
+
+      /* ===================== DEBTS / RECEIVABLES ===================== */
+      function debtRemaining(d) {
+        return Math.max(0, Number(d.amount || 0) - Number(d.paid || 0));
+      }
+      function debtSettled(d) {
+        return debtRemaining(d) <= 0;
+      }
+      function debtDueLabel(d) {
+        if (!d.dueDate) return "بدون سررسید";
+        const today = todayISO();
+        if (debtSettled(d)) return "تسویه‌شده";
+        if (d.dueDate < today) return "سررسید گذشته";
+        return "سررسید " + displayDate(d.dueDate);
+      }
+      function setDebtFilter(btn, filter) {
+        debtFilter = filter;
+        document.querySelectorAll("[data-debt-filter]").forEach((x) =>
+          x.classList.toggle("active", x.dataset.debtFilter === filter),
+        );
+        renderDebts();
+      }
+      function setDebtAccountFilter(value) {
+        debtAccountFilter = value;
+        renderDebts();
+      }
+      function renderDebts() {
+        const list = document.getElementById("debtList");
+        if (!list) return;
+        const debts = Array.isArray(state.debts) ? state.debts : [];
+        const open = debts.filter((d) => !debtSettled(d));
+        const receivable = open.filter((d) => d.type === "receivable").reduce((s,d) => s + debtRemaining(d), 0);
+        const payable = open.filter((d) => d.type === "payable").reduce((s,d) => s + debtRemaining(d), 0);
+        document.getElementById("debtReceivableTotal").textContent = money(receivable);
+        document.getElementById("debtPayableTotal").textContent = money(payable);
+        const net = receivable - payable;
+        const netEl = document.getElementById("debtNetTotal");
+        netEl.textContent = (net < 0 ? "− " : "+ ") + money(Math.abs(net));
+
+        const accSelect = document.getElementById("debtAccountFilter");
+        if (accSelect) {
+          accSelect.innerHTML = `<option value="all">همه حساب‌ها</option>` + state.accounts.map((a) =>
+            `<option value="${a.id}">${esc(a.name)}</option>`).join("");
+          accSelect.value = debtAccountFilter;
+          if (accSelect.value !== debtAccountFilter) debtAccountFilter = "all";
+        }
+        const filtered = debts
+          .filter((d) => debtFilter === "all" || d.type === debtFilter)
+          .filter((d) => debtAccountFilter === "all" || String(d.accountId) === String(debtAccountFilter))
+          .sort((a,b) => {
+            const as = debtSettled(a), bs = debtSettled(b);
+            if (as !== bs) return as ? 1 : -1;
+            if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
+            return (b.id || 0) - (a.id || 0);
+          });
+        if (!filtered.length) {
+          list.innerHTML = `<div class="empty"><b>${debts.length ? "موردی با این فیلتر پیدا نشد" : "هنوز بدهی یا طلبی ثبت نشده است."}</b><br><small>${debts.length ? "فیلتر حساب یا نوع را تغییر دهید." : "برای شروع، یک طلب یا بدهی ثبت کنید."}</small></div>`;
+          return;
+        }
+        list.innerHTML = filtered.map((d) => {
+          const a = state.accounts.find((x) => String(x.id) === String(d.accountId));
+          const remaining = debtRemaining(d), total = Number(d.amount || 0), paid = Math.min(total, Number(d.paid || 0));
+          const pct = total ? Math.min(100, (paid / total) * 100) : 0;
+          const settled = debtSettled(d);
+          const overdue = !settled && d.dueDate && d.dueDate < todayISO();
+          return `<div class="debt-card ${d.type} ${settled ? "debt-settled" : ""}">
+            <div class="debt-card-top">
+              <div class="debt-title-wrap"><div class="debt-title">${esc(d.title || (d.type === "receivable" ? "طلب" : "بدهی"))}</div><div class="debt-person">${esc(d.person || "بدون نام")}</div></div>
+              <span class="debt-type ${d.type}">${d.type === "receivable" ? "طلب از او" : "بدهکار به او"}</span>
+            </div>
+            <div class="debt-amount-row"><div><div class="debt-remaining">${money(remaining)}</div><div class="debt-total">از ${money(total)} · پرداخت‌شده ${money(paid)}</div></div></div>
+            <div class="debt-meta"><span>💳 ${esc(a?.name || "حساب حذف‌شده")}</span><span class="${overdue ? "debt-overdue" : ""}">◷ ${esc(debtDueLabel(d))}</span></div>
+            <div class="debt-progress"><i style="width:${pct}%"></i></div>
+            ${!settled ? `<div class="debt-actions"><button class="debt-pay-btn" onclick="openDebtPayment(${d.id})">ثبت پرداخت</button><button class="debt-more-btn" onclick="openDebt(${d.id})">ویرایش</button></div>` : `<div class="debt-actions"><button class="debt-more-btn" onclick="openDebt(${d.id})">مشاهده / ویرایش</button></div>`}
+          </div>`;
+        }).join("");
+      }
+      function openDebt(id = null) {
+        if (!state.accounts.length) return toast("اول حداقل یک حساب اضافه کنید");
+        const d = id ? state.debts.find((x) => x.id === id) : null;
+        const accounts = state.accounts.map((a) => `<option value="${a.id}" ${String(a.id) === String(d?.accountId ?? state.accounts[0].id) ? "selected" : ""}>${esc(a.name)}</option>`).join("");
+        const isEditing = !!d;
+        openSheet(`<div class="sheet-head"><h3>${isEditing ? "ویرایش بدهی / طلب" : "ثبت بدهی یا طلب"}</h3><button class="close" onclick="closeSheet()">×</button></div>
+          <div class="form-grid">
+            <div class="field"><label>نوع</label><select id="debtType"><option value="receivable" ${d?.type === "receivable" ? "selected" : ""}>طلب از شخص</option><option value="payable" ${d?.type === "payable" ? "selected" : ""}>بدهی به شخص</option></select></div>
+            <div class="field"><label>حساب مرتبط</label><select id="debtAccount">${accounts}</select></div>
+            <div class="field full"><label>عنوان</label><input id="debtTitle" value="${esc(d?.title || "")}" placeholder="مثلاً قرض به علی"></div>
+            <div class="field"><label>شخص / طرف حساب</label><input id="debtPerson" value="${esc(d?.person || "")}" placeholder="مثلاً علی"></div>
+            <div class="field"><label>مبلغ کل</label><input id="debtAmount" type="text" inputmode="decimal" value="${d ? displayAmount(d.amount) : ""}" placeholder="مبلغ"></div>
+            <div class="field"><label>تاریخ سررسید</label><input id="debtDue" type="date" value="${esc(d?.dueDate || "")}"></div>
+            <div class="field full"><label>توضیح</label><input id="debtNote" value="${esc(d?.note || "")}" placeholder="توضیح اختیاری"></div>
+          </div>
+          ${d && Number(d.paid || 0) ? `<div class="empty" style="margin-top:12px">تا الان ${money(d.paid)} پرداخت شده و مانده ${money(debtRemaining(d))} است.</div>` : ""}
+          <button class="primary" onclick="saveDebt(${id || 0})">${isEditing ? "ذخیره تغییرات" : "ثبت مورد"}</button>
+          ${isEditing ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteDebt(${d.id})">حذف این مورد</button>` : ""}`);
+      }
+      function saveDebt(id) {
+        const type = document.getElementById("debtType").value;
+        const amount = inputAmount(document.getElementById("debtAmount").value);
+        const title = document.getElementById("debtTitle").value.trim();
+        const person = document.getElementById("debtPerson").value.trim();
+        const accountId = Number(document.getElementById("debtAccount").value);
+        const dueDate = document.getElementById("debtDue").value;
+        const note = document.getElementById("debtNote").value.trim();
+        if (!amount) return toast("مبلغ را وارد کنید");
+        const old = id ? state.debts.find((x) => x.id === id) : null;
+        if (old && amount < Number(old.paid || 0)) return toast("مبلغ کل نمی‌تواند از مبلغ پرداخت‌شده کمتر باشد");
+        const item = { id: id || Date.now(), type, title: title || (type === "receivable" ? "طلب" : "بدهی"), person, amount, paid: old?.paid || 0, accountId, dueDate, note, createdAt: old?.createdAt || new Date().toISOString() };
+        if (old) Object.assign(old, item); else state.debts.unshift(item);
+        save(); closeSheet(); render(); toast(old ? "تغییرات ذخیره شد" : "ثبت شد");
+      }
+      function openDebtPayment(id) {
+        const d = state.debts.find((x) => x.id === id);
+        if (!d || debtSettled(d)) return;
+        openSheet(`<div class="sheet-head"><h3>ثبت پرداخت</h3><button class="close" onclick="closeSheet()">×</button></div>
+          <div class="empty"><b>${esc(d.title)}</b><br><small>مانده: ${money(debtRemaining(d))}</small></div>
+          <div class="field" style="margin-top:14px"><label>${d.type === "receivable" ? "مبلغ دریافتی" : "مبلغ پرداختی"}</label><input id="debtPaymentAmount" type="text" inputmode="decimal" placeholder="مبلغ"></div>
+          <div class="field" style="margin-top:10px"><label>توضیح پرداخت</label><input id="debtPaymentNote" placeholder="اختیاری"></div>
+          <button class="primary" onclick="saveDebtPayment(${d.id})">ثبت ${d.type === "receivable" ? "دریافت" : "پرداخت"}</button>`);
+      }
+      function saveDebtPayment(id) {
+        const d = state.debts.find((x) => x.id === id);
+        if (!d) return;
+        const amount = inputAmount(document.getElementById("debtPaymentAmount").value);
+        const remaining = debtRemaining(d);
+        if (!amount || amount > remaining) return toast("مبلغ پرداخت را درست وارد کنید");
+        const acc = state.accounts.find((a) => String(a.id) === String(d.accountId));
+        if (!acc) return toast("حساب مرتبط پیدا نشد");
+        if (d.type === "payable" && amount > Number(acc.balance || 0)) return toast("موجودی حساب برای این پرداخت کافی نیست");
+        d.paid = Number(d.paid || 0) + amount;
+        if (d.type === "receivable") acc.balance += amount;
+        else acc.balance -= amount;
+        state.transactions.unshift({ id: Date.now(), type: d.type === "receivable" ? "income" : "expense", amount, date: todayISO(), accountId: acc.id, toAccountId: null, category: d.type === "receivable" ? "دریافت طلب" : "پرداخت بدهی", icon: d.type === "receivable" ? "↗" : "↘", note: document.getElementById("debtPaymentNote").value.trim() || d.title });
+        save(); closeSheet(); render(); toast(d.type === "receivable" ? "دریافت ثبت شد" : "پرداخت ثبت شد");
+      }
+      function deleteDebt(id) {
+        const d = state.debts.find((x) => x.id === id);
+        if (!d) return;
+        if (!confirm("این مورد حذف شود؟ سوابق پرداخت‌های ثبت‌شده باقی می‌مانند.")) return;
+        state.debts = state.debts.filter((x) => x.id !== id);
+        save(); closeSheet(); render(); toast("مورد حذف شد");
+      }
+
+      /* ===================== SETTINGS / BACKUP ===================== */
+      function openSettings() {
+        openSheet(`<div class="sheet-head"><h3>تنظیمات</h3><button class="close" onclick="closeSheet()">×</button></div>
+ <div class="settings-row"><div><b>قالب برنامه</b><small>ظاهر روشن یا تاریک</small></div><button class="toggle ${state.settings.theme === "dark" ? "on" : ""}" onclick="toggleTheme(this)"><i></i></button></div>
+ <div class="settings-row"><div><b>واحد پول</b><small>ریال یا تومان</small></div><select onchange="state.settings.currency=this.value;save();render()" style="padding:8px;border-radius:11px;border:1px solid var(--border);background:var(--bg);color:var(--text)"><option ${state.settings.currency === "تومان" ? "selected" : ""}>تومان</option><option ${state.settings.currency === "ریال" ? "selected" : ""}>ریال</option></select></div>
+ <div class="settings-row"><div><b>تقویم برنامه</b><small>تاریخ‌ها و فرم‌های ورود تاریخ</small></div><select onchange="state.settings.dateMode=this.value;save();render();closeSheet()" style="padding:8px;border-radius:11px;border:1px solid var(--border);background:var(--bg);color:var(--text)"><option value="jalali" ${state.settings.dateMode === "jalali" ? "selected" : ""}>شمسی</option><option value="gregorian" ${state.settings.dateMode === "gregorian" ? "selected" : ""}>میلادی</option></select></div>
+ <div class="settings-row"><div><b>جمع دارایی با موجودی</b><small>به‌صورت پیش‌فرض خاموش است</small></div><button class="toggle ${state.settings.includeAssets ? "on" : ""}" onclick="toggleAssets(this)"><i></i></button></div>
+ <div class="settings-row"><div><b>قیمت‌های بازار</b><small>${state.settings.apiLastUpdate ? `آخرین بروزرسانی: ${esc(state.settings.apiLastUpdate)}` : "قیمت API هنوز بروزرسانی موفقی نداشته است."}</small></div><button class="secondary" onclick="refreshMarketPrices(true)">🔄 بروزرسانی</button></div>
+<div class="sms-automation-card">
+  <div class="settings-row" style="padding:0;border:0"><div><b>ثبت تراکنش از متن پیامک</b><small>متن پیامک بانکی را وارد کن تا مبلغ و نوع تراکنش تشخیص داده شود؛ بدون دسترسی به صندوق پیامک گوشی.</small></div><button class="toggle ${state.settings.smsAutomation.enabled ? "on" : ""}" onclick="toggleSmsAutomation(this)"><i></i></button></div>
+  <div class="sms-status"><i class="sms-dot ${state.settings.smsAutomation.enabled ? "on" : ""}"></i><span>${state.settings.smsAutomation.enabled ? "فعال است؛ ثبت فقط پس از وارد کردن متن پیامک توسط خودت انجام می‌شود." : "خاموش است."}</span></div>
+  <button class="secondary" style="width:100%;margin-top:10px" onclick="openSmsAutomation()">⚙️ تنظیم پیامک‌های بانکی</button>
+</div>
+<div class="switch-info"><b>نحوه محاسبه</b><br>قیمت‌های API به تومان ذخیره می‌شوند. با انتخاب ریال، تمام مبالغ نمایشی در کل برنامه در ۱۰ ضرب می‌شوند؛ با انتخاب تومان، مقدار اصلی نمایش داده می‌شود. ۱ تومان = ۱۰ ریال. قیمت طلا نیز بر اساس واحد انتخابی محاسبه می‌شود.</div>
+<div class="settings-row"><div><b>ذخیره‌سازی</b><small>اطلاعات روی همین دستگاه و مرورگر ذخیره می‌شود.</small></div><span>🔒</span></div>
+ <button class="secondary" style="width:100%;margin-top:14px" onclick="exportData()">📤 خروجی پشتیبان</button>
+ <button class="secondary" style="width:100%;margin-top:8px" onclick="importData()">📥 بازیابی پشتیبان</button>
+ <button class="primary danger" style="width:100%;margin-top:8px" onclick="resetData()">حذف کامل اطلاعات</button>`);
+      }
+      function toggleTheme(btn) {
+        state.settings.theme =
+          state.settings.theme === "dark" ? "light" : "dark";
+        save();
+        document.documentElement.dataset.theme = state.settings.theme;
+        btn.classList.toggle("on", state.settings.theme === "dark");
+      }
+      function toggleAssets(btn) {
+        state.settings.includeAssets = !state.settings.includeAssets;
+        save();
+        btn.classList.toggle("on", state.settings.includeAssets);
+        render();
+      }
+      function exportData() {
+        let b = new Blob([JSON.stringify(state, null, 2)], {
+            type: "application/json",
+          }),
+          u = URL.createObjectURL(b),
+          a = document.createElement("a");
+        a.href = u;
+        a.download = "hesabyar-backup.json";
+        a.click();
+        URL.revokeObjectURL(u);
+        toast("فایل پشتیبان آماده شد");
+      }
+      function importData() {
+        let i = document.createElement("input");
+        i.type = "file";
+        i.accept = ".json";
+        i.onchange = () => {
+          let f = i.files[0];
+          if (!f) return;
+          let r = new FileReader();
+          r.onload = () => {
+            try {
+              let x = JSON.parse(r.result);
+              if (!x.accounts || !x.transactions) throw 1;
+              state = x;
+              save();
+              closeSheet();
+              render();
+              toast("اطلاعات بازیابی شد");
+            } catch {
+              toast("فایل پشتیبان معتبر نیست");
+            }
+          };
+          r.readAsText(f);
+        };
+        i.click();
+      }
+      function resetData() {
+        if (confirm("همه اطلاعات حذف شود؟ این کار قابل بازگشت نیست.")) {
+          localStorage.removeItem(KEY);
+          location.reload();
+        }
+      }
+
+      /* ===================== SMS AUTOMATION ===================== */
+      function toggleSmsAutomation(btn) {
+        state.settings.smsAutomation.enabled = !state.settings.smsAutomation.enabled;
+        save();
+        btn.classList.toggle("on", state.settings.smsAutomation.enabled);
+      }
+
+      function smsAccountOptions(selected) {
+        return state.accounts.map(a => `<option value="${a.id}" ${String(a.id) === String(selected) ? "selected" : ""}>${esc(a.name || "حساب بدون نام")}</option>`).join("");
+      }
+
+      function openSmsAutomation() {
+        const rules = state.settings.smsAutomation.rules || [];
+        const rows = rules.length ? rules.map((r,i) => smsRuleHtml(r,i)).join("") : `<div class="empty">هنوز فرستنده‌ای تعریف نشده است؛ یک فرستنده و حساب مربوط به آن را اضافه کن.</div>`;
+        openSheet(`<div class="sheet-head"><h3>ثبت تراکنش از پیامک بانکی</h3><button class="close" onclick="closeSheet()">×</button></div>
+          <div class="empty" style="line-height:2">برای هر حساب بانکی نام یا شماره فرستنده پیامک را تنظیم کن. سپس متن پیامک بانکی را از برنامه پیامک کپی و اینجا وارد کن. حساب‌یار بدون خواندن پیامک‌های دیگر گوشی، متن واردشده را تحلیل می‌کند. قبل از استفاده، نتیجه را بررسی کن.</div>
+          <div id="smsRules">${rows}</div>
+          <button class="secondary" style="width:100%;margin-top:10px" onclick="addSmsRule()">+ افزودن فرستنده</button>
+          <button class="primary" style="width:100%;margin-top:8px" onclick="saveSmsRules()">ذخیره تنظیمات</button>
+          <div class="sms-test-box field"><label>متن پیامک بانکی</label><textarea id="smsTestBody" placeholder="متن پیامک را از برنامه پیامک کپی و اینجا جای‌گذاری کن..."></textarea><button class="primary" style="width:100%;margin-top:8px" onclick="testSmsParser()">تحلیل و ثبت تراکنش</button><small style="display:block;margin-top:8px;color:var(--muted);line-height:1.8">فقط متن واردشده بررسی می‌شود؛ حساب‌یار به صندوق پیامک گوشی دسترسی نمی‌گیرد.</small></div>
+          ${state.settings.smsAutomation.pending?.length ? `<div class="sms-pending"><b>موارد نیازمند بررسی:</b><br>${state.settings.smsAutomation.pending.slice(-5).reverse().map(x => esc(x.reason || "پیامک مبهم")).join("<br>")}</div>` : ""}`);
+      }
+
+      function smsRuleHtml(r = {}, i = 0) {
+        return `<div class="sms-rule" data-sms-rule="${i}">
+          <div class="field"><label>حساب</label><select class="sms-account">${smsAccountOptions(r.accountId)}</select></div>
+          <div class="field"><label>شماره / نام فرستنده</label><input class="sms-sender" value="${esc(r.sender || "")}" placeholder="مثلاً SPB یا 3000..." /></div>
+          <button class="sms-rule-remove" onclick="this.closest('.sms-rule').remove()" title="حذف">×</button>
+        </div>`;
+      }
+
+      function addSmsRule() {
+        const box = document.getElementById("smsRules");
+        if (!box) return;
+        if (box.querySelector(".empty")) box.innerHTML = "";
+        box.insertAdjacentHTML("beforeend", smsRuleHtml({ accountId: state.accounts[0]?.id || "" }, box.querySelectorAll(".sms-rule").length));
+      }
+
+      function saveSmsRules() {
+        const rules = [...document.querySelectorAll("#smsRules .sms-rule")].map(row => ({
+          id: row.dataset.smsRule || `${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+          accountId: row.querySelector(".sms-account")?.value,
+          sender: row.querySelector(".sms-sender")?.value.trim(),
+          enabled: true,
+        })).filter(r => r.accountId && r.sender);
+        state.settings.smsAutomation.rules = rules;
+        state.settings.smsAutomation.enabled = true;
+        save();
+        closeSheet();
+        toast("تنظیمات پیامک ذخیره شد");
+      }
+
+      function requestSmsPermission() {
+        toast("برای سازگاری بهتر با Google Play، متن پیامک را خودت وارد کن؛ دسترسی مستقیم به پیامک‌ها درخواست نمی‌شود.");
+      }
+
+      function normalizeSmsText(s) {
+        return String(s || "").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٬،]/g, ",").replace(/\s+/g," ").trim().toLowerCase();
+      }
+      function smsAmount(text) {
+        const t = normalizeSmsText(text);
+        // اول عددی را می‌گیریم که مستقیماً کنار واحد پول آمده؛ شماره کارت/پیگیری نباید به‌عنوان مبلغ انتخاب شود.
+        const unitRe = /(\d[\d,\. ]*)\s*(ریال|تومان|irr|rials|toman)/i;
+        const m = t.match(unitRe);
+        if (!m) return 0;
+        const n = Number(m[1].replace(/[,. ]/g,""));
+        if (!Number.isFinite(n) || n <= 0) return 0;
+        return /ریال|irr|rials/i.test(m[2]) ? n / 10 : n;
+      }
+      function smsType(text) {
+        const t = normalizeSmsText(text);
+        if (/انتقال|کارت به کارت/.test(t)) return "transfer";
+        if (/برداشت|خرید|پرداخت|خرید اینترنتی|کسر شد|خرج/.test(t)) return "expense";
+        if (/واریز|دریافت|افزایش موجودی|شارژ شد|بستانکار/.test(t)) return "income";
+        return null;
+      }
+      function smsDate(timestamp) {
+        const d = timestamp ? new Date(timestamp) : new Date();
+        if (Number.isNaN(d.getTime())) return todayISO();
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+      }
+      function smsSenderMatches(ruleSender, sender) {
+        const a = normalizeSmsText(ruleSender).replace(/\s/g,"");
+        const b = normalizeSmsText(sender).replace(/\s/g,"");
+        return !!a && (a === b || b.includes(a) || a.includes(b));
+      }
+      function smsFingerprint(sender, body, timestamp) {
+        const raw = `${sender}|${timestamp || ""}|${body}`;
+        let h = 2166136261;
+        for (let i=0;i<raw.length;i++) h = Math.imul(h ^ raw.charCodeAt(i), 16777619);
+        return (h >>> 0).toString(16);
+      }
+      function findSmsDestination(body, sourceId) {
+        const digits = normalizeSmsText(body).match(/\d{4}/g) || [];
+        return state.accounts.find(a => a.id !== sourceId && digits.some(x => String(a.number || "").replace(/\D/g,"").endsWith(x))) || null;
+      }
+      function processIncomingSms(payload) {
+        if (!state.settings.smsAutomation.enabled || !payload) return {ok:false, reason:"اتوماسیون خاموش است"};
+        const body = String(payload.body || payload.text || "").trim();
+        const sender = String(payload.sender || payload.address || "").trim();
+        const timestamp = payload.timestamp || payload.date || Date.now();
+        if (!body || !sender) return {ok:false, reason:"پیامک ناقص است"};
+        const fp = smsFingerprint(sender, body, timestamp);
+        if (state.settings.smsAutomation.processed.includes(fp)) return {ok:false, duplicate:true};
+        const rule = state.settings.smsAutomation.rules.find(r => r.enabled !== false && smsSenderMatches(r.sender, sender));
+        if (!rule) return {ok:false, reason:"فرستنده برای هیچ حسابی تنظیم نشده است"};
+        const amount = smsAmount(body), type = smsType(body);
+        if (!amount || !type) {
+          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"مبلغ یا نوع تراکنش از پیامک با اطمینان تشخیص داده نشد"});
+          state.settings.smsAutomation.processed.push(fp); save();
+          return {ok:false, pending:true, reason:"پیامک برای بررسی نگه داشته شد"};
+        }
+        const acc = state.accounts.find(a => String(a.id) === String(rule.accountId));
+        if (!acc) return {ok:false, reason:"حساب تنظیم‌شده پیدا نشد"};
+        const dest = type === "transfer" ? findSmsDestination(body, acc.id) : null;
+        if (type === "transfer" && !dest) {
+          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"انتقال تشخیص داده شد ولی حساب مقصد مشخص نیست"});
+          state.settings.smsAutomation.processed.push(fp); save();
+          return {ok:false, pending:true, reason:"حساب مقصد انتقال مشخص نیست"};
+        }
+        if ((type === "expense" || type === "transfer") && Number(acc.balance) < amount) {
+          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"موجودی حساب برای این تراکنش کافی نیست"});
+          state.settings.smsAutomation.processed.push(fp); save();
+          return {ok:false, pending:true, reason:"موجودی کافی نیست"};
+        }
+        if (type === "expense") acc.balance -= amount;
+        if (type === "income") acc.balance += amount;
+        if (type === "transfer") { acc.balance -= amount; dest.balance += amount; }
+        state.transactions.unshift({id:Date.now(), type, amount, date:smsDate(timestamp), timestamp:new Date(timestamp).toISOString(), accountId:acc.id, toAccountId:dest?.id || null, category:type === "income" ? "دخل پیامکی" : type === "expense" ? "خرج پیامکی" : "انتقال پیامکی", icon:type === "income" ? "↓" : type === "expense" ? "↑" : "⇄", note:`ثبت خودکار از پیامک ${sender}`, smsFingerprint:fp});
+        state.settings.smsAutomation.processed.push(fp);
+        if (state.settings.smsAutomation.processed.length > 500) state.settings.smsAutomation.processed = state.settings.smsAutomation.processed.slice(-500);
+        save(); render();
+        toast(`تراکنش ${type === "income" ? "دخل" : type === "expense" ? "خرج" : "جابه‌جایی"} خودکار ثبت شد`);
+        return {ok:true, type, amount, accountId:acc.id, toAccountId:dest?.id || null};
+      }
+      window.onHesabyarSmsReceived = processIncomingSms;
+      function testSmsParser() {
+        const body = document.getElementById("smsTestBody")?.value.trim();
+        if (!body) return toast("متن پیامک را وارد کنید");
+        const sender = state.settings.smsAutomation.rules[0]?.sender || "test";
+        const result = processIncomingSms({sender, body, timestamp:Date.now()});
+        if (result.ok) closeSheet(); else toast(result.reason || "پیامک قابل ثبت نیست");
+      }
+
+      /* ===================== MARKET API ===================== */
+      /*
+       * Iran Market Data public JSON feed
+       * Source: TGJU data published by iran-market.github.io
+       * No API key required; Raw GitHub endpoint supports browser/CORS access.
+       * Current snapshots are published about every 30 minutes.
+       */
+      const MARKET_API_URL =
+        "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/latest-toman.json";
+      const MARKET_API_INTERVAL = 600000;
+      let marketApiBusy = false;
+      let marketApiLastFetch = 0;
+      let marketApiLastSuccess = 0;
+
+      function apiNumber(v) {
+        if (typeof v === "number")
+          return Number.isFinite(v) && v > 0 ? v : null;
+        if (typeof v !== "string") return null;
+        let s = v
+          .replace(/[٬,\s]/g, "")
+          .replace(/[۰-۹]/g, (ch) => "۰۱۲۳۴۵۶۷۸۹".indexOf(ch));
+        const n = Number(s);
+        return Number.isFinite(n) && n > 0 ? n : null;
+      }
+
+      function apiSymbol(asset) {
+        if (!asset) return null;
+        if (asset.type === "gold") return "GOLD_18K_IRR";
+        if (asset.type === "crypto") {
+          const c = String(asset.code || "btc").toUpperCase();
+          const map = {
+            BTC: "BTC_IRR",
+            ETH: "ETH_IRR",
+            SOL: "SOL_IRR",
+            USDT: "USDT_IRR",
+          };
+          return map[c] || null;
+        }
+        const map = {
+          usd: "USD_IRR_FREE",
+          eur: "EUR_IRR_FREE",
+          gbp: "GBP_IRR_FREE",
+          aed: "AED_IRR_FREE",
+          try: "TRY_IRR_FREE",
+          cad: "CAD_IRR_FREE",
+          nok: "NOK_IRR_FREE",
+        };
+        return map[asset.type] || null;
+      }
+
+      function flattenMarketRecords(node, out = []) {
+        if (Array.isArray(node)) {
+          for (const item of node) flattenMarketRecords(item, out);
+        } else if (node && typeof node === "object") {
+          if (
+            typeof node.symbol === "string" &&
+            Object.prototype.hasOwnProperty.call(node, "price")
+          ) {
+            out.push(node);
+          }
+          for (const key of Object.keys(node)) {
+            if (key !== "symbol") flattenMarketRecords(node[key], out);
+          }
+        }
+        return out;
+      }
+
+      function getApiBasePrice(data, symbol, asset) {
+        const records = flattenMarketRecords(data?.data || data, []);
+        const item = records.find((x) => x.symbol === symbol);
+        if (!item) return null;
+
+        const rawPrice = apiNumber(item.price);
+        if (rawPrice === null) return null;
+
+        // Feed prices are already in Toman. The previous 0.1 factor made them ten times too small.
+        const price = rawPrice;
+
+        const rawChange = apiNumber(item.change);
+        const change = rawChange === null ? 0 : rawChange;
+        const prevCloseRaw = apiNumber(item.prev_close);
+        const prevClose = prevCloseRaw === null ? null : prevCloseRaw;
+
+        return {
+          price,
+          prevClose,
+          change,
+          changePct:
+            typeof item.change_pct === "number"
+              ? item.change_pct
+              : apiNumber(item.change_pct),
+          stale: Boolean(item.stale),
+          updatedAt:
+            item.timestamp_tehran ||
+            item.timestamp_jalali ||
+            item.timestamp ||
+            null,
+          source: item.source || "Iran Market",
+        };
+      }
+
+      function effectiveAssetPrice(basePrice, asset) {
+        return basePrice * assetUnitFactor(asset);
+      }
+
+      function applyApiPrice(asset, market) {
+        asset.apiBasePrice = market.price;
+        asset.price = effectiveAssetPrice(market.price, asset);
+        asset.priceSource = "api";
+        asset.priceUpdatedAt = market.updatedAt || new Date().toISOString();
+        asset.apiStale = market.stale;
+        asset.apiSource = market.source;
+
+        // Keep the API's change versus its previous close.
+        asset.apiPrevBasePrice = market.prevClose;
+        asset.apiChangeBase = market.change;
+        asset.apiChangePct = Number.isFinite(market.changePct)
+          ? market.changePct
+          : null;
+        asset.apiChangeValue = market.change * assetUnitFactor(asset);
+      }
+
+      async function refreshMarketPrices(showMessage = false) {
+        if (marketApiBusy) return false;
+
+        const refreshBtn = document.getElementById("assetsRefreshBtn");
+        if (refreshBtn) {
+          refreshBtn.disabled = true;
+          refreshBtn.textContent = "⏳ در حال بروزرسانی...";
+        }
+
+        const supported = state.assets.filter((a) => apiSymbol(a));
+        if (!supported.length) {
+          if (showMessage)
+            toast("برای بروزرسانی، ابتدا دارایی پشتیبانی‌شده اضافه کنید");
+          return false;
+        }
+
+        if (Date.now() - marketApiLastFetch < 60000) {
+          if (showMessage)
+            toast("برای جلوگیری از درخواست تکراری، کمی صبر کنید");
+          return false;
+        }
+
+        marketApiBusy = true;
+        marketApiLastFetch = Date.now();
+
+        try {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 12000);
+
+          const response = await fetch(MARKET_API_URL + "?t=" + Date.now(), {
+            method: "GET",
+            cache: "no-store",
+            signal: controller.signal,
+            headers: { Accept: "application/json" },
+          });
+
+          clearTimeout(timeout);
+          if (!response.ok) throw new Error("HTTP " + response.status);
+
+          const data = await response.json();
+          let updated = 0;
+          let staleCount = 0;
+
+          for (const asset of state.assets) {
+            const symbol = apiSymbol(asset);
+            if (!symbol) continue;
+
+            const market = getApiBasePrice(data, symbol, asset);
+            if (market) {
+              applyApiPrice(asset, market);
+              updated++;
+              if (market.stale) staleCount++;
+            }
+          }
+
+          if (!updated) throw new Error("No supported prices found");
+
+          state.settings.apiLastUpdate = new Date().toLocaleString("fa-IR");
+          marketApiLastSuccess = Date.now();
+          save();
+          render();
+
+          if (showMessage) {
+            const extra = staleCount ? ` (${faNum(staleCount)} نرخ قدیمی)` : "";
+            toast(faNum(updated) + " سرمایه با قیمت API بروزرسانی شد" + extra);
+          }
+          return true;
+        } catch (error) {
+          console.error("Hesabyar Iran Market API error:", error);
+          if (showMessage)
+            toast("دریافت قیمت API ناموفق بود؛ آخرین قیمت حفظ شد");
+          return false;
+        } finally {
+          marketApiBusy = false;
+          const refreshBtn = document.getElementById("assetsRefreshBtn");
+          if (refreshBtn) {
+            refreshBtn.disabled = false;
+            refreshBtn.textContent = "🔄 بروزرسانی قیمت‌ها";
+          }
+          updateAssetsApiStatus();
+        }
+      }
+
+      function assetChangeHtml(asset) {
+        if (
+          asset.priceSource !== "api" ||
+          !Number.isFinite(Number(asset.apiChangePct))
+        )
+          return "";
+        const pct = Number(asset.apiChangePct);
+        const value = Number(asset.apiChangeValue) || 0;
+        if (pct === 0 && value === 0) {
+          return `<div class="asset-change flat">↔ بدون تغییر نسبت به قیمت قبل</div>`;
+        }
+        const up = pct > 0;
+        const cls = up ? "up" : "down";
+        const sign = up ? "+" : "−";
+        return `<div class="asset-change ${cls}">${up ? "▲ رشد" : "▼ افت"} ${faNum(Math.abs(pct))}% · ${sign}${money(Math.abs(value))}</div>`;
+      }
+
+      function updateAssetsApiStatus() {
+        const el = document.getElementById("assetsApiStatus");
+        if (!el) return;
+        if (marketApiBusy) {
+          el.textContent = "در حال دریافت آخرین قیمت‌ها از API...";
+        } else if (state.settings.apiLastUpdate) {
+          el.textContent =
+            "آخرین بروزرسانی موفق: " +
+            state.settings.apiLastUpdate +
+            " · بروزرسانی خودکار هر ۱۰ دقیقه";
+        } else {
+          el.textContent = "قیمت‌ها هنوز از API بروزرسانی نشده‌اند.";
+        }
+      }
+
+      function startMarketApi() {
+        refreshMarketPrices(false);
+
+        setInterval(() => {
+          if (document.visibilityState === "visible")
+            refreshMarketPrices(false);
+        }, MARKET_API_INTERVAL);
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") {
+            const age = marketApiLastSuccess
+              ? Date.now() - marketApiLastSuccess
+              : Infinity;
+            if (age > 300000) refreshMarketPrices(false);
+          }
+        });
+      }
+
+      /* ===================== ASSET DETAIL / TECHNICAL VIEW ===================== */
+      function assetIcon(asset) {
+        return asset.type === "gold"
+          ? "🥇"
+          : asset.type === "usd"
+            ? "💵"
+            : asset.type === "eur"
+              ? "💶"
+              : asset.type === "gbp"
+                ? "💷"
+                : asset.type === "aed"
+                  ? "🇦🇪"
+                  : asset.type === "try"
+                    ? "🇹🇷"
+                    : asset.type === "cad"
+                      ? "🇨🇦"
+                      : asset.type === "nok"
+                        ? "🇳🇴"
+                        : asset.type === "crypto"
+                          ? "₿"
+                          : "◈";
+      }
+      function assetTrend(asset) {
+        const snap = assetPriceSnapshot(asset);
+        const pct = Number.isFinite(snap.pct)
+          ? snap.pct
+          : Number(asset.apiChangePct);
+        if (Number.isFinite(pct)) {
+          if (pct > 0)
+            return { label: "روند صعودی", cls: "up", arrow: "▲", pct };
+          if (pct < 0)
+            return { label: "روند نزولی", cls: "down", arrow: "▼", pct };
+        }
+        return { label: "بدون تغییر", cls: "flat", arrow: "↔", pct: 0 };
+      }
+      function historyValue(v) {
+        const n = apiNumber(v);
+        return n === null ? null : n;
+      }
+      function normalizeMarketHistory(raw, asset) {
+        let rows = [];
+        if (Array.isArray(raw)) rows = raw;
+        else if (Array.isArray(raw?.data)) rows = raw.data;
+        else if (Array.isArray(raw?.history)) rows = raw.history;
+        else if (raw && Array.isArray(raw.t)) {
+          // UDF / OHLC array format
+          const t = raw.t || [],
+            o = raw.o || [],
+            h = raw.h || [],
+            l = raw.l || [],
+            c = raw.c || [],
+            v = raw.v || [];
+          rows = t.map((ts, i) => ({
+            date: ts,
+            open: o[i],
+            high: h[i],
+            low: l[i],
+            close: c[i],
+            volume: v[i],
+          }));
+        } else if (raw && typeof raw === "object") {
+          const keys = Object.keys(raw).filter((k) =>
+            /^\d{4}[-/]\d{2}[-/]\d{2}/.test(k),
+          );
+          rows = keys.map((k) => Object.assign({ date: k }, raw[k]));
+        }
+        const out = [];
+        for (const r of rows) {
+          if (r == null) continue;
+          const date =
+            r.date || r.day || r.timestamp || r.time || r.t || r.datetime;
+          let close = historyValue(
+            r.close ?? r.c ?? r.price ?? r.value ?? r.last ?? r.lastprice,
+          );
+          let open = historyValue(r.open ?? r.o ?? r.firstPrice);
+          let high = historyValue(
+            r.high ?? r.h ?? r.max ?? r.highest ?? r.maxValue,
+          );
+          let low = historyValue(
+            r.low ?? r.l ?? r.min ?? r.lowest ?? r.minValue,
+          );
+          let volume = historyValue(r.volume ?? r.v ?? r.tradevolume ?? r.vol);
+          if (close === null) continue;
+          if (open === null) open = close;
+          if (high === null) high = Math.max(open, close);
+          if (low === null) low = Math.min(open, close);
+          let d = date;
+          if (typeof d === "number")
+            d =
+              d > 1e12
+                ? new Date(d).toISOString().slice(0, 10)
+                : new Date(d * 1000).toISOString().slice(0, 10);
+          d = String(d || "")
+            .slice(0, 10)
+            .replaceAll("/", "-");
+          if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) d = String(date || "");
+          out.push({
+            date: d,
+            open: effectiveAssetPrice(open, asset),
+            high: effectiveAssetPrice(high, asset),
+            low: effectiveAssetPrice(low, asset),
+            close: effectiveAssetPrice(close, asset),
+            volume,
+          });
+        }
+        const seen = new Map();
+        out.forEach((x) => seen.set(x.date, x));
+        return [...seen.values()].sort((a, b) => a.date.localeCompare(b.date));
+      }
+      async function fetchAssetHistory(asset) {
+        const symbol = apiSymbol(asset);
+        if (!symbol) return [];
+        const base =
+          "https://raw.githubusercontent.com/iran-market/iran-market.github.io/main/data/";
+        const urls = [
+          `${base}history/${encodeURIComponent(symbol)}.json`,
+          `${base}history/${encodeURIComponent(symbol.toLowerCase())}.json`,
+        ];
+        for (const url of urls) {
+          try {
+            const res = await fetch(url + "?t=" + Date.now(), {
+              cache: "no-store",
+            });
+            if (!res.ok) continue;
+            const raw = await res.json();
+            const rows = normalizeMarketHistory(raw, asset);
+            if (rows.length) return rows;
+          } catch (e) {}
+        }
+        // بعضی نسخه‌های API مسیر تاریخچه را در index.json اعلام می‌کنند.
+        try {
+          const res = await fetch(base + "history/index.json?t=" + Date.now(), {
+            cache: "no-store",
+          });
+          if (res.ok) {
+            const idx = await res.json();
+            let path = null;
+            const walk = (node, key = "") => {
+              if (path || node == null) return;
+              if (typeof node === "string") {
+                if (
+                  key === symbol ||
+                  key.toLowerCase() === symbol.toLowerCase() ||
+                  node.toLowerCase().includes(symbol.toLowerCase())
+                )
+                  path = node;
+                return;
+              }
+              if (Array.isArray(node)) {
+                node.forEach((x) => walk(x, key));
+                return;
+              }
+              if (typeof node === "object")
+                Object.keys(node).forEach((k) => walk(node[k], k));
+            };
+            walk(idx);
+            if (path) {
+              const full = path.startsWith("http")
+                ? path
+                : base + String(path).replace(/^\//, "");
+              const rr = await fetch(full + "?t=" + Date.now(), {
+                cache: "no-store",
+              });
+              if (rr.ok) return normalizeMarketHistory(await rr.json(), asset);
+            }
+          }
+        } catch (e) {}
+        return [];
+      }
+      function calcSMA(values, n) {
+        return values.map((v, i) =>
+          i < n - 1
+            ? null
+            : values.slice(i - n + 1, i + 1).reduce((a, b) => a + b, 0) / n,
+        );
+      }
+      function calcRSI(values, n = 14) {
+        const r = Array(values.length).fill(null);
+        if (values.length <= n) return r;
+        let gain = 0,
+          loss = 0;
+        for (let i = 1; i <= n; i++) {
+          const d = values[i] - values[i - 1];
+          if (d >= 0) gain += d;
+          else loss -= d;
+        }
+        let avgG = gain / n,
+          avgL = loss / n;
+        r[n] = avgL === 0 ? 100 : 100 - 100 / (1 + avgG / avgL);
+        for (let i = n + 1; i < values.length; i++) {
+          const d = values[i] - values[i - 1],
+            g = Math.max(0, d),
+            l = Math.max(0, -d);
+          avgG = (avgG * (n - 1) + g) / n;
+          avgL = (avgL * (n - 1) + l) / n;
+          r[i] = avgL === 0 ? 100 : 100 - 100 / (1 + avgG / avgL);
+        }
+        return r;
+      }
+      function calcEMA(values, n) {
+        const r = Array(values.length).fill(null);
+        if (values.length < n) return r;
+        let e = values.slice(0, n).reduce((a, b) => a + b, 0) / n;
+        r[n - 1] = e;
+        const k = 2 / (n + 1);
+        for (let i = n; i < values.length; i++) {
+          e = values[i] * k + e * (1 - k);
+          r[i] = e;
+        }
+        return r;
+      }
+      function technicalChartSvg(rows, asset, days = 30) {
+        const data = rows.slice(-Math.max(7, days));
+        const closes = data.map((x) => x.close),
+          sma7 = calcSMA(closes, 7),
+          sma20 = calcSMA(closes, 20),
+          rsi = calcRSI(closes, 14),
+          ema12 = calcEMA(closes, 12),
+          ema26 = calcEMA(closes, 26);
+        const macd = closes.map((_, i) =>
+          ema12[i] != null && ema26[i] != null ? ema12[i] - ema26[i] : null,
+        );
+        const macdValid = macd.filter((x) => x != null),
+          signalValid = calcEMA(macdValid, 9),
+          signal = Array(macd.length).fill(null);
+        let si = 0;
+        for (let i = 0; i < macd.length; i++)
+          if (macd[i] != null) {
+            signal[i] = signalValid[si] ?? null;
+            si++;
+          }
+        const hist = macd.map((x, i) =>
+          x != null && signal[i] != null ? x - signal[i] : null,
+        );
+        const W = 720,
+          H = 430,
+          L = 52,
+          R = 18;
+        const plot = (top, bottom, vals) => {
+          const good = vals.filter((v) => v != null);
+          let lo = Math.min(...good),
+            hi = Math.max(...good);
+          if (!Number.isFinite(lo) || !Number.isFinite(hi)) {
+            lo = 0;
+            hi = 1;
+          }
+          const pad = (hi - lo || 1) * 0.12;
+          lo -= pad;
+          hi += pad;
+          const y = (v) => bottom - ((v - lo) / (hi - lo)) * (bottom - top);
+          const x = (i) => L + (i / Math.max(1, data.length - 1)) * (W - L - R);
+          return { x, y, lo, hi };
+        };
+        const p = plot(28, 205, [
+          ...closes,
+          ...sma7.filter((x) => x != null),
+          ...sma20.filter((x) => x != null),
+        ]);
+        const r = plot(235, 315, [...rsi.filter((x) => x != null), 30, 70]);
+        const m = plot(340, 410, [
+          ...macd.filter((x) => x != null),
+          ...signal.filter((x) => x != null),
+          0,
+        ]);
+        const pathFor = (vals, scale) =>
+          vals
+            .map((v, i) =>
+              v == null
+                ? ""
+                : `${i ? "L" : "M"} ${scale.x(i).toFixed(1)} ${scale.y(v).toFixed(1)}`,
+            )
+            .filter(Boolean)
+            .join(" ");
+        const areaPath =
+          pathFor(closes, p) +
+          ` L ${p.x(closes.length - 1)} ${p.y(p.lo)} L ${p.x(0)} ${p.y(p.lo)} Z`;
+        const gid = "techGrad" + String(asset.id).replace(/\D/g, "");
+        const first = data[0]?.date || "",
+          last = data[data.length - 1]?.date || "";
+        const pct =
+          closes.length > 1
+            ? ((closes.at(-1) - closes[0]) / closes[0]) * 100
+            : 0;
+        const trend = pct > 0 ? "up" : pct < 0 ? "down" : "flat";
+        const color =
+          trend === "up" ? "#17c58b" : trend === "down" ? "#f05b70" : "#9b8cff";
+        const fmtDate = (d) => {
+          const q = String(d || "").slice(5);
+          return q.replace("-", "/");
+        };
+        return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" class="technical-svg" role="img" aria-label="نمودار تکنیکال ${esc(asset.name)}">
+  <defs><linearGradient id="${gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".26"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+  <text class="tech-section-title" x="${W - R}" y="18" text-anchor="end">قیمت + میانگین متحرک</text>
+  <line class="chart-grid" x1="${L}" y1="${p.y((p.lo + p.hi) / 2)}" x2="${W - R}" y2="${p.y((p.lo + p.hi) / 2)}"/><line class="chart-grid" x1="${L}" y1="${p.y(p.lo)}" x2="${W - R}" y2="${p.y(p.lo)}"/>
+  <path d="${areaPath}" fill="url(#${gid})"/><path d="${pathFor(closes, p)}" fill="none" stroke="${color}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="${pathFor(sma7, p)}" fill="none" stroke="#f3b84b" stroke-width="2" stroke-linecap="round" opacity=".95"/><path d="${pathFor(sma20, p)}" fill="none" stroke="#8b7cff" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+  <circle cx="${p.x(closes.length - 1)}" cy="${p.y(closes.at(-1))}" r="6" fill="${color}" stroke="var(--surface)" stroke-width="3"/>
+  ${(() => {
+    const label = money(closes.at(-1));
+    const bw = 176,
+      bh = 30,
+      px = p.x(closes.length - 1),
+      py = p.y(closes.at(-1));
+    const bx = Math.max(L, Math.min(px - bw / 2, W - R - bw));
+    const by = Math.max(24, Math.min(py - bh - 10, 205 - bh));
+    return `<rect class="price-badge" x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${bw}" height="${bh}" rx="15" fill="var(--surface)" stroke="var(--border)"/><text class="chart-price" x="${(bx + bw / 2).toFixed(1)}" y="${(by + 20).toFixed(1)}" text-anchor="middle">${label}</text>`;
+  })()}
+  <text class="tech-section-title" x="${W - R}" y="225" text-anchor="end">RSI (14)</text>
+  <line class="chart-grid" x1="${L}" y1="${r.y(70)}" x2="${W - R}" y2="${r.y(70)}"/><line class="chart-grid" x1="${L}" y1="${r.y(30)}" x2="${W - R}" y2="${r.y(30)}"/>
+  <text class="chart-label" x="${W - R}" y="${r.y(70) - 4}" text-anchor="end">70</text><text class="chart-label" x="${W - R}" y="${r.y(30) - 4}" text-anchor="end">30</text>
+  <path d="${pathFor(rsi, r)}" fill="none" stroke="#a98cff" stroke-width="2.5" stroke-linecap="round"/>
+  <text class="tech-section-title" x="${W - R}" y="330" text-anchor="end">MACD</text>
+  <line class="chart-grid" x1="${L}" y1="${m.y(0)}" x2="${W - R}" y2="${m.y(0)}"/>
+  ${hist
+    .map((v, i) => {
+      if (v == null) return "";
+      const x = m.x(i),
+        y0 = m.y(0),
+        y1 = m.y(v);
+      return `<rect x="${x - 3}" y="${Math.min(y0, y1)}" width="6" height="${Math.max(1, Math.abs(y1 - y0))}" rx="2" fill="${v >= 0 ? "#17c58b" : "#f05b70"}" opacity=".65"/>`;
+    })
+    .join("")}
+  <path d="${pathFor(macd, m)}" fill="none" stroke="#54b7ff" stroke-width="2.2"/><path d="${pathFor(signal, m)}" fill="none" stroke="#f3b84b" stroke-width="2"/>
+  <text class="chart-label" x="${L}" y="${H - 4}">${fmtDate(first)}</text><text class="chart-label" x="${W - R}" y="${H - 4}" text-anchor="end">${fmtDate(last)}</text>
+ </svg>
+ <div class="tech-legend"><span><i style="background:${color}"></i>قیمت</span><span><i style="background:#f3b84b"></i>MA7 / Signal</span><span><i style="background:#8b7cff"></i>MA20</span><span><i style="background:#54b7ff"></i>MACD</span><strong class="${trend}">${pct >= 0 ? "▲" : "▼"} ${Math.abs(pct).toLocaleString("fa-IR", { maximumFractionDigits: 2 })}%</strong></div>`;
+      }
+      function assetPriceSnapshot(asset) {
+        const current =
+          asset.apiBasePrice != null
+            ? effectiveAssetPrice(Number(asset.apiBasePrice), asset)
+            : Number(asset.price) || 0;
+        let previous =
+          asset.apiPrevBasePrice != null
+            ? effectiveAssetPrice(Number(asset.apiPrevBasePrice), asset)
+            : null;
+        const pct = Number(asset.apiChangePct),
+          chg = Number(asset.apiChangeBase);
+        if (
+          (previous == null || !Number.isFinite(previous)) &&
+          Number.isFinite(pct) &&
+          pct !== 0
+        )
+          previous = current / (1 + pct / 100);
+        if (
+          (previous == null || !Number.isFinite(previous)) &&
+          Number.isFinite(chg) &&
+          chg !== 0
+        )
+          previous = current - effectiveAssetPrice(chg, asset);
+        return {
+          current,
+          previous,
+          pct: Number.isFinite(pct)
+            ? pct
+            : previous
+              ? ((current - previous) / previous) * 100
+              : 0,
+        };
+      }
+      function fallbackTrendChart(asset) {
+        const s = assetPriceSnapshot(asset),
+          rows = [
+            { date: "قبلی", close: s.previous || s.current },
+            { date: "اکنون", close: s.current },
+          ];
+        return `<div class="tech-fallback"><div class="fallback-line"><span></span><i></i><b></b></div><div><small>قیمت قبلی</small><strong>${money(s.previous || s.current)}</strong></div><div><small>قیمت فعلی</small><strong>${money(s.current)}</strong></div></div>`;
+      }
+      async function loadAssetTechnicalChart(id) {
+        const a = state.assets.find((x) => x.id === id);
+        const box = document.getElementById("assetTechnicalChart");
+        if (!a || !box) return;
+        box.innerHTML = `<div class="tech-loading"><span>◌</span><b>در حال دریافت تاریخچه قیمت...</b><small>در حال ساخت RSI و MACD بر اساس داده واقعی API</small></div>`;
+        const rows = await fetchAssetHistory(a);
+        if (rows.length >= 20) {
+          a._historyRows = rows;
+          box.innerHTML = technicalChartSvg(rows, a, 30);
+          return;
+        }
+        box.innerHTML = `${fallbackTrendChart(a)}<div class="tech-note">تاریخچه کافی برای محاسبه RSI/MACD از API دریافت نشد؛ بنابراین هیچ مقدار ساختگی به‌عنوان اندیکاتور نمایش داده نمی‌شود.</div>`;
+      }
+
+      function openAssetDetails(id) {
+        const a = state.assets.find((x) => x.id === id);
+        if (!a) return;
+        const snap = assetPriceSnapshot(a);
+        const basePrice = snap.current;
+        const total = a.qty * basePrice;
+        const trend = assetTrend(a);
+        const prev = snap.previous;
+        const changeText = Number.isFinite(trend.pct)
+          ? `${trend.arrow} ${Math.abs(trend.pct).toLocaleString("fa-IR", { maximumFractionDigits: 2 })}%`
+          : "—";
+        openSheet(`<div class="sheet-head"><h3>جزئیات سرمایه</h3><button class="close" onclick="closeSheet()">×</button></div>
+  <div class="asset-detail">
+   <div class="asset-detail-hero">
+    <div class="asset-detail-top">
+     <div class="asset-detail-icon">${assetIcon(a)}</div>
+     <div class="asset-detail-title"><b>${esc(a.name)}</b><small>${faNum(a.qty)} ${esc(assetUnitLabel(a))} · ${a.priceSource === "api" ? "قیمت بازار" : "قیمت دستی"}</small></div>
+     <div class="asset-detail-price"><b>${money(total)}</b><small>ارزش سرمایه شما</small></div>
+    </div>
+   </div>
+   <div class="asset-detail-grid">
+    <div class="asset-kpi"><small>مقدار شما</small><b>${faNum(a.qty)} ${esc(assetUnitLabel(a))}</b></div>
+    <div class="asset-kpi"><small>قیمت هر واحد</small><b>${money(basePrice)}</b></div>
+    <div class="asset-kpi"><small>تغییر قیمت</small><b class="${trend.cls}">${changeText}</b></div>
+    <div class="asset-kpi"><small>ارزش کل شما</small><b>${money(total)}</b></div>
+   </div>
+   <div class="tech-card">
+    <div class="tech-head"><b>تحلیل تکنیکال</b><span class="tech-badge">${trend.label}</span></div>
+    <div id="assetTechnicalChart" class="tech-chart"><div class="tech-loading"><span>◌</span><b>در حال آماده‌سازی نمودار...</b></div></div>
+    <div class="tech-note">قیمت، MA7، MA20، RSI(14) و MACD فقط از داده‌های تاریخی واقعی API محاسبه می‌شوند. قیمت فعلی و قبلی نیز مستقیماً از snapshot API گرفته می‌شوند و در صورت نبودن یکی از آن‌ها از تغییر رسمی API محاسبه می‌شود.</div>
+   </div>
+   <div class="tech-card">
+    <div class="tech-head"><b>موقعیت سرمایه شما روی قیمت</b><span class="tech-badge">دارایی من</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px">
+      <div><small style="color:var(--muted);font-size:10px">مقدار</small><div style="font-weight:800;margin-top:4px">${faNum(a.qty)} ${esc(assetUnitLabel(a))}</div></div>
+      <div style="height:38px;width:1px;background:var(--border)"></div>
+      <div style="text-align:left"><small style="color:var(--muted);font-size:10px">ارزش فعلی</small><div style="font-weight:800;margin-top:4px">${money(total)}</div></div>
+    </div>
+   </div>
+   <div class="detail-actions">
+    <button class="secondary" onclick="closeSheet();openAsset(${a.id})">✎ ویرایش سرمایه</button>
+    <button class="primary" style="margin-top:0" onclick="closeSheet();refreshMarketPrices(true)">↻ بروزرسانی قیمت</button>
+   </div>
+  </div>`);
+        setTimeout(() => loadAssetTechnicalChart(a.id), 40);
+      }
+
+      /* ===================== RENDER ===================== */
+      function render() {
+        document.documentElement.dataset.theme = state.settings.theme;
+        renderTotalBalance();
+        document.getElementById("today").textContent = dateLabel(todayISO());
+        let ym = todayISO().slice(0, 7),
+          inc = state.transactions
+            .filter((t) => t.type === "income" && t.date.startsWith(ym))
+            .reduce((s, t) => s + t.amount, 0),
+          out = state.transactions
+            .filter((t) => t.type === "expense" && t.date.startsWith(ym))
+            .reduce((s, t) => s + t.amount, 0);
+        document.getElementById("monthIncome").textContent = money(inc);
+        document.getElementById("monthExpense").textContent = money(out);
+        document.getElementById("accounts").innerHTML = state.accounts.length
+          ? state.accounts
+              .map(
+                (a) =>
+                  `<div class="money-card ${a.style || ""}" onclick="openAccount(${a.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAccount(${a.id})}"><div class="card-top"><span class="bank-name">${esc(a.name)}</span><span class="bank-icon">${a.icon || "💳"}</span></div><div class="card-number">${a.type === "cash" ? "حساب نقدی" : "•••• •••• •••• " + esc(a.number.slice(-4))}</div><div class="card-bottom"><span class="card-balance">${money(a.balance)}</span><span>${esc(a.bank || "")}</span></div></div>`,
+              )
+              .join("")
+          : `<div class="empty" style="min-width:100%">هنوز حسابی ندارید. از «افزودن حساب» شروع کنید.</div>`;
+        document.getElementById("recentTx").innerHTML = state.transactions
+          .length
+          ? state.transactions.slice(0, 6).map(txHtml).join("")
+          : `<div class="empty">هنوز تراکنشی ثبت نشده است.</div>`;
+        updateAssetsApiStatus();
+        document.getElementById("assetGrid").innerHTML = state.assets.length
+          ? state.assets
+              .map(
+                (
+                  a,
+                ) => `<div class="asset" onclick="openAssetDetails(${a.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAssetDetails(${a.id})}">
+ <button class="asset-menu" onclick="event.stopPropagation();openAsset(${a.id})" aria-label="ویرایش سرمایه">⋮</button>
+ <div class="asset-icon">${assetIcon(a)}</div>
+ <div class="asset-info"><b>${esc(a.name)}</b><small>${faNum(a.qty)} ${esc(assetUnitLabel(a))}</small>${assetChangeHtml(a)}<div class="asset-source">${a.priceSource === "api" ? "● قیمت بازار" : "● قیمت دستی"}</div></div>
+ <div class="asset-value-wrap"><div class="asset-value">${money(a.qty * a.price)}</div><div class="asset-unit-price">هر واحد: ${money(a.price)}</div></div>
+ </div>`,
+              )
+              .join("")
+          : `<div class="empty" style="grid-column:1/-1">هنوز سرمایه‌ای ثبت نشده است.</div>`;
+        renderReports();
+        renderBudgets();
+        renderDebts();
+        document.querySelector(".fab").style.display = document
+          .getElementById("home")
+          .classList.contains("active")
+          ? "block"
+          : "none";
+      }
+      document.documentElement.dataset.theme = state.settings.theme;
+      render();
+
+      /* ===================== INPUT NUMBER FORMATTING ===================== */
+      // نمایش جداکننده سه‌رقمی هنگام تایپ؛ هنگام محاسبه، ویرگول‌ها حذف می‌شوند.
+      function formatGroupedInput(input) {
+        if (!input || input.dataset.groupFormatting === "off") return;
+        let raw = String(input.value || "")
+          .replace(/[,\u066C\s]/g, "")
+          .replace(/[۰-۹]/g, (ch) => "۰۱۲۳۴۵۶۷۸۹".indexOf(ch));
+        if (raw === "" || raw === "-" || raw === ".") {
+          input.value = raw;
+          return;
+        }
+        let negative = raw.startsWith("-");
+        if (negative) raw = raw.slice(1);
+        let parts = raw.split(".");
+        let integer = parts[0].replace(/\D/g, "");
+        let decimal =
+          parts.length > 1
+            ? "." + parts.slice(1).join("").replace(/\D/g, "")
+            : "";
+        integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        input.value = (negative ? "-" : "") + integer + decimal;
+      }
+      function cleanGroupedNumber(value) {
+        return (
+          Number(
+            String(value ?? "")
+              .replace(/[,\u066C\s]/g, "")
+              .replace(/[۰-۹]/g, (ch) => "۰۱۲۳۴۵۶۷۸۹".indexOf(ch)),
+          ) || 0
+        );
+      }
+      document.addEventListener("input", function (event) {
+        const el = event.target;
+        if (!el || el.tagName !== "INPUT") return;
+        if (el.type === "number") {
+          const value = el.value;
+          el.type = "text";
+          el.inputMode = "decimal";
+          el.value = value;
+        }
+        if (
+          el.type === "text" &&
+          (el.inputMode === "numeric" ||
+            el.inputMode === "decimal" ||
+            /amount|price|balance|budget|quantity|qty|capital|value|money|sum|cost|txAmount|bAmount|aBal|asPrice/i.test(
+              el.id + " " + el.name,
+            ))
+        ) {
+          const start = el.selectionStart,
+            before = el.value;
+          formatGroupedInput(el);
+          if (start !== null && document.activeElement === el) {
+            const diff = el.value.length - before.length;
+            try {
+              el.setSelectionRange(
+                Math.max(0, start + diff),
+                Math.max(0, start + diff),
+              );
+            } catch (e) {}
+          }
+        }
+      });
+      document.addEventListener("focusout", function (event) {
+        const el = event.target;
+        if (
+          el &&
+          el.tagName === "INPUT" &&
+          (el.inputMode === "numeric" ||
+            el.inputMode === "decimal" ||
+            /amount|price|balance|budget|quantity|qty|capital|value|money|sum|cost|txAmount|bAmount|aBal|asPrice/i.test(
+              el.id + " " + el.name,
+            ))
+        ) {
+          formatGroupedInput(el);
+        }
+      });
+    </script>
+  </body>
+</html>
