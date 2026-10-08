@@ -1594,6 +1594,32 @@
       .sms-pending { margin-top:10px; padding:10px; border-radius:13px; border:1px dashed var(--border); background:var(--surface); font-size:11px; line-height:1.9; }
       @media (max-width:640px){ .sms-rule{grid-template-columns:1fr;}.sms-rule-remove{width:100%;} }
 
+
+/* FINAL MOBILE NAV FIX */
+@media (max-width: 650px) {
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+  .app { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; padding-left: 10px; padding-right: 10px; padding-bottom: 92px; }
+  .bottom-nav {
+    left: 0; right: 0; bottom: 0; width: 100%; max-width: none;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2px;
+  }
+  .nav-btn {
+    min-width: 0; max-width: 100%; width: 100%;
+    padding: 5px 0; margin: 0;
+    font-size: clamp(7px, 2.5vw, 10px);
+    line-height: 1.15;
+    overflow: hidden;
+  }
+  .nav-btn span { font-size: clamp(16px, 5vw, 19px); line-height: 18px; margin-bottom: 2px; }
+  .nav-btn span, .nav-btn { text-align: center; }
+}
+@media (max-width: 380px) {
+  .bottom-nav { padding-left: 2px; padding-right: 2px; gap: 1px; }
+  .nav-btn { font-size: 7px; }
+  .nav-btn span { font-size: 16px; line-height: 17px; }
+}
 </style>
   </head>
   <body>
