@@ -1,0 +1,8 @@
+{
+  "appId": "com.hesabyar.app",
+  "appName": "حساب‌یار",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}
