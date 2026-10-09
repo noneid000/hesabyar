@@ -989,6 +989,12 @@
       .debt-actions button { flex: 1; padding: 9px 10px; border-radius: 12px; font-size: 10px; }
       .debt-pay-btn { background: var(--primary); color: #fff; }
       .debt-more-btn { background: var(--surface2); color: var(--text); }
+      .debt-fx-preview{grid-column:1/-1;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface2),var(--surface));border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+      .debt-fx-preview small{display:block;color:var(--muted);font-size:10px;line-height:1.8}
+      .debt-fx-preview strong{display:block;font-size:14px;color:var(--primary);margin-top:3px}
+      .debt-fx-refresh{background:var(--surface);border:1px solid var(--border);color:var(--primary);border-radius:11px;padding:9px 11px;font-size:10px;white-space:nowrap}
+      .debt-native-amount{font-size:17px;font-weight:800;direction:rtl}
+      .debt-converted{color:var(--muted);font-size:10px;margin-top:4px;line-height:1.7}
       .debt-overdue { color: var(--red) !important; }
       .debt-settled { opacity: .72; }
       .debt-settled .debt-title { text-decoration: line-through; text-decoration-thickness: 1px; }
@@ -2906,10 +2912,12 @@
       function renderDebts() {
         const list = document.getElementById("debtList");
         if (!list) return;
+        // Keep displayed equivalents tied to the latest market rates, not the rate from when the debt was entered.
+        if (!debtRates.busy && (!debtRates.fetchedAt || Date.now() - debtRates.fetchedAt > 300000)) refreshDebtRates(false);
         const debts = Array.isArray(state.debts) ? state.debts : [];
         const open = debts.filter((d) => !debtSettled(d));
-        const receivable = open.filter((d) => d.type === "receivable").reduce((s,d) => s + debtRemaining(d), 0);
-        const payable = open.filter((d) => d.type === "payable").reduce((s,d) => s + debtRemaining(d), 0);
+        const receivable = open.filter((d) => d.type === "receivable").reduce((s,d) => s + debtToToman(d, debtRemaining(d)), 0);
+        const payable = open.filter((d) => d.type === "payable").reduce((s,d) => s + debtToToman(d, debtRemaining(d)), 0);
         document.getElementById("debtReceivableTotal").textContent = money(receivable);
         document.getElementById("debtPayableTotal").textContent = money(payable);
         const net = receivable - payable;
@@ -2947,7 +2955,7 @@
               <div class="debt-title-wrap"><div class="debt-title">${esc(d.title || (d.type === "receivable" ? "طلب" : "بدهی"))}</div><div class="debt-person">${esc(d.person || "بدون نام")}</div></div>
               <span class="debt-type ${d.type}">${d.type === "receivable" ? "طلب از او" : "بدهکار به او"}</span>
             </div>
-            <div class="debt-amount-row"><div><div class="debt-remaining">${money(remaining)}</div><div class="debt-total">از ${money(total)} · پرداخت‌شده ${money(paid)}</div></div></div>
+            <div class="debt-amount-row"><div><div class="debt-native-amount">${debtNativeMoney(d, remaining)}</div><div class="debt-converted">معادل ${money(debtToToman(d, remaining))}</div><div class="debt-total">کل: ${debtNativeMoney(d,total)} · پرداخت‌شده: ${debtNativeMoney(d,paid)}</div></div></div>
             <div class="debt-meta"><span>💳 ${esc(a?.name || "حساب حذف‌شده")}</span><span class="${overdue ? "debt-overdue" : ""}">◷ ${esc(debtDueLabel(d))}</span></div>
             <div class="debt-progress"><i style="width:${pct}%"></i></div>
             ${!settled ? `<div class="debt-actions"><button class="debt-pay-btn" onclick="openDebtPayment(${d.id})">ثبت پرداخت</button><button class="debt-more-btn" onclick="openDebt(${d.id})">ویرایش</button></div>` : `<div class="debt-actions"><button class="debt-more-btn" onclick="openDebt(${d.id})">مشاهده / ویرایش</button></div>`}
@@ -2965,17 +2973,39 @@
             <div class="field"><label>حساب مرتبط</label><select id="debtAccount">${accounts}</select></div>
             <div class="field full"><label>عنوان</label><input id="debtTitle" value="${esc(d?.title || "")}" placeholder="مثلاً قرض به علی"></div>
             <div class="field"><label>شخص / طرف حساب</label><input id="debtPerson" value="${esc(d?.person || "")}" placeholder="مثلاً علی"></div>
-            <div class="field"><label>مبلغ کل</label><input id="debtAmount" type="text" inputmode="decimal" value="${d ? displayAmount(d.amount) : ""}" placeholder="مبلغ"></div>
+            <div class="field"><label>واحد مبلغ</label><select id="debtCurrency" onchange="updateDebtFxPreview()"><option value="${d?.currency || 'toman'}" selected>${({'toman':'تومان','rial':'ریال','usd':'دلار آمریکا','gold':'گرم طلای ۱۸ عیار'}[d?.currency || 'toman'])}</option>${[['toman','تومان'],['rial','ریال'],['usd','دلار آمریکا'],['gold','گرم طلای ۱۸ عیار']].filter(x=>x[0] !== (d?.currency || 'toman')).map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select></div>
+            <div class="field"><label>مبلغ کل</label><input id="debtAmount" type="text" inputmode="decimal" value="${d ? faNum(d.amount) : ""}" placeholder="مثلاً 10" oninput="updateDebtFxPreview()"></div>
+            <div class="debt-fx-preview"><div><small id="debtFxLabel">معادل تقریبی به واحد تنظیمات</small><strong id="debtFxValue">برای محاسبه، مبلغ را وارد کنید</strong><small id="debtFxUpdated">نرخ از API بازار دریافت می‌شود</small></div><button type="button" class="debt-fx-refresh" onclick="refreshDebtRates(true)">↻ بروزرسانی نرخ</button></div>
             <div class="field"><label>تاریخ سررسید</label><input id="debtDue" type="date" value="${esc(d?.dueDate || "")}"></div>
             <div class="field full"><label>توضیح</label><input id="debtNote" value="${esc(d?.note || "")}" placeholder="توضیح اختیاری"></div>
           </div>
           ${d && Number(d.paid || 0) ? `<div class="empty" style="margin-top:12px">تا الان ${money(d.paid)} پرداخت شده و مانده ${money(debtRemaining(d))} است.</div>` : ""}
           <button class="primary" onclick="saveDebt(${id || 0})">${isEditing ? "ذخیره تغییرات" : "ثبت مورد"}</button>
           ${isEditing ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteDebt(${d.id})">حذف این مورد</button>` : ""}`);
+        updateDebtFxPreview();
+        if (!debtRates.updatedAt || Date.now() - debtRates.fetchedAt > 300000) refreshDebtRates(false);
       }
+      const debtRates = { usd: null, gold: null, updatedAt: "", fetchedAt: 0, busy: false };
+      function debtCurrencyLabel(c){return ({toman:"تومان",rial:"ریال",usd:"دلار",gold:"گرم طلا ۱۸ عیار"})[c]||"تومان";}
+      function debtNativeMoney(d,n){const value=Number(n)||0;return `${new Intl.NumberFormat("fa-IR",{maximumFractionDigits:3}).format(value)} ${debtCurrencyLabel(d.currency||"toman")}`;}
+      function debtToToman(d,n){const c=d.currency||"toman",v=Number(n||0);if(c==="usd")return v*(debtRates.usd||Number(state.settings.usdToToman)||0);if(c==="gold")return v*(debtRates.gold||0);if(c==="rial")return v/10;return v;}
+      async function refreshDebtRates(showMessage=false){
+        if(debtRates.busy)return; debtRates.busy=true;
+        const btn=document.querySelector(".debt-fx-refresh"); if(btn){btn.disabled=true;btn.textContent="⏳ دریافت...";}
+        try{const r=await fetch(MARKET_API_URL+"?t="+Date.now(),{cache:"no-store",headers:{Accept:"application/json"}});if(!r.ok)throw new Error("API");const data=await r.json();
+          const usd=getApiBasePrice(data,"USD_IRR_FREE",{type:"usd"}); const gold=getApiBasePrice(data,"GOLD_18K_IRR",{type:"gold"});
+          if(usd?.price)debtRates.usd=usd.price;if(gold?.price)debtRates.gold=gold.price;
+          if(debtRates.usd)state.settings.usdToToman=debtRates.usd;
+          debtRates.updatedAt=new Date().toLocaleString("fa-IR");debtRates.fetchedAt=Date.now();save();updateDebtFxPreview();renderDebts();
+          if(showMessage)toast("نرخ‌های بازار بروزرسانی شد");
+        }catch(e){debtRates.fetchedAt=Date.now();updateDebtFxPreview();if(showMessage)toast("دریافت نرخ ناموفق بود؛ آخرین نرخ ذخیره‌شده نمایش داده می‌شود");}
+        finally{debtRates.busy=false;if(btn){btn.disabled=false;btn.textContent="↻ بروزرسانی نرخ";}}
+      }
+      function updateDebtFxPreview(){const amountEl=document.getElementById("debtAmount"),currencyEl=document.getElementById("debtCurrency");if(!amountEl||!currencyEl)return;const amount=cleanGroupedNumber(amountEl.value||0),c=currencyEl.value;const d={currency:c};const value=debtToToman(d,amount);const val=document.getElementById("debtFxValue"),label=document.getElementById("debtFxLabel"),updated=document.getElementById("debtFxUpdated");if(label)label.textContent=`معادل به ${state.settings.currency} (بر اساس نرخ بازار)`;if(val)val.textContent=amount>0&&value>0?money(value):"برای محاسبه، مبلغ را وارد کنید";if(updated)updated.textContent=(c==="toman"||c==="rial")?"تبدیل بر اساس واحد انتخابی تنظیمات":(debtRates.updatedAt?`آخرین نرخ: ${debtRates.updatedAt}`:"در حال دریافت نرخ زنده از API…");}
       function saveDebt(id) {
         const type = document.getElementById("debtType").value;
-        const amount = inputAmount(document.getElementById("debtAmount").value);
+        const amount = cleanGroupedNumber(document.getElementById("debtAmount").value);
+        const currency = document.getElementById("debtCurrency").value;
         const title = document.getElementById("debtTitle").value.trim();
         const person = document.getElementById("debtPerson").value.trim();
         const accountId = Number(document.getElementById("debtAccount").value);
@@ -2984,7 +3014,7 @@
         if (!amount) return toast("مبلغ را وارد کنید");
         const old = id ? state.debts.find((x) => x.id === id) : null;
         if (old && amount < Number(old.paid || 0)) return toast("مبلغ کل نمی‌تواند از مبلغ پرداخت‌شده کمتر باشد");
-        const item = { id: id || Date.now(), type, title: title || (type === "receivable" ? "طلب" : "بدهی"), person, amount, paid: old?.paid || 0, accountId, dueDate, note, createdAt: old?.createdAt || new Date().toISOString() };
+        const item = { id: id || Date.now(), type, title: title || (type === "receivable" ? "طلب" : "بدهی"), person, amount, currency, paid: old?.paid || 0, accountId, dueDate, note, createdAt: old?.createdAt || new Date().toISOString() };
         if (old) Object.assign(old, item); else state.debts.unshift(item);
         save(); closeSheet(); render(); toast(old ? "تغییرات ذخیره شد" : "ثبت شد");
       }
@@ -2992,24 +3022,25 @@
         const d = state.debts.find((x) => x.id === id);
         if (!d || debtSettled(d)) return;
         openSheet(`<div class="sheet-head"><h3>ثبت پرداخت</h3><button class="close" onclick="closeSheet()">×</button></div>
-          <div class="empty"><b>${esc(d.title)}</b><br><small>مانده: ${money(debtRemaining(d))}</small></div>
-          <div class="field" style="margin-top:14px"><label>${d.type === "receivable" ? "مبلغ دریافتی" : "مبلغ پرداختی"}</label><input id="debtPaymentAmount" type="text" inputmode="decimal" placeholder="مبلغ"></div>
+          <div class="empty"><b>${esc(d.title)}</b><br><small>مانده: ${debtNativeMoney(d,debtRemaining(d))} · معادل ${money(debtToToman(d,debtRemaining(d)))}</small></div>
+          <div class="field" style="margin-top:14px"><label>${d.type === "receivable" ? "مبلغ دریافتی" : "مبلغ پرداختی"} (${debtCurrencyLabel(d.currency||"toman")})</label><input id="debtPaymentAmount" type="text" inputmode="decimal" placeholder="مبلغ"></div>
           <div class="field" style="margin-top:10px"><label>توضیح پرداخت</label><input id="debtPaymentNote" placeholder="اختیاری"></div>
           <button class="primary" onclick="saveDebtPayment(${d.id})">ثبت ${d.type === "receivable" ? "دریافت" : "پرداخت"}</button>`);
       }
       function saveDebtPayment(id) {
         const d = state.debts.find((x) => x.id === id);
         if (!d) return;
-        const amount = inputAmount(document.getElementById("debtPaymentAmount").value);
+        const amount = cleanGroupedNumber(document.getElementById("debtPaymentAmount").value);
         const remaining = debtRemaining(d);
         if (!amount || amount > remaining) return toast("مبلغ پرداخت را درست وارد کنید");
         const acc = state.accounts.find((a) => String(a.id) === String(d.accountId));
         if (!acc) return toast("حساب مرتبط پیدا نشد");
-        if (d.type === "payable" && amount > Number(acc.balance || 0)) return toast("موجودی حساب برای این پرداخت کافی نیست");
+        const accountAmount = debtToToman(d, amount) / currencyFactor();
+        if (d.type === "payable" && accountAmount > Number(acc.balance || 0)) return toast("موجودی حساب برای این پرداخت کافی نیست");
         d.paid = Number(d.paid || 0) + amount;
-        if (d.type === "receivable") acc.balance += amount;
-        else acc.balance -= amount;
-        state.transactions.unshift({ id: Date.now(), type: d.type === "receivable" ? "income" : "expense", amount, date: todayISO(), accountId: acc.id, toAccountId: null, category: d.type === "receivable" ? "دریافت طلب" : "پرداخت بدهی", icon: d.type === "receivable" ? "↗" : "↘", note: document.getElementById("debtPaymentNote").value.trim() || d.title });
+        if (d.type === "receivable") acc.balance += accountAmount;
+        else acc.balance -= accountAmount;
+        state.transactions.unshift({ id: Date.now(), type: d.type === "receivable" ? "income" : "expense", amount: accountAmount, date: todayISO(), accountId: acc.id, toAccountId: null, category: d.type === "receivable" ? "دریافت طلب" : "پرداخت بدهی", icon: d.type === "receivable" ? "↗" : "↘", note: document.getElementById("debtPaymentNote").value.trim() || d.title });
         save(); closeSheet(); render(); toast(d.type === "receivable" ? "دریافت ثبت شد" : "پرداخت ثبت شد");
       }
       function deleteDebt(id) {
@@ -3029,8 +3060,8 @@
  <div class="settings-row"><div><b>جمع دارایی با موجودی</b><small>به‌صورت پیش‌فرض خاموش است</small></div><button class="toggle ${state.settings.includeAssets ? "on" : ""}" onclick="toggleAssets(this)"><i></i></button></div>
  <div class="settings-row"><div><b>قیمت‌های بازار</b><small>${state.settings.apiLastUpdate ? `آخرین بروزرسانی: ${esc(state.settings.apiLastUpdate)}` : "قیمت API هنوز بروزرسانی موفقی نداشته است."}</small></div><button class="secondary" onclick="refreshMarketPrices(true)">🔄 بروزرسانی</button></div>
 <div class="sms-automation-card">
-  <div class="settings-row" style="padding:0;border:0"><div><b>ثبت تراکنش از متن پیامک</b><small>متن پیامک بانکی را وارد کن تا مبلغ و نوع تراکنش تشخیص داده شود؛ بدون دسترسی به صندوق پیامک گوشی.</small></div><button class="toggle ${state.settings.smsAutomation.enabled ? "on" : ""}" onclick="toggleSmsAutomation(this)"><i></i></button></div>
-  <div class="sms-status"><i class="sms-dot ${state.settings.smsAutomation.enabled ? "on" : ""}"></i><span>${state.settings.smsAutomation.enabled ? "فعال است؛ ثبت فقط پس از وارد کردن متن پیامک توسط خودت انجام می‌شود." : "خاموش است."}</span></div>
+  <div class="settings-row" style="padding:0;border:0"><div><b>ثبت خودکار تراکنش از پیامک</b><small>پیامک بانک را می‌خواند و دخل، خرج یا جابه‌جایی را خودکار ثبت می‌کند.</small></div><button class="toggle ${state.settings.smsAutomation.enabled ? "on" : ""}" onclick="toggleSmsAutomation(this)"><i></i></button></div>
+  <div class="sms-status"><i class="sms-dot ${state.settings.smsAutomation.enabled ? "on" : ""}"></i><span>${state.settings.smsAutomation.enabled ? "فعال است؛ برای خواندن پیامک باید مجوز اندروید داده شود." : "خاموش است."}</span></div>
   <button class="secondary" style="width:100%;margin-top:10px" onclick="openSmsAutomation()">⚙️ تنظیم پیامک‌های بانکی</button>
 </div>
 <div class="switch-info"><b>نحوه محاسبه</b><br>قیمت‌های API به تومان ذخیره می‌شوند. با انتخاب ریال، تمام مبالغ نمایشی در کل برنامه در ۱۰ ضرب می‌شوند؛ با انتخاب تومان، مقدار اصلی نمایش داده می‌شود. ۱ تومان = ۱۰ ریال. قیمت طلا نیز بر اساس واحد انتخابی محاسبه می‌شود.</div>
@@ -3101,6 +3132,9 @@
         state.settings.smsAutomation.enabled = !state.settings.smsAutomation.enabled;
         save();
         btn.classList.toggle("on", state.settings.smsAutomation.enabled);
+        if (state.settings.smsAutomation.enabled && window.AndroidSmsBridge?.requestSmsPermission) {
+          try { window.AndroidSmsBridge.requestSmsPermission(); } catch (e) {}
+        }
       }
 
       function smsAccountOptions(selected) {
@@ -3109,13 +3143,14 @@
 
       function openSmsAutomation() {
         const rules = state.settings.smsAutomation.rules || [];
-        const rows = rules.length ? rules.map((r,i) => smsRuleHtml(r,i)).join("") : `<div class="empty">هنوز فرستنده‌ای تعریف نشده است؛ یک فرستنده و حساب مربوط به آن را اضافه کن.</div>`;
-        openSheet(`<div class="sheet-head"><h3>ثبت تراکنش از پیامک بانکی</h3><button class="close" onclick="closeSheet()">×</button></div>
-          <div class="empty" style="line-height:2">برای هر حساب بانکی نام یا شماره فرستنده پیامک را تنظیم کن. سپس متن پیامک بانکی را از برنامه پیامک کپی و اینجا وارد کن. حساب‌یار بدون خواندن پیامک‌های دیگر گوشی، متن واردشده را تحلیل می‌کند. قبل از استفاده، نتیجه را بررسی کن.</div>
+        const rows = rules.length ? rules.map((r,i) => smsRuleHtml(r,i)).join("") : `<div class="empty">هنوز هیچ فرستنده‌ای برای ثبت خودکار تعریف نشده است.</div>`;
+        openSheet(`<div class="sheet-head"><h3>اتوماسیون پیامک بانکی</h3><button class="close" onclick="closeSheet()">×</button></div>
+          <div class="empty" style="line-height:2">برای هر حساب بانکی مشخص کن پیامک‌های کدام شماره یا نام فرستنده متعلق به آن حساب است. بعد از اجازه دسترسی پیامک در اندروید، تراکنش‌ها بدون ثبت دستی ساخته می‌شوند.</div>
           <div id="smsRules">${rows}</div>
           <button class="secondary" style="width:100%;margin-top:10px" onclick="addSmsRule()">+ افزودن فرستنده</button>
           <button class="primary" style="width:100%;margin-top:8px" onclick="saveSmsRules()">ذخیره تنظیمات</button>
-          <div class="sms-test-box field"><label>متن پیامک بانکی</label><textarea id="smsTestBody" placeholder="متن پیامک را از برنامه پیامک کپی و اینجا جای‌گذاری کن..."></textarea><button class="primary" style="width:100%;margin-top:8px" onclick="testSmsParser()">تحلیل و ثبت تراکنش</button><small style="display:block;margin-top:8px;color:var(--muted);line-height:1.8">فقط متن واردشده بررسی می‌شود؛ حساب‌یار به صندوق پیامک گوشی دسترسی نمی‌گیرد.</small></div>
+          <button class="secondary" style="width:100%;margin-top:8px" onclick="requestSmsPermission()">🔐 اجازه خواندن پیامک</button>
+          <div class="sms-test-box field"><label>آزمایش بدون منتظر ماندن برای پیامک</label><textarea id="smsTestBody" placeholder="متن یک پیامک بانکی را اینجا وارد کن..."></textarea><button class="secondary" style="width:100%;margin-top:8px" onclick="testSmsParser()">تشخیص و ثبت آزمایشی</button></div>
           ${state.settings.smsAutomation.pending?.length ? `<div class="sms-pending"><b>موارد نیازمند بررسی:</b><br>${state.settings.smsAutomation.pending.slice(-5).reverse().map(x => esc(x.reason || "پیامک مبهم")).join("<br>")}</div>` : ""}`);
       }
 
@@ -3149,7 +3184,11 @@
       }
 
       function requestSmsPermission() {
-        toast("برای سازگاری بهتر با Google Play، متن پیامک را خودت وارد کن؛ دسترسی مستقیم به پیامک‌ها درخواست نمی‌شود.");
+        if (window.AndroidSmsBridge?.requestSmsPermission) {
+          try { window.AndroidSmsBridge.requestSmsPermission(); toast("درخواست مجوز پیامک ارسال شد"); } catch(e) { toast("درخواست مجوز ناموفق بود"); }
+        } else {
+          toast("این قابلیت در APK اندروید فعال می‌شود");
+        }
       }
 
       function normalizeSmsText(s) {
