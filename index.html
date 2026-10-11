@@ -153,7 +153,9 @@
         position: relative;
         max-width: 100%;
       }
-      .balance-row .balance { min-width: 0; }
+      .balance-row .balance {
+        min-width: 0;
+      }
       .balance-currency-control {
         position: relative;
         flex: 0 0 auto;
@@ -166,27 +168,32 @@
         display: grid;
         place-items: center;
         border-radius: 10px;
-        background: rgba(255,255,255,.14);
+        background: rgba(255, 255, 255, 0.14);
         color: #fff;
-        border: 1px solid rgba(255,255,255,.16);
-        box-shadow: 0 5px 14px rgba(0,0,0,.10);
-        transition: background .18s ease, transform .18s ease;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+        transition:
+          background 0.18s ease,
+          transform 0.18s ease;
       }
       .balance-currency-trigger:hover,
       .balance-currency-trigger:focus-visible {
-        background: rgba(255,255,255,.22);
+        background: rgba(255, 255, 255, 0.22);
         outline: none;
       }
-      .balance-currency-trigger:active { transform: scale(.94); }
+      .balance-currency-trigger:active {
+        transform: scale(0.94);
+      }
       .balance-currency-chevron {
         width: 8px;
         height: 8px;
         border-right: 1.8px solid currentColor;
         border-bottom: 1.8px solid currentColor;
         transform: rotate(45deg) translateY(-2px);
-        transition: transform .18s ease;
+        transition: transform 0.18s ease;
       }
-      .balance-currency-trigger[aria-expanded="true"] .balance-currency-chevron {
+      .balance-currency-trigger[aria-expanded="true"]
+        .balance-currency-chevron {
         transform: rotate(225deg) translate(-1px, -1px);
       }
       .balance-currency-menu {
@@ -195,17 +202,20 @@
         right: 0;
         width: 178px;
         padding: 6px;
-        border: 1px solid rgba(255,255,255,.18);
+        border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 16px;
         background: var(--surface);
         color: var(--text);
-        box-shadow: 0 16px 38px rgba(28,24,68,.18);
+        box-shadow: 0 16px 38px rgba(28, 24, 68, 0.18);
         z-index: 9999;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-5px) scale(.98);
+        transform: translateY(-5px) scale(0.98);
         transform-origin: top right;
-        transition: opacity .16s ease, transform .16s ease, visibility .16s ease;
+        transition:
+          opacity 0.16s ease,
+          transform 0.16s ease,
+          visibility 0.16s ease;
       }
       .balance-currency-menu.show {
         opacity: 1;
@@ -225,8 +235,12 @@
         text-align: right;
         font-size: 11px;
       }
-      .balance-currency-option + .balance-currency-option { margin-top: 4px; }
-      .balance-currency-option:hover { background: var(--surface2); }
+      .balance-currency-option + .balance-currency-option {
+        margin-top: 4px;
+      }
+      .balance-currency-option:hover {
+        background: var(--surface2);
+      }
       .balance-currency-option.active {
         background: var(--surface2);
         color: var(--primary);
@@ -248,8 +262,13 @@
         font-weight: 800;
         font-size: 11px;
       }
-      .currency-option-check { font-size: 13px; opacity: 0; }
-      .balance-currency-option.active .currency-option-check { opacity: 1; }
+      .currency-option-check {
+        font-size: 13px;
+        opacity: 0;
+      }
+      .balance-currency-option.active .currency-option-check {
+        opacity: 1;
+      }
       .balance-fx-status {
         padding: 6px 10px 8px;
         color: var(--muted);
@@ -259,9 +278,19 @@
         margin-top: 4px;
       }
       @media (max-width: 390px) {
-        .balance-row { gap: 5px; max-width: calc(100vw - 42px); }
-        .balance-currency-trigger { width: 28px; height: 28px; border-radius: 9px; }
-        .balance-currency-menu { width: 170px; right: -2px; }
+        .balance-row {
+          gap: 5px;
+          max-width: calc(100vw - 42px);
+        }
+        .balance-currency-trigger {
+          width: 28px;
+          height: 28px;
+          border-radius: 9px;
+        }
+        .balance-currency-menu {
+          width: 170px;
+          right: -2px;
+        }
       }
 
       .hero-row {
@@ -315,6 +344,7 @@
         align-items: center;
         justify-content: space-between;
         margin: 24px 2px 11px;
+        gap: 10px;
       }
       .section-head h2 {
         font-size: 16px;
@@ -397,6 +427,160 @@
       .money-card:active {
         transform: scale(0.985);
       }
+
+      /* Polished transaction editing and account reordering */
+      .tx-edit-btn {
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        color: var(--primary);
+        background: var(--surface2);
+        cursor: pointer;
+        padding: 0;
+        transition:
+          transform 0.18s ease,
+          background 0.18s ease,
+          box-shadow 0.18s ease;
+      }
+      .tx-edit-btn svg {
+        width: 17px;
+        height: 17px;
+        display: block;
+      }
+      .tx-edit-btn:hover {
+        background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+        box-shadow: 0 4px 12px #0001;
+        transform: translateY(-1px);
+      }
+      .tx-edit-btn:active {
+        transform: scale(0.92);
+      }
+      .account-order-hint {
+        display: none;
+        align-items: flex-start;
+        gap: 11px;
+        margin: 0 0 12px;
+        padding: 13px 14px;
+        border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+        border-radius: 17px;
+        background: color-mix(in srgb, var(--primary) 7%, var(--surface));
+        color: var(--text);
+        font-size: 12px;
+        line-height: 1.9;
+        box-shadow: 0 7px 20px #00000008;
+      }
+      .account-order-hint.show {
+        display: flex;
+        animation: orderHintIn 0.22s ease-out;
+      }
+      .account-order-hint .order-hint-icon {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border-radius: 11px;
+        display: grid;
+        place-items: center;
+        background: var(--primary);
+        color: white;
+      }
+      .account-order-hint .order-hint-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+      .account-order-hint b {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 1px;
+      }
+      .account-order-hint small {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .money-card {
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-select: none;
+        transition:
+          transform 0.22s ease,
+          box-shadow 0.22s ease,
+          filter 0.22s ease;
+      }
+      .money-card.reorder-ready {
+        cursor: grab;
+        outline: 1px solid #ffffff75;
+        outline-offset: -5px;
+        animation: accountNudge 0.24s ease-in-out infinite alternate;
+      }
+      .money-card.reorder-ready:nth-child(even) {
+        animation-delay: 0.12s;
+      }
+      .money-card.dragging-account {
+        cursor: grabbing;
+        z-index: 3;
+        transform: scale(1.045) rotate(-1.5deg);
+        box-shadow: 0 20px 38px #0004;
+        filter: saturate(1.15);
+        animation: none;
+      }
+      .money-card.drop-account {
+        outline: 3px solid var(--primary);
+        outline-offset: 3px;
+        transform: scale(0.97);
+        filter: brightness(1.08);
+        animation: none;
+      }
+      .money-card.order-source {
+        outline: 3px solid #fff;
+        outline-offset: 3px;
+        box-shadow:
+          0 0 0 6px color-mix(in srgb, var(--primary) 55%, transparent),
+          0 14px 30px #0003;
+        animation: none;
+        transform: translateY(-3px);
+      }
+      .money-card.order-source:before {
+        content: "انتخاب شد";
+        position: absolute;
+        z-index: 4;
+        top: 9px;
+        left: 10px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        color: white;
+        background: #172033d9;
+        font: 700 10px inherit;
+        letter-spacing: 0;
+      }
+      @keyframes accountNudge {
+        from {
+          transform: rotate(-0.55deg) translateY(0);
+        }
+        to {
+          transform: rotate(0.55deg) translateY(-2px);
+        }
+      }
+      @keyframes orderHintIn {
+        from {
+          opacity: 0;
+          transform: translateY(-5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .money-card.reorder-ready,
+        .account-order-hint.show {
+          animation: none;
+        }
+      }
+
       .tx-list {
         display: flex;
         flex-direction: column;
@@ -894,9 +1078,15 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .debt-summary.receivable strong { color: var(--green); }
-      .debt-summary.payable strong { color: var(--red); }
-      .debt-summary.net strong { color: var(--primary); }
+      .debt-summary.receivable strong {
+        color: var(--green);
+      }
+      .debt-summary.payable strong {
+        color: var(--red);
+      }
+      .debt-summary.net strong {
+        color: var(--primary);
+      }
       .debt-toolbar {
         display: flex;
         align-items: center;
@@ -904,8 +1094,14 @@
         gap: 10px;
         margin-bottom: 13px;
       }
-      .debt-filterbar { margin: 0; overflow: auto; scrollbar-width: none; }
-      .debt-filterbar::-webkit-scrollbar { display: none; }
+      .debt-filterbar {
+        margin: 0;
+        overflow: auto;
+        scrollbar-width: none;
+      }
+      .debt-filterbar::-webkit-scrollbar {
+        display: none;
+      }
       #debtAccountFilter {
         flex: 0 0 145px;
         min-width: 0;
@@ -933,21 +1129,36 @@
       .debt-card::before {
         content: "";
         position: absolute;
-        top: 0; bottom: 0; right: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
         width: 4px;
         background: var(--primary);
       }
-      .debt-card.receivable::before { background: var(--green); }
-      .debt-card.payable::before { background: var(--red); }
+      .debt-card.receivable::before {
+        background: var(--green);
+      }
+      .debt-card.payable::before {
+        background: var(--red);
+      }
       .debt-card-top {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 12px;
       }
-      .debt-title-wrap { min-width: 0; }
-      .debt-title { font-size: 13px; font-weight: 800; }
-      .debt-person { color: var(--muted); font-size: 10px; margin-top: 4px; }
+      .debt-title-wrap {
+        min-width: 0;
+      }
+      .debt-title {
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .debt-person {
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+      }
       .debt-type {
         flex: 0 0 auto;
         border-radius: 10px;
@@ -955,10 +1166,20 @@
         font-size: 9px;
         font-weight: 700;
       }
-      .debt-type.receivable { background: #dff8ed; color: var(--green); }
-      .debt-type.payable { background: #ffe7eb; color: var(--red); }
-      [data-theme="dark"] .debt-type.receivable { background: #14382c; }
-      [data-theme="dark"] .debt-type.payable { background: #3d2027; }
+      .debt-type.receivable {
+        background: #dff8ed;
+        color: var(--green);
+      }
+      .debt-type.payable {
+        background: #ffe7eb;
+        color: var(--red);
+      }
+      [data-theme="dark"] .debt-type.receivable {
+        background: #14382c;
+      }
+      [data-theme="dark"] .debt-type.payable {
+        background: #3d2027;
+      }
       .debt-amount-row {
         display: flex;
         justify-content: space-between;
@@ -966,8 +1187,15 @@
         gap: 10px;
         margin-top: 13px;
       }
-      .debt-remaining { font-size: 17px; font-weight: 800; }
-      .debt-total { color: var(--muted); font-size: 9px; margin-top: 3px; }
+      .debt-remaining {
+        font-size: 17px;
+        font-weight: 800;
+      }
+      .debt-total {
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 3px;
+      }
       .debt-meta {
         display: flex;
         flex-wrap: wrap;
@@ -981,28 +1209,112 @@
         padding: 6px 8px;
         font-size: 9px;
       }
-      .debt-progress { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; margin-top: 12px; }
-      .debt-progress i { display: block; height: 100%; border-radius: inherit; background: var(--primary); }
-      .debt-card.receivable .debt-progress i { background: var(--green); }
-      .debt-card.payable .debt-progress i { background: var(--red); }
-      .debt-actions { display: flex; gap: 7px; margin-top: 12px; }
-      .debt-actions button { flex: 1; padding: 9px 10px; border-radius: 12px; font-size: 10px; }
-      .debt-pay-btn { background: var(--primary); color: #fff; }
-      .debt-more-btn { background: var(--surface2); color: var(--text); }
-      .debt-fx-preview{grid-column:1/-1;border:1px solid var(--border);background:linear-gradient(135deg,var(--surface2),var(--surface));border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-      .debt-fx-preview small{display:block;color:var(--muted);font-size:10px;line-height:1.8}
-      .debt-fx-preview strong{display:block;font-size:14px;color:var(--primary);margin-top:3px}
-      .debt-fx-refresh{background:var(--surface);border:1px solid var(--border);color:var(--primary);border-radius:11px;padding:9px 11px;font-size:10px;white-space:nowrap}
-      .debt-native-amount{font-size:17px;font-weight:800;direction:rtl}
-      .debt-converted{color:var(--muted);font-size:10px;margin-top:4px;line-height:1.7}
-      .debt-overdue { color: var(--red) !important; }
-      .debt-settled { opacity: .72; }
-      .debt-settled .debt-title { text-decoration: line-through; text-decoration-thickness: 1px; }
+      .debt-progress {
+        height: 6px;
+        background: var(--surface2);
+        border-radius: 99px;
+        overflow: hidden;
+        margin-top: 12px;
+      }
+      .debt-progress i {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--primary);
+      }
+      .debt-card.receivable .debt-progress i {
+        background: var(--green);
+      }
+      .debt-card.payable .debt-progress i {
+        background: var(--red);
+      }
+      .debt-actions {
+        display: flex;
+        gap: 7px;
+        margin-top: 12px;
+      }
+      .debt-actions button {
+        flex: 1;
+        padding: 9px 10px;
+        border-radius: 12px;
+        font-size: 10px;
+      }
+      .debt-pay-btn {
+        background: var(--primary);
+        color: #fff;
+      }
+      .debt-more-btn {
+        background: var(--surface2);
+        color: var(--text);
+      }
+      .debt-fx-preview {
+        grid-column: 1/-1;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, var(--surface2), var(--surface));
+        border-radius: 16px;
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .debt-fx-preview small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.8;
+      }
+      .debt-fx-preview strong {
+        display: block;
+        font-size: 14px;
+        color: var(--primary);
+        margin-top: 3px;
+      }
+      .debt-fx-refresh {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--primary);
+        border-radius: 11px;
+        padding: 9px 11px;
+        font-size: 10px;
+        white-space: nowrap;
+      }
+      .debt-native-amount {
+        font-size: 17px;
+        font-weight: 800;
+        direction: rtl;
+      }
+      .debt-converted {
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+        line-height: 1.7;
+      }
+      .debt-overdue {
+        color: var(--red) !important;
+      }
+      .debt-settled {
+        opacity: 0.72;
+      }
+      .debt-settled .debt-title {
+        text-decoration: line-through;
+        text-decoration-thickness: 1px;
+      }
       @media (max-width: 650px) {
-        .debt-summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .debt-summary.net { grid-column: 1 / -1; }
-        .debt-toolbar { align-items: stretch; flex-direction: column; }
-        #debtAccountFilter { flex: 1 1 auto; width: 100%; }
+        .debt-summary-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .debt-summary.net {
+          grid-column: 1 / -1;
+        }
+        .debt-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        #debtAccountFilter {
+          flex: 1 1 auto;
+          width: 100%;
+        }
       }
 
       .bottom-nav {
@@ -1039,6 +1351,10 @@
         border-radius: 13px;
         font-size: 10px;
         line-height: 1.2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
       .nav-btn span {
         display: block;
@@ -1050,6 +1366,10 @@
         color: var(--primary);
         background: var(--surface2);
         font-weight: 700;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
       .fab {
         position: fixed;
@@ -1587,46 +1907,602 @@
           transform: rotate(360deg);
         }
       }
-    
-      .sms-automation-card { margin-top: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface2); }
-      .sms-rule { display:grid; grid-template-columns: 1fr 1fr auto; gap:8px; align-items:end; margin-top:10px; }
-      .sms-rule .field { margin:0; }
-      .sms-rule-remove { height:40px; min-width:40px; border:1px solid var(--border); border-radius:12px; background:var(--surface); color:var(--danger,#e55); cursor:pointer; }
-      .sms-status { display:flex; align-items:center; gap:8px; margin-top:9px; font-size:11px; color:var(--muted); line-height:1.8; }
-      .sms-dot { width:8px; height:8px; border-radius:50%; background:var(--muted); flex:0 0 auto; }
-      .sms-dot.on { background:#18b981; box-shadow:0 0 0 4px rgba(24,185,129,.12); }
-      .sms-test-box { margin-top:12px; }
-      .sms-test-box textarea { min-height:110px; resize:vertical; }
-      .sms-pending { margin-top:10px; padding:10px; border-radius:13px; border:1px dashed var(--border); background:var(--surface); font-size:11px; line-height:1.9; }
-      @media (max-width:640px){ .sms-rule{grid-template-columns:1fr;}.sms-rule-remove{width:100%;} }
 
+      .sms-automation-card {
+        margin-top: 12px;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--surface2);
+      }
+      .sms-rule {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 8px;
+        align-items: end;
+        margin-top: 10px;
+      }
+      .sms-rule .field {
+        margin: 0;
+      }
+      .sms-rule-remove {
+        height: 40px;
+        min-width: 40px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--danger, #e55);
+        cursor: pointer;
+      }
+      .sms-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 9px;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .sms-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--muted);
+        flex: 0 0 auto;
+      }
+      .sms-dot.on {
+        background: #18b981;
+        box-shadow: 0 0 0 4px rgba(24, 185, 129, 0.12);
+      }
+      .sms-test-box {
+        margin-top: 12px;
+      }
+      .sms-test-box textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      .sms-pending {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 13px;
+        border: 1px dashed var(--border);
+        background: var(--surface);
+        font-size: 11px;
+        line-height: 1.9;
+      }
+      @media (max-width: 640px) {
+        .sms-rule {
+          grid-template-columns: 1fr;
+        }
+        .sms-rule-remove {
+          width: 100%;
+        }
+      }
 
-/* FINAL MOBILE NAV FIX */
-@media (max-width: 650px) {
-  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
-  .app { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; padding-left: 10px; padding-right: 10px; padding-bottom: 92px; }
-  .bottom-nav {
-    left: 0; right: 0; bottom: 0; width: 100%; max-width: none;
-    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 2px;
-  }
-  .nav-btn {
-    min-width: 0; max-width: 100%; width: 100%;
-    padding: 5px 0; margin: 0;
-    font-size: clamp(7px, 2.5vw, 10px);
-    line-height: 1.15;
-    overflow: hidden;
-  }
-  .nav-btn span { font-size: clamp(16px, 5vw, 19px); line-height: 18px; margin-bottom: 2px; }
-  .nav-btn span, .nav-btn { text-align: center; }
-}
-@media (max-width: 380px) {
-  .bottom-nav { padding-left: 2px; padding-right: 2px; gap: 1px; }
-  .nav-btn { font-size: 7px; }
-  .nav-btn span { font-size: 16px; line-height: 17px; }
-}
-</style>
+      /* FINAL MOBILE NAV FIX */
+      @media (max-width: 650px) {
+        html,
+        body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+        .app {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
+          padding-left: 10px;
+          padding-right: 10px;
+          padding-bottom: 92px;
+        }
+        .bottom-nav {
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          max-width: none;
+          padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 2px;
+        }
+        .nav-btn {
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          padding: 5px 0;
+          margin: 0;
+          font-size: clamp(7px, 2.5vw, 10px);
+          line-height: 1.15;
+          overflow: hidden;
+        }
+        .nav-btn span {
+          font-size: clamp(16px, 5vw, 19px);
+          line-height: 18px;
+          margin-bottom: 2px;
+        }
+        .nav-btn span,
+        .nav-btn {
+          text-align: center;
+        }
+      }
+      @media (max-width: 380px) {
+        .bottom-nav {
+          padding-left: 2px;
+          padding-right: 2px;
+          gap: 1px;
+        }
+        .nav-btn {
+          font-size: 7px;
+        }
+        .nav-btn span {
+          font-size: 16px;
+          line-height: 17px;
+        }
+      }
+
+      /* More hub, checks and installments */
+      .nav-btn span svg {
+        width: 21px;
+        height: 21px;
+        display: block;
+      }
+      .more-intro {
+        padding: 22px;
+        border-radius: 24px;
+        color: #fff;
+        background: linear-gradient(135deg, #5546d8, #8b7cff);
+        box-shadow: 0 15px 32px #6959ea2b;
+        margin-bottom: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .more-intro:after {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        border: 1px solid #ffffff26;
+        border-radius: 50%;
+        left: -35px;
+        top: -50px;
+        box-shadow:
+          0 0 0 18px #ffffff0b,
+          0 0 0 36px #ffffff08;
+      }
+      .more-intro b {
+        font-size: 18px;
+        display: block;
+      }
+      .more-intro p {
+        font-size: 11px;
+        line-height: 1.9;
+        opacity: 0.88;
+        margin: 7px 0 0;
+        max-width: 85%;
+      }
+      .more-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin: 14px 0;
+      }
+      .more-tile {
+        min-width: 0;
+        text-align: right;
+        padding: 17px;
+        border-radius: 21px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+        transition:
+          transform 0.18s,
+          border-color 0.18s;
+        position: relative;
+        overflow: hidden;
+      }
+      .more-tile:active {
+        transform: scale(0.98);
+      }
+      .more-tile:hover {
+        border-color: var(--primary);
+      }
+      .more-tile-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 15px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 13px;
+        background: var(--surface2);
+        color: var(--primary);
+      }
+      .more-tile-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      .more-tile b {
+        display: block;
+        font-size: 13px;
+      }
+      .more-tile small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.8;
+        margin-top: 5px;
+      }
+      .more-tile .tile-count {
+        position: absolute;
+        left: 12px;
+        top: 13px;
+        border-radius: 9px;
+        padding: 4px 7px;
+        background: var(--surface2);
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .module-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .module-back {
+        width: 39px;
+        height: 39px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        flex: 0 0 auto;
+      }
+      .module-back svg {
+        width: 20px;
+        height: 20px;
+      }
+      .module-head h2 {
+        margin: 0;
+        font-size: 17px;
+      }
+      .module-head small {
+        color: var(--muted);
+        font-size: 10px;
+        display: block;
+        margin-top: 3px;
+      }
+      .module-hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 17px;
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        background: linear-gradient(120deg, var(--surface), var(--surface2));
+        margin-bottom: 14px;
+      }
+      .module-hero b {
+        font-size: 14px;
+      }
+      .module-hero small {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 5px;
+        line-height: 1.8;
+      }
+      .module-hero-icon {
+        width: 45px;
+        height: 45px;
+        flex: 0 0 auto;
+        border-radius: 15px;
+        background: var(--surface);
+        display: grid;
+        place-items: center;
+        color: var(--primary);
+        box-shadow: var(--shadow);
+      }
+      .module-hero-icon svg {
+        width: 24px;
+        height: 24px;
+      }
+      .module-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 9px;
+        margin-bottom: 14px;
+      }
+      .module-stat {
+        padding: 12px 10px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        border-radius: 16px;
+        min-width: 0;
+      }
+      .module-stat small {
+        font-size: 9px;
+        color: var(--muted);
+        display: block;
+      }
+      .module-stat b {
+        display: block;
+        font-size: 13px;
+        margin-top: 7px;
+        overflow-wrap: anywhere;
+      }
+      .module-stat.good b {
+        color: var(--green);
+      }
+      .module-stat.bad b {
+        color: var(--red);
+      }
+      .module-filters {
+        display: flex;
+        gap: 7px;
+        overflow: auto;
+        scrollbar-width: none;
+        margin: 12px 0;
+      }
+      .module-filters::-webkit-scrollbar {
+        display: none;
+      }
+      .module-filters .chip {
+        padding: 8px 11px;
+      }
+      .module-list {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+      }
+      .record-card {
+        position: relative;
+        overflow: hidden;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 21px;
+        padding: 15px;
+        box-shadow: 0 7px 20px rgba(36, 30, 82, 0.035);
+      }
+      .record-card:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--primary);
+      }
+      .record-card.received:before {
+        background: var(--green);
+      }
+      .record-card.paid:before {
+        background: var(--red);
+      }
+      .record-card.overdue {
+        border-color: #e9576755;
+      }
+      .record-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .record-title {
+        font-size: 13px;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+      }
+      .record-sub {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 5px;
+        line-height: 1.8;
+      }
+      .record-badge {
+        font-size: 9px;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 6px 9px;
+        white-space: nowrap;
+        background: var(--surface2);
+        color: var(--muted);
+      }
+      .record-badge.good {
+        background: #dff8ed;
+        color: #087b56;
+      }
+      .record-badge.bad {
+        background: #ffe7eb;
+        color: #bd3546;
+      }
+      .record-badge.warn {
+        background: #fff1d7;
+        color: #98600b;
+      }
+      [data-theme="dark"] .record-badge.good {
+        background: #14382c;
+        color: #70dfb6;
+      }
+      [data-theme="dark"] .record-badge.bad {
+        background: #3d2027;
+        color: #ff9aa5;
+      }
+      [data-theme="dark"] .record-badge.warn {
+        background: #3c3020;
+        color: #ffcf7d;
+      }
+      .record-amount {
+        font-size: 19px;
+        font-weight: 800;
+        margin-top: 13px;
+        letter-spacing: -0.3px;
+      }
+      .record-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .record-meta span {
+        font-size: 9px;
+        color: var(--muted);
+        background: var(--surface2);
+        padding: 6px 8px;
+        border-radius: 9px;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+      .record-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 13px;
+      }
+      .record-actions button {
+        flex: 1;
+        min-height: 39px;
+        border-radius: 12px;
+        padding: 8px 10px;
+        font-size: 10px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .record-actions svg {
+        width: 15px;
+        height: 15px;
+      }
+      .record-edit {
+        background: var(--surface2);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .record-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .record-secondary {
+        background: var(--surface);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+      .record-actions .danger {
+        color: var(--red);
+      }
+      .preview-box {
+        grid-column: 1/-1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        padding: 13px;
+        border-radius: 16px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        margin-top: 15px;
+      }
+      .preview-box small {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+      }
+      .preview-box strong {
+        display: block;
+        font-size: 13px;
+        margin-top: 5px;
+      }
+      .preview-box .preview-wide {
+        grid-column: 1/-1;
+        border-top: 1px solid var(--border);
+        padding-top: 9px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .field-hint {
+        font-size: 9px;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-top: 5px;
+      }
+      .schedule-line {
+        display: flex;
+        gap: 9px;
+        align-items: flex-start;
+        margin-top: 12px;
+        padding: 10px;
+        border-radius: 13px;
+        background: var(--surface2);
+      }
+      .schedule-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary);
+        margin-top: 5px;
+        flex: 0 0 auto;
+      }
+      .schedule-line small {
+        display: block;
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .schedule-line b {
+        font-size: 11px;
+      }
+      .module-tip {
+        padding: 12px 14px;
+        border-radius: 15px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.9;
+        background: var(--surface);
+        margin: 12px 0;
+      }
+      @media (max-width: 480px) {
+        .app {
+          padding-left: 13px;
+          padding-right: 13px;
+        }
+        .more-grid {
+          gap: 9px;
+        }
+        .more-tile {
+          padding: 14px;
+          border-radius: 18px;
+        }
+        .more-tile-icon {
+          width: 42px;
+          height: 42px;
+        }
+        .module-summary {
+          gap: 6px;
+        }
+        .module-stat {
+          padding: 10px 8px;
+        }
+        .module-stat b {
+          font-size: 11px;
+        }
+        .record-card {
+          padding: 13px;
+        }
+        .record-amount {
+          font-size: 17px;
+        }
+        .record-actions {
+          flex-wrap: wrap;
+        }
+        .record-actions button {
+          min-width: calc(50% - 5px);
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="app">
@@ -1644,12 +2520,24 @@
           <div class="balance-row">
             <div class="balance" id="totalBalance">۰ <span>تومان</span></div>
             <div class="balance-currency-control" id="balanceCurrencyControl">
-              <button type="button" class="balance-currency-trigger"
-                id="balanceCurrencyTrigger" onclick="toggleBalanceCurrencyMenu(event)"
-                aria-label="تغییر واحد نمایش موجودی" aria-expanded="false">
-                <span class="balance-currency-chevron" aria-hidden="true"></span>
+              <button
+                type="button"
+                class="balance-currency-trigger"
+                id="balanceCurrencyTrigger"
+                onclick="toggleBalanceCurrencyMenu(event)"
+                aria-label="تغییر واحد نمایش موجودی"
+                aria-expanded="false"
+              >
+                <span
+                  class="balance-currency-chevron"
+                  aria-hidden="true"
+                ></span>
               </button>
-              <div class="balance-currency-menu" id="balanceCurrencyMenu" role="menu"></div>
+              <div
+                class="balance-currency-menu"
+                id="balanceCurrencyMenu"
+                role="menu"
+              ></div>
             </div>
           </div>
           <div class="hero-row">
@@ -1670,6 +2558,27 @@
         <div class="section-head">
           <h2>حساب‌ها و کارت‌ها</h2>
           <button onclick="openAccount()">+ افزودن حساب</button>
+        </div>
+        <div id="accountOrderHint" class="account-order-hint">
+          <span class="order-hint-icon"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M8 5h12M8 12h12M8 19h12M3 5h.01M3 12h.01M3 19h.01"
+              /></svg></span
+          ><span
+            ><b>مرتب‌سازی حساب‌ها</b
+            ><small
+              >حساب انتخاب‌شده را بکشید روی جای جدید؛ در موبایل، حساب مقصد را
+              لمس کنید. برای پایان، روی حساب انتخاب‌شده دوباره نگه دارید.</small
+            ></span
+          >
         </div>
         <div id="accounts" class="cards-scroll"></div>
         <div class="section-head">
@@ -1766,31 +2675,322 @@
 
       <main id="debts" class="page">
         <div class="section-head">
-          <div>
+          <button
+            class="module-back"
+            onclick="showPage('more')"
+            aria-label="بازگشت"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div style="flex: 1">
             <h2>بدهی‌ها و طلب‌ها</h2>
-            <small class="debt-page-subtitle">تعهدات هر حساب را یکجا مدیریت کنید.</small>
+            <small class="debt-page-subtitle"
+              >تعهدات هر حساب را یکجا مدیریت کنید.</small
+            >
           </div>
           <button onclick="openDebt()">+ ثبت مورد</button>
         </div>
 
         <div class="debt-summary-grid">
-          <div class="debt-summary receivable"><span>طلب‌های باز</span><strong id="debtReceivableTotal">۰</strong></div>
-          <div class="debt-summary payable"><span>بدهی‌های باز</span><strong id="debtPayableTotal">۰</strong></div>
-          <div class="debt-summary net"><span>خالص</span><strong id="debtNetTotal">۰</strong></div>
+          <div class="debt-summary receivable">
+            <span>طلب‌های باز</span><strong id="debtReceivableTotal">۰</strong>
+          </div>
+          <div class="debt-summary payable">
+            <span>بدهی‌های باز</span><strong id="debtPayableTotal">۰</strong>
+          </div>
+          <div class="debt-summary net">
+            <span>خالص</span><strong id="debtNetTotal">۰</strong>
+          </div>
         </div>
 
         <div class="debt-toolbar">
           <div class="filterbar debt-filterbar">
-            <button class="chip active" data-debt-filter="all" onclick="setDebtFilter(this,'all')">همه</button>
-            <button class="chip" data-debt-filter="receivable" onclick="setDebtFilter(this,'receivable')">طلب‌ها</button>
-            <button class="chip" data-debt-filter="payable" onclick="setDebtFilter(this,'payable')">بدهی‌ها</button>
+            <button
+              class="chip active"
+              data-debt-filter="all"
+              onclick="setDebtFilter(this, 'all')"
+            >
+              همه
+            </button>
+            <button
+              class="chip"
+              data-debt-filter="receivable"
+              onclick="setDebtFilter(this, 'receivable')"
+            >
+              طلب‌ها
+            </button>
+            <button
+              class="chip"
+              data-debt-filter="payable"
+              onclick="setDebtFilter(this, 'payable')"
+            >
+              بدهی‌ها
+            </button>
           </div>
-          <select id="debtAccountFilter" onchange="setDebtAccountFilter(this.value)" aria-label="فیلتر حساب">
+          <select
+            id="debtAccountFilter"
+            onchange="setDebtAccountFilter(this.value)"
+            aria-label="فیلتر حساب"
+          >
             <option value="all">همه حساب‌ها</option>
           </select>
         </div>
 
         <div id="debtList" class="debt-list"></div>
+      </main>
+      <main id="more" class="page">
+        <div class="more-intro">
+          <b>بیشتر در حساب‌یار</b>
+          <p>
+            ابزارهای مدیریت تعهدات، چک‌ها و پرداخت‌های آینده را یکجا مدیریت
+            کنید.
+          </p>
+        </div>
+        <div class="section-head"><h2>مدیریت مالی</h2></div>
+        <div class="more-grid">
+          <button class="more-tile" onclick="showMoreSection('checks')">
+            <span class="tile-count" id="moreCheckCount">۰</span
+            ><span class="more-tile-icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3 10h18M7 15h4" />
+                <circle cx="17" cy="15" r="1" /></svg></span
+            ><b>ثبت چک</b
+            ><small
+              >چک‌های دریافتی و پرداختی، سررسیدها و ثبت وصول یا پرداخت</small
+            >
+          </button>
+          <button class="more-tile" onclick="showMoreSection('installments')">
+            <span class="tile-count" id="moreInstallmentCount">۰</span
+            ><span class="more-tile-icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="4" y="3" width="16" height="18" rx="2" />
+                <path d="M8 7h8M8 11h2m4 0h2M8 15h2m4 0h2M8 18h8" /></svg></span
+            ><b>اقساط و وام</b
+            ><small>وام دریافتی، خرید قسطی و فروش قسطی / طلب</small>
+          </button>
+          <button class="more-tile" onclick="showMoreSection('debts')">
+            <span class="tile-count" id="moreDebtCount">۰</span
+            ><span class="more-tile-icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M7 7h13l-3-3M20 7l-3 3M17 17H4l3 3M4 17l3-3"
+                /></svg></span
+            ><b>بدهی و طلب</b
+            ><small>پیگیری مانده بدهی‌ها و طلب‌ها و ثبت پرداخت‌ها</small>
+          </button>
+        </div>
+        <div class="module-tip">
+          یادآوری مهم: در روز سررسید، حساب به‌صورت خودکار تغییر نمی‌کند. پس از
+          بررسی واقعی وصول یا پرداخت، آن را ثبت کنید تا موجودی و گزارش‌های مالی
+          دقیق بمانند.
+        </div>
+      </main>
+
+      <main id="checks" class="page">
+        <div class="module-head">
+          <button
+            class="module-back"
+            onclick="showPage('more')"
+            aria-label="بازگشت"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div>
+            <h2>مدیریت چک‌ها</h2>
+            <small>چک‌های دریافتی و پرداختی را پیگیری کنید</small>
+          </div>
+          <div style="flex: 1"></div>
+          <button
+            class="primary"
+            style="
+              margin: 0;
+              padding: 10px 13px;
+              border-radius: 13px;
+              font-size: 11px;
+            "
+            onclick="openCheck()"
+          >
+            + چک جدید
+          </button>
+        </div>
+        <div class="module-summary">
+          <div class="module-stat good">
+            <small>دریافتی‌های باز</small><b id="checkReceivedTotal">۰</b>
+          </div>
+          <div class="module-stat bad">
+            <small>پرداختی‌های باز</small><b id="checkPaidTotal">۰</b>
+          </div>
+          <div class="module-stat">
+            <small>سررسید گذشته</small><b id="checkOverdueCount">۰</b>
+          </div>
+        </div>
+        <div class="module-filters">
+          <button
+            class="chip active"
+            data-check-filter="all"
+            onclick="setCheckFilter(this, 'all')"
+          >
+            همه</button
+          ><button
+            class="chip"
+            data-check-filter="received"
+            onclick="setCheckFilter(this, 'received')"
+          >
+            دریافتی</button
+          ><button
+            class="chip"
+            data-check-filter="paid"
+            onclick="setCheckFilter(this, 'paid')"
+          >
+            پرداختی</button
+          ><button
+            class="chip"
+            data-check-filter="overdue"
+            onclick="setCheckFilter(this, 'overdue')"
+          >
+            سررسید گذشته</button
+          ><button
+            class="chip"
+            data-check-filter="settled"
+            onclick="setCheckFilter(this, 'settled')"
+          >
+            تعیین‌تکلیف‌شده
+          </button>
+        </div>
+        <div id="checkList" class="module-list"></div>
+        <div class="module-tip">
+          در سررسید چک، حساب خودکار تغییر نمی‌کند. بعد از اطمینان از وصول یا
+          پرداخت، گزینه «ثبت در حساب» را بزنید؛ اگر فقط می‌خواهید وضعیت چک را
+          ثبت کنید، گزینه دوم را انتخاب کنید.
+        </div>
+      </main>
+
+      <main id="installments" class="page">
+        <div class="module-head">
+          <button
+            class="module-back"
+            onclick="showPage('more')"
+            aria-label="بازگشت"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div>
+            <h2>اقساط و وام</h2>
+            <small>برنامه اقساط و سررسیدهای پیش‌رو</small>
+          </div>
+          <div style="flex: 1"></div>
+          <button
+            class="primary"
+            style="
+              margin: 0;
+              padding: 10px 13px;
+              border-radius: 13px;
+              font-size: 11px;
+            "
+            onclick="openInstallment()"
+          >
+            + مورد جدید
+          </button>
+        </div>
+        <div class="module-summary">
+          <div class="module-stat">
+            <small>برنامه‌های فعال</small><b id="installmentActiveCount">۰</b>
+          </div>
+          <div class="module-stat bad">
+            <small>اقساط عقب‌افتاده</small><b id="installmentOverdueCount">۰</b>
+          </div>
+          <div class="module-stat good">
+            <small>قسط بعدی</small><b id="installmentNextAmount">—</b>
+          </div>
+        </div>
+        <div class="module-filters">
+          <button
+            class="chip active"
+            data-inst-filter="all"
+            onclick="setInstallmentFilter(this, 'all')"
+          >
+            همه</button
+          ><button
+            class="chip"
+            data-inst-filter="loan"
+            onclick="setInstallmentFilter(this, 'loan')"
+          >
+            وام دریافتی</button
+          ><button
+            class="chip"
+            data-inst-filter="purchase"
+            onclick="setInstallmentFilter(this, 'purchase')"
+          >
+            خرید قسطی</button
+          ><button
+            class="chip"
+            data-inst-filter="sale"
+            onclick="setInstallmentFilter(this, 'sale')"
+          >
+            فروش قسطی / طلب</button
+          ><button
+            class="chip"
+            data-inst-filter="overdue"
+            onclick="setInstallmentFilter(this, 'overdue')"
+          >
+            عقب‌افتاده
+          </button>
+        </div>
+        <div id="installmentList" class="module-list"></div>
+        <div class="module-tip">
+          تاریخ اولین سررسید، مبنای زمان‌بندی ماهانه است. در سررسید، قسط به‌صورت
+          یادآوری نمایش داده می‌شود؛ موجودی حساب فقط پس از ثبت پرداخت یا دریافت
+          تغییر می‌کند.
+        </div>
       </main>
     </div>
 
@@ -1812,8 +3012,19 @@
       <button class="nav-btn" data-page="budgets" onclick="showPage('budgets')">
         <span>◎</span>بودجه
       </button>
-      <button class="nav-btn" data-page="debts" onclick="showPage('debts')">
-        <span>⇄</span>بدهی/طلب
+      <button class="nav-btn" data-page="more" onclick="showPage('more')">
+        <span
+          ><svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+            stroke-linecap="round"
+          >
+            <circle cx="5" cy="12" r="1.2" />
+            <circle cx="12" cy="12" r="1.2" />
+            <circle cx="19" cy="12" r="1.2" /></svg></span
+        >بیشتر
       </button>
     </nav>
     <div
@@ -1858,6 +3069,8 @@
         transactions: [],
         budgets: [],
         debts: [],
+        checks: [],
+        installments: [],
         categories: defaultCategories.map((x) => ({
           icon: x[0],
           name: x[1],
@@ -1874,7 +3087,12 @@
           balanceDisplayCurrency: "default",
           usdToToman: null,
           usdRateUpdatedAt: "",
-          smsAutomation: { enabled: false, rules: [], processed: [], pending: [] },
+          smsAutomation: {
+            enabled: false,
+            rules: [],
+            processed: [],
+            pending: [],
+          },
         },
         state.settings || {},
       );
@@ -1882,13 +3100,26 @@
         state.settings.balanceDisplayCurrency = "default";
       if (!Object.prototype.hasOwnProperty.call(state.settings, "usdToToman"))
         state.settings.usdToToman = null;
-      if (!Object.prototype.hasOwnProperty.call(state.settings, "usdRateFetchedAt"))
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          state.settings,
+          "usdRateFetchedAt",
+        )
+      )
         state.settings.usdRateFetchedAt = 0;
-      if (!Object.prototype.hasOwnProperty.call(state.settings, "usdRateUpdatedAt"))
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          state.settings,
+          "usdRateUpdatedAt",
+        )
+      )
         state.settings.usdRateUpdatedAt = "";
       if (!Array.isArray(state.debts)) state.debts = [];
+      if (!Array.isArray(state.checks)) state.checks = [];
+      if (!Array.isArray(state.installments)) state.installments = [];
 
-      let debtFilter = "all", debtAccountFilter = "all";
+      let debtFilter = "all",
+        debtAccountFilter = "all";
 
       let reportPeriod = "day",
         reportAccount = "all",
@@ -2021,33 +3252,47 @@
         return (Number(n) || 0) * currencyFactor();
       }
       function balanceCurrencyOptions() {
-        const configured = state.settings.currency === "ریال" ? "ریال" : "تومان";
+        const configured =
+          state.settings.currency === "ریال" ? "ریال" : "تومان";
         return [
-          { key: "default", label: configured, symbol: configured === "ریال" ? "﷼" : "ت", kind: "تنظیمات" },
+          {
+            key: "default",
+            label: configured,
+            symbol: configured === "ریال" ? "﷼" : "ت",
+            kind: "تنظیمات",
+          },
           { key: "usd", label: "دلار آمریکا", symbol: "$", kind: "USD" },
         ];
       }
 
       function balanceCurrencyLabel() {
-        return balanceCurrencyOptions().find(
-          x => x.key === (state.settings.balanceDisplayCurrency || "default")
-        ) || balanceCurrencyOptions()[0];
+        return (
+          balanceCurrencyOptions().find(
+            (x) =>
+              x.key === (state.settings.balanceDisplayCurrency || "default"),
+          ) || balanceCurrencyOptions()[0]
+        );
       }
 
       function formatUsd(n) {
         const value = Number(n) || 0;
-        const digits = Math.abs(value) >= 1000 ? 0 : Math.abs(value) >= 100 ? 1 : 2;
+        const digits =
+          Math.abs(value) >= 1000 ? 0 : Math.abs(value) >= 100 ? 1 : 2;
         return new Intl.NumberFormat("fa-IR", {
           minimumFractionDigits: digits,
-          maximumFractionDigits: digits
+          maximumFractionDigits: digits,
         }).format(value);
       }
 
       function getTotalBalanceBaseToman() {
-        let total = state.accounts.reduce((s, a) => s + (Number(a.balance) || 0), 0);
+        let total = state.accounts.reduce(
+          (s, a) => s + (Number(a.balance) || 0),
+          0,
+        );
         if (state.settings.includeAssets)
           total += state.assets.reduce(
-            (s, a) => s + (Number(a.qty) || 0) * (Number(a.price) || 0), 0
+            (s, a) => s + (Number(a.qty) || 0) * (Number(a.price) || 0),
+            0,
           );
         return total;
       }
@@ -2061,7 +3306,10 @@
         const trigger = document.getElementById("balanceCurrencyTrigger");
         if (!menu || !trigger) return;
         const active = state.settings.balanceDisplayCurrency || "default";
-        menu.innerHTML = balanceCurrencyOptions().map(o => `
+        menu.innerHTML =
+          balanceCurrencyOptions()
+            .map(
+              (o) => `
           <button type="button" class="balance-currency-option ${active === o.key ? "active" : ""}"
             role="menuitem" onclick="selectBalanceCurrency('${o.key}')">
             <span class="currency-option-main">
@@ -2070,13 +3318,20 @@
             </span>
             <span class="currency-option-check">✓</span>
           </button>
-        `).join("") + (active === "usd"
-          ? `<div class="balance-fx-status">${
-              state.settings.usdToToman
-                ? `نرخ مبنا: ۱ دلار ≈ ${faNum(state.settings.usdToToman)} تومان`
-                : "برای تبدیل دلار، نرخ ارز از API دریافت می‌شود."
-            }</div>` : "");
-        trigger.setAttribute("aria-expanded", menu.classList.contains("show") ? "true" : "false");
+        `,
+            )
+            .join("") +
+          (active === "usd"
+            ? `<div class="balance-fx-status">${
+                state.settings.usdToToman
+                  ? `نرخ مبنا: ۱ دلار ≈ ${faNum(state.settings.usdToToman)} تومان`
+                  : "برای تبدیل دلار، نرخ ارز از API دریافت می‌شود."
+              }</div>`
+            : "");
+        trigger.setAttribute(
+          "aria-expanded",
+          menu.classList.contains("show") ? "true" : "false",
+        );
       }
 
       function toggleBalanceCurrencyMenu(event) {
@@ -2098,8 +3353,11 @@
 
       async function ensureUsdRate() {
         const now = Date.now();
-        if (state.settings.usdToToman &&
-            now - (Number(state.settings.usdRateFetchedAt) || 0) < MARKET_API_INTERVAL)
+        if (
+          state.settings.usdToToman &&
+          now - (Number(state.settings.usdRateFetchedAt) || 0) <
+            MARKET_API_INTERVAL
+        )
           return Number(state.settings.usdToToman);
 
         try {
@@ -2132,7 +3390,11 @@
         state.settings.balanceDisplayCurrency = key;
         save();
         render();
-        toast(key === "usd" ? "نمایش موجودی به دلار تغییر کرد" : "نمایش موجودی به واحد تنظیمات برگشت");
+        toast(
+          key === "usd"
+            ? "نمایش موجودی به دلار تغییر کرد"
+            : "نمایش موجودی به واحد تنظیمات برگشت",
+        );
       }
 
       function renderTotalBalance() {
@@ -2180,11 +3442,24 @@
         document
           .querySelectorAll(".page")
           .forEach((x) => x.classList.remove("active"));
-        document.getElementById(id).classList.add("active");
+        const target = document.getElementById(id);
+        if (target) target.classList.add("active");
         document
           .querySelectorAll(".nav-btn")
-          .forEach((x) => x.classList.toggle("active", x.dataset.page === id));
+          .forEach((x) =>
+            x.classList.toggle(
+              "active",
+              x.dataset.page === id ||
+                ((id === "debts" || id === "checks" || id === "installments") &&
+                  x.dataset.page === "more"),
+            ),
+          );
+        const fab = document.querySelector(".fab");
+        if (fab) fab.style.display = id === "home" ? "block" : "none";
         render();
+      }
+      function showMoreSection(id) {
+        showPage(id);
       }
       function openSheet(h) {
         document.getElementById("sheet").innerHTML = h;
@@ -2196,7 +3471,8 @@
 
       document.addEventListener("click", (event) => {
         const control = document.getElementById("balanceCurrencyControl");
-        if (control && !control.contains(event.target)) closeBalanceCurrencyMenu();
+        if (control && !control.contains(event.target))
+          closeBalanceCurrencyMenu();
       });
 
       /* ===================== BANKS ===================== */
@@ -2349,7 +3625,12 @@
       }
 
       /* ===================== TRANSACTIONS ===================== */
-      function openTx() {
+      function openTx(editId = null) {
+        const editingTx =
+          editId != null
+            ? state.transactions.find((t) => String(t.id) === String(editId))
+            : null;
+        if (editId != null && !editingTx) return toast("تراکنش پیدا نشد");
         if (!state.accounts.length) {
           openAccount();
           toast("ابتدا یک حساب اضافه کنید");
@@ -2358,28 +3639,29 @@
         let cats = state.categories
             .map(
               (c, i) =>
-                `<option value="${i}">${c.icon} ${esc(c.name)}</option>`,
+                `<option value="${i}" ${editingTx && c.name === editingTx.category ? "selected" : ""}>${c.icon} ${esc(c.name)}</option>`,
             )
             .join(""),
           accs = state.accounts
             .map(
               (a) =>
-                `<option value="${a.id}">${a.icon} ${esc(a.name)}</option>`,
+                `<option value="${a.id}" ${editingTx && String(a.id) === String(editingTx.accountId) ? "selected" : ""}>${a.icon} ${esc(a.name)}</option>`,
             )
             .join("");
-        openSheet(`<div class="sheet-head"><h3>ثبت تراکنش</h3><button class="close" onclick="closeSheet()">×</button></div>
- <div class="filterbar"><button class="chip active" id="tExpense" onclick="txType('expense')">− خرج</button><button class="chip" id="tIncome" onclick="txType('income')">+ دخل</button><button class="chip" id="tTransfer" onclick="txType('transfer')">⇄ جابه‌جایی</button></div>
- <input type="hidden" id="txType" value="expense">
+        openSheet(`<div class="sheet-head"><h3>${editingTx ? "ویرایش تراکنش" : "ثبت تراکنش"}</h3><button class="close" onclick="closeSheet()">×</button></div>
+ <div class="filterbar"><button class="chip ${!editingTx || editingTx.type === "expense" ? "active" : ""}" id="tExpense" onclick="txType('expense')">− خرج</button><button class="chip ${editingTx?.type === "income" ? "active" : ""}" id="tIncome" onclick="txType('income')">+ دخل</button><button class="chip ${editingTx?.type === "transfer" ? "active" : ""}" id="tTransfer" onclick="txType('transfer')">⇄ جابه‌جایی</button></div>
+ <input type="hidden" id="txType" value="${editingTx?.type || "expense"}"><input type="hidden" id="txEditId" value="${editingTx?.id || ""}">
  <div class="form-grid">
-  <div class="field"><label>مبلغ</label><input id="txAmount" type="text" inputmode="decimal" placeholder="مبلغ به ${state.settings.currency}"></div>
-  <div class="field"><label>تاریخ ${state.settings.dateMode === "jalali" ? "شمسی" : "میلادی"}</label><input id="txDateText" value="${displayDate(todayISO())}" placeholder="${state.settings.dateMode === "jalali" ? "1405/07/15" : "2026/10/07"}"></div>
+  <div class="field"><label>مبلغ</label><input id="txAmount" type="text" inputmode="decimal" value="${editingTx ? displayAmount(editingTx.amount) : ""}" placeholder="مبلغ به ${state.settings.currency}"></div>
+  <div class="field"><label>تاریخ ${state.settings.dateMode === "jalali" ? "شمسی" : "میلادی"}</label><input id="txDateText" value="${displayDate(editingTx?.date || todayISO())}" placeholder="${state.settings.dateMode === "jalali" ? "1405/07/15" : "2026/10/07"}"></div>
   <div class="field"><label>حساب</label><select id="txAccount">${accs}</select></div>
-  <div class="field" id="toWrap" style="display:none"><label>حساب مقصد</label><select id="txTo">${accs}</select></div>
+  <div class="field" id="toWrap" style="display:none"><label>حساب مقصد</label><select id="txTo">${state.accounts.map((a) => `<option value="${a.id}" ${editingTx && String(a.id) === String(editingTx.toAccountId) ? "selected" : ""}>${a.icon} ${esc(a.name)}</option>`).join("")}</select></div>
   <div class="field" id="catWrap"><label>دسته‌بندی</label><select id="txCat">${cats}</select></div>
-  <div class="field full"><label>توضیحات</label><input id="txNote" placeholder="مثلاً خرید ناهار"></div>
+  <div class="field full"><label>توضیحات</label><input id="txNote" value="${esc(editingTx?.note || "")}" placeholder="مثلاً خرید ناهار"></div>
  </div>
  <div class="switch-info">تاریخ با فرمت <b>${state.settings.dateMode === "jalali" ? "سال/ماه/روز شمسی" : "سال/ماه/روز میلادی"}</b> وارد شود.</div>
- <button class="primary" onclick="addTx()">ثبت تراکنش</button>`);
+ <button class="primary" onclick="addTx()">${editingTx ? "ذخیره ویرایش" : "ثبت تراکنش"}</button>`);
+        if (editingTx) txType(editingTx.type);
       }
       function txType(t) {
         document.getElementById("txType").value = t;
@@ -2418,6 +3700,10 @@
         return d <= max;
       }
       function addTx() {
+        const editId = document.getElementById("txEditId")?.value;
+        const oldTx = editId
+          ? state.transactions.find((t) => String(t.id) === String(editId))
+          : null;
         let type = document.getElementById("txType").value,
           amount = inputAmount(document.getElementById("txAmount").value),
           text = document.getElementById("txDateText").value.trim();
@@ -2434,34 +3720,72 @@
           toast("مبلغ و حساب را درست وارد کنید");
           return;
         }
-        // خرج و انتقال نباید باعث منفی شدن موجودی حساب مبدأ شوند.
+        let to = null;
+        if (type === "transfer") {
+          to = state.accounts.find(
+            (a) =>
+              String(a.id) === String(document.getElementById("txTo").value),
+          );
+          if (!to || String(to.id) === String(acc.id)) {
+            toast("حساب مقصد را درست انتخاب کنید");
+            return;
+          }
+        }
+        // موجودی فرضی پس از برگرداندن اثر تراکنش قبلی؛ ویرایش باعث دوباره‌شماری موجودی نمی‌شود.
+        const projected = new Map(
+          state.accounts.map((a) => [String(a.id), Number(a.balance) || 0]),
+        );
+        if (oldTx) {
+          if (oldTx.type === "income")
+            projected.set(
+              String(oldTx.accountId),
+              projected.get(String(oldTx.accountId)) - Number(oldTx.amount),
+            );
+          if (oldTx.type === "expense")
+            projected.set(
+              String(oldTx.accountId),
+              projected.get(String(oldTx.accountId)) + Number(oldTx.amount),
+            );
+          if (oldTx.type === "transfer") {
+            projected.set(
+              String(oldTx.accountId),
+              projected.get(String(oldTx.accountId)) + Number(oldTx.amount),
+            );
+            projected.set(
+              String(oldTx.toAccountId),
+              (projected.get(String(oldTx.toAccountId)) || 0) -
+                Number(oldTx.amount),
+            );
+          }
+        }
         if (
           (type === "expense" || type === "transfer") &&
-          amount > Number(acc.balance)
+          amount > (projected.get(String(acc.id)) || 0)
         ) {
           toast("موجودی حساب کافی نیست");
           return;
         }
-        if (type === "expense") acc.balance -= amount;
-        if (type === "income") acc.balance += amount;
-        let to = null;
+        if (type === "expense")
+          projected.set(String(acc.id), projected.get(String(acc.id)) - amount);
+        if (type === "income")
+          projected.set(String(acc.id), projected.get(String(acc.id)) + amount);
         if (type === "transfer") {
-          to = state.accounts.find(
-            (a) => a.id == document.getElementById("txTo").value,
+          projected.set(String(acc.id), projected.get(String(acc.id)) - amount);
+          projected.set(
+            String(to.id),
+            (projected.get(String(to.id)) || 0) + amount,
           );
-          if (!to || to.id === acc.id) {
-            toast("حساب مقصد را درست انتخاب کنید");
-            return;
-          }
-          acc.balance -= amount;
-          to.balance += amount;
         }
+        state.accounts.forEach((a) => {
+          a.balance = projected.get(String(a.id)) ?? a.balance;
+        });
         let cat =
           type === "transfer"
             ? null
             : state.categories[Number(document.getElementById("txCat").value)];
-        state.transactions.unshift({
-          id: Date.now(),
+        const updatedTx = {
+          ...(oldTx || {}),
+          id: oldTx ? oldTx.id : Date.now(),
           type,
           amount,
           date,
@@ -2469,12 +3793,17 @@
           toAccountId: to?.id || null,
           category: cat?.name || "انتقال",
           icon: cat?.icon || "⇄",
-          note: document.getElementById("txNote").value,
-        });
+          note: document.getElementById("txNote").value.trim(),
+        };
+        if (oldTx)
+          state.transactions = state.transactions.map((t) =>
+            String(t.id) === String(oldTx.id) ? updatedTx : t,
+          );
+        else state.transactions.unshift(updatedTx);
         save();
         closeSheet();
         render();
-        toast("تراکنش ثبت شد");
+        toast(oldTx ? "تراکنش ویرایش شد" : "تراکنش ثبت شد");
       }
       function txHtml(t) {
         let a = state.accounts.find((x) => x.id === t.accountId),
@@ -2485,7 +3814,7 @@
               : t.type === "expense"
                 ? "expense"
                 : "";
-        return `<div class="tx"><div class="tx-icon">${t.icon || "◈"}</div><div class="tx-main"><b>${esc(t.category || "انتقال")}</b><small>${esc(t.note || "بدون توضیح")} · ${esc(a?.name || "حساب حذف‌شده")} · ${displayDate(t.date)}</small></div><div class="tx-amount ${cls}">${sign} ${money(t.amount)}</div></div>`;
+        return `<div class="tx"><div class="tx-icon">${t.icon || "◈"}</div><div class="tx-main"><b>${esc(t.category || "انتقال")}</b><small>${esc(t.note || "بدون توضیح")} · ${esc(a?.name || "حساب حذف‌شده")} · ${displayDate(t.date)}</small></div><div class="tx-amount ${cls}">${sign} ${money(t.amount)}</div><button class="tx-edit-btn" onclick="event.stopPropagation();openTx(${JSON.stringify(t.id)})" aria-label="ویرایش تراکنش" title="ویرایش تراکنش"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg></button></div>`;
       }
 
       /* ===================== ASSETS ===================== */
@@ -2900,9 +4229,11 @@
       }
       function setDebtFilter(btn, filter) {
         debtFilter = filter;
-        document.querySelectorAll("[data-debt-filter]").forEach((x) =>
-          x.classList.toggle("active", x.dataset.debtFilter === filter),
-        );
+        document
+          .querySelectorAll("[data-debt-filter]")
+          .forEach((x) =>
+            x.classList.toggle("active", x.dataset.debtFilter === filter),
+          );
         renderDebts();
       }
       function setDebtAccountFilter(value) {
@@ -2913,59 +4244,90 @@
         const list = document.getElementById("debtList");
         if (!list) return;
         // Keep displayed equivalents tied to the latest market rates, not the rate from when the debt was entered.
-        if (!debtRates.busy && (!debtRates.fetchedAt || Date.now() - debtRates.fetchedAt > 300000)) refreshDebtRates(false);
+        if (
+          !debtRates.busy &&
+          (!debtRates.fetchedAt || Date.now() - debtRates.fetchedAt > 300000)
+        )
+          refreshDebtRates(false);
         const debts = Array.isArray(state.debts) ? state.debts : [];
         const open = debts.filter((d) => !debtSettled(d));
-        const receivable = open.filter((d) => d.type === "receivable").reduce((s,d) => s + debtToToman(d, debtRemaining(d)), 0);
-        const payable = open.filter((d) => d.type === "payable").reduce((s,d) => s + debtToToman(d, debtRemaining(d)), 0);
-        document.getElementById("debtReceivableTotal").textContent = money(receivable);
-        document.getElementById("debtPayableTotal").textContent = money(payable);
+        const receivable = open
+          .filter((d) => d.type === "receivable")
+          .reduce((s, d) => s + debtToToman(d, debtRemaining(d)), 0);
+        const payable = open
+          .filter((d) => d.type === "payable")
+          .reduce((s, d) => s + debtToToman(d, debtRemaining(d)), 0);
+        document.getElementById("debtReceivableTotal").textContent =
+          money(receivable);
+        document.getElementById("debtPayableTotal").textContent =
+          money(payable);
         const net = receivable - payable;
         const netEl = document.getElementById("debtNetTotal");
         netEl.textContent = (net < 0 ? "− " : "+ ") + money(Math.abs(net));
 
         const accSelect = document.getElementById("debtAccountFilter");
         if (accSelect) {
-          accSelect.innerHTML = `<option value="all">همه حساب‌ها</option>` + state.accounts.map((a) =>
-            `<option value="${a.id}">${esc(a.name)}</option>`).join("");
+          accSelect.innerHTML =
+            `<option value="all">همه حساب‌ها</option>` +
+            state.accounts
+              .map((a) => `<option value="${a.id}">${esc(a.name)}</option>`)
+              .join("");
           accSelect.value = debtAccountFilter;
           if (accSelect.value !== debtAccountFilter) debtAccountFilter = "all";
         }
         const filtered = debts
           .filter((d) => debtFilter === "all" || d.type === debtFilter)
-          .filter((d) => debtAccountFilter === "all" || String(d.accountId) === String(debtAccountFilter))
-          .sort((a,b) => {
-            const as = debtSettled(a), bs = debtSettled(b);
+          .filter(
+            (d) =>
+              debtAccountFilter === "all" ||
+              String(d.accountId) === String(debtAccountFilter),
+          )
+          .sort((a, b) => {
+            const as = debtSettled(a),
+              bs = debtSettled(b);
             if (as !== bs) return as ? 1 : -1;
-            if (a.dueDate && b.dueDate) return a.dueDate.localeCompare(b.dueDate);
+            if (a.dueDate && b.dueDate)
+              return a.dueDate.localeCompare(b.dueDate);
             return (b.id || 0) - (a.id || 0);
           });
         if (!filtered.length) {
           list.innerHTML = `<div class="empty"><b>${debts.length ? "موردی با این فیلتر پیدا نشد" : "هنوز بدهی یا طلبی ثبت نشده است."}</b><br><small>${debts.length ? "فیلتر حساب یا نوع را تغییر دهید." : "برای شروع، یک طلب یا بدهی ثبت کنید."}</small></div>`;
           return;
         }
-        list.innerHTML = filtered.map((d) => {
-          const a = state.accounts.find((x) => String(x.id) === String(d.accountId));
-          const remaining = debtRemaining(d), total = Number(d.amount || 0), paid = Math.min(total, Number(d.paid || 0));
-          const pct = total ? Math.min(100, (paid / total) * 100) : 0;
-          const settled = debtSettled(d);
-          const overdue = !settled && d.dueDate && d.dueDate < todayISO();
-          return `<div class="debt-card ${d.type} ${settled ? "debt-settled" : ""}">
+        list.innerHTML = filtered
+          .map((d) => {
+            const a = state.accounts.find(
+              (x) => String(x.id) === String(d.accountId),
+            );
+            const remaining = debtRemaining(d),
+              total = Number(d.amount || 0),
+              paid = Math.min(total, Number(d.paid || 0));
+            const pct = total ? Math.min(100, (paid / total) * 100) : 0;
+            const settled = debtSettled(d);
+            const overdue = !settled && d.dueDate && d.dueDate < todayISO();
+            return `<div class="debt-card ${d.type} ${settled ? "debt-settled" : ""}">
             <div class="debt-card-top">
               <div class="debt-title-wrap"><div class="debt-title">${esc(d.title || (d.type === "receivable" ? "طلب" : "بدهی"))}</div><div class="debt-person">${esc(d.person || "بدون نام")}</div></div>
               <span class="debt-type ${d.type}">${d.type === "receivable" ? "طلب از او" : "بدهکار به او"}</span>
             </div>
-            <div class="debt-amount-row"><div><div class="debt-native-amount">${debtNativeMoney(d, remaining)}</div><div class="debt-converted">معادل ${money(debtToToman(d, remaining))}</div><div class="debt-total">کل: ${debtNativeMoney(d,total)} · پرداخت‌شده: ${debtNativeMoney(d,paid)}</div></div></div>
+            <div class="debt-amount-row"><div><div class="debt-native-amount">${debtNativeMoney(d, remaining)}</div><div class="debt-converted">معادل ${money(debtToToman(d, remaining))}</div><div class="debt-total">کل: ${debtNativeMoney(d, total)} · پرداخت‌شده: ${debtNativeMoney(d, paid)}</div></div></div>
             <div class="debt-meta"><span>💳 ${esc(a?.name || "حساب حذف‌شده")}</span><span class="${overdue ? "debt-overdue" : ""}">◷ ${esc(debtDueLabel(d))}</span></div>
             <div class="debt-progress"><i style="width:${pct}%"></i></div>
             ${!settled ? `<div class="debt-actions"><button class="debt-pay-btn" onclick="openDebtPayment(${d.id})">ثبت پرداخت</button><button class="debt-more-btn" onclick="openDebt(${d.id})">ویرایش</button></div>` : `<div class="debt-actions"><button class="debt-more-btn" onclick="openDebt(${d.id})">مشاهده / ویرایش</button></div>`}
           </div>`;
-        }).join("");
+          })
+          .join("");
       }
       function openDebt(id = null) {
-        if (!state.accounts.length) return toast("اول حداقل یک حساب اضافه کنید");
+        if (!state.accounts.length)
+          return toast("اول حداقل یک حساب اضافه کنید");
         const d = id ? state.debts.find((x) => x.id === id) : null;
-        const accounts = state.accounts.map((a) => `<option value="${a.id}" ${String(a.id) === String(d?.accountId ?? state.accounts[0].id) ? "selected" : ""}>${esc(a.name)}</option>`).join("");
+        const accounts = state.accounts
+          .map(
+            (a) =>
+              `<option value="${a.id}" ${String(a.id) === String(d?.accountId ?? state.accounts[0].id) ? "selected" : ""}>${esc(a.name)}</option>`,
+          )
+          .join("");
         const isEditing = !!d;
         openSheet(`<div class="sheet-head"><h3>${isEditing ? "ویرایش بدهی / طلب" : "ثبت بدهی یا طلب"}</h3><button class="close" onclick="closeSheet()">×</button></div>
           <div class="form-grid">
@@ -2973,7 +4335,15 @@
             <div class="field"><label>حساب مرتبط</label><select id="debtAccount">${accounts}</select></div>
             <div class="field full"><label>عنوان</label><input id="debtTitle" value="${esc(d?.title || "")}" placeholder="مثلاً قرض به علی"></div>
             <div class="field"><label>شخص / طرف حساب</label><input id="debtPerson" value="${esc(d?.person || "")}" placeholder="مثلاً علی"></div>
-            <div class="field"><label>واحد مبلغ</label><select id="debtCurrency" onchange="updateDebtFxPreview()"><option value="${d?.currency || 'toman'}" selected>${({'toman':'تومان','rial':'ریال','usd':'دلار آمریکا','gold':'گرم طلای ۱۸ عیار'}[d?.currency || 'toman'])}</option>${[['toman','تومان'],['rial','ریال'],['usd','دلار آمریکا'],['gold','گرم طلای ۱۸ عیار']].filter(x=>x[0] !== (d?.currency || 'toman')).map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')}</select></div>
+            <div class="field"><label>واحد مبلغ</label><select id="debtCurrency" onchange="updateDebtFxPreview()"><option value="${d?.currency || "toman"}" selected>${{ toman: "تومان", rial: "ریال", usd: "دلار آمریکا", gold: "گرم طلای ۱۸ عیار" }[d?.currency || "toman"]}</option>${[
+              ["toman", "تومان"],
+              ["rial", "ریال"],
+              ["usd", "دلار آمریکا"],
+              ["gold", "گرم طلای ۱۸ عیار"],
+            ]
+              .filter((x) => x[0] !== (d?.currency || "toman"))
+              .map((x) => `<option value="${x[0]}">${x[1]}</option>`)
+              .join("")}</select></div>
             <div class="field"><label>مبلغ کل</label><input id="debtAmount" type="text" inputmode="decimal" value="${d ? faNum(d.amount) : ""}" placeholder="مثلاً 10" oninput="updateDebtFxPreview()"></div>
             <div class="debt-fx-preview"><div><small id="debtFxLabel">معادل تقریبی به واحد تنظیمات</small><strong id="debtFxValue">برای محاسبه، مبلغ را وارد کنید</strong><small id="debtFxUpdated">نرخ از API بازار دریافت می‌شود</small></div><button type="button" class="debt-fx-refresh" onclick="refreshDebtRates(true)">↻ بروزرسانی نرخ</button></div>
             <div class="field"><label>تاریخ سررسید</label><input id="debtDue" type="date" value="${esc(d?.dueDate || "")}"></div>
@@ -2983,28 +4353,111 @@
           <button class="primary" onclick="saveDebt(${id || 0})">${isEditing ? "ذخیره تغییرات" : "ثبت مورد"}</button>
           ${isEditing ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteDebt(${d.id})">حذف این مورد</button>` : ""}`);
         updateDebtFxPreview();
-        if (!debtRates.updatedAt || Date.now() - debtRates.fetchedAt > 300000) refreshDebtRates(false);
+        if (!debtRates.updatedAt || Date.now() - debtRates.fetchedAt > 300000)
+          refreshDebtRates(false);
       }
-      const debtRates = { usd: null, gold: null, updatedAt: "", fetchedAt: 0, busy: false };
-      function debtCurrencyLabel(c){return ({toman:"تومان",rial:"ریال",usd:"دلار",gold:"گرم طلا ۱۸ عیار"})[c]||"تومان";}
-      function debtNativeMoney(d,n){const value=Number(n)||0;return `${new Intl.NumberFormat("fa-IR",{maximumFractionDigits:3}).format(value)} ${debtCurrencyLabel(d.currency||"toman")}`;}
-      function debtToToman(d,n){const c=d.currency||"toman",v=Number(n||0);if(c==="usd")return v*(debtRates.usd||Number(state.settings.usdToToman)||0);if(c==="gold")return v*(debtRates.gold||0);if(c==="rial")return v/10;return v;}
-      async function refreshDebtRates(showMessage=false){
-        if(debtRates.busy)return; debtRates.busy=true;
-        const btn=document.querySelector(".debt-fx-refresh"); if(btn){btn.disabled=true;btn.textContent="⏳ دریافت...";}
-        try{const r=await fetch(MARKET_API_URL+"?t="+Date.now(),{cache:"no-store",headers:{Accept:"application/json"}});if(!r.ok)throw new Error("API");const data=await r.json();
-          const usd=getApiBasePrice(data,"USD_IRR_FREE",{type:"usd"}); const gold=getApiBasePrice(data,"GOLD_18K_IRR",{type:"gold"});
-          if(usd?.price)debtRates.usd=usd.price;if(gold?.price)debtRates.gold=gold.price;
-          if(debtRates.usd)state.settings.usdToToman=debtRates.usd;
-          debtRates.updatedAt=new Date().toLocaleString("fa-IR");debtRates.fetchedAt=Date.now();save();updateDebtFxPreview();renderDebts();
-          if(showMessage)toast("نرخ‌های بازار بروزرسانی شد");
-        }catch(e){debtRates.fetchedAt=Date.now();updateDebtFxPreview();if(showMessage)toast("دریافت نرخ ناموفق بود؛ آخرین نرخ ذخیره‌شده نمایش داده می‌شود");}
-        finally{debtRates.busy=false;if(btn){btn.disabled=false;btn.textContent="↻ بروزرسانی نرخ";}}
+      const debtRates = {
+        usd: null,
+        gold: null,
+        updatedAt: "",
+        fetchedAt: 0,
+        busy: false,
+      };
+      function debtCurrencyLabel(c) {
+        return (
+          {
+            toman: "تومان",
+            rial: "ریال",
+            usd: "دلار",
+            gold: "گرم طلا ۱۸ عیار",
+          }[c] || "تومان"
+        );
       }
-      function updateDebtFxPreview(){const amountEl=document.getElementById("debtAmount"),currencyEl=document.getElementById("debtCurrency");if(!amountEl||!currencyEl)return;const amount=cleanGroupedNumber(amountEl.value||0),c=currencyEl.value;const d={currency:c};const value=debtToToman(d,amount);const val=document.getElementById("debtFxValue"),label=document.getElementById("debtFxLabel"),updated=document.getElementById("debtFxUpdated");if(label)label.textContent=`معادل به ${state.settings.currency} (بر اساس نرخ بازار)`;if(val)val.textContent=amount>0&&value>0?money(value):"برای محاسبه، مبلغ را وارد کنید";if(updated)updated.textContent=(c==="toman"||c==="rial")?"تبدیل بر اساس واحد انتخابی تنظیمات":(debtRates.updatedAt?`آخرین نرخ: ${debtRates.updatedAt}`:"در حال دریافت نرخ زنده از API…");}
+      function debtNativeMoney(d, n) {
+        const value = Number(n) || 0;
+        return `${new Intl.NumberFormat("fa-IR", { maximumFractionDigits: 3 }).format(value)} ${debtCurrencyLabel(d.currency || "toman")}`;
+      }
+      function debtToToman(d, n) {
+        const c = d.currency || "toman",
+          v = Number(n || 0);
+        if (c === "usd")
+          return v * (debtRates.usd || Number(state.settings.usdToToman) || 0);
+        if (c === "gold") return v * (debtRates.gold || 0);
+        if (c === "rial") return v / 10;
+        return v;
+      }
+      async function refreshDebtRates(showMessage = false) {
+        if (debtRates.busy) return;
+        debtRates.busy = true;
+        const btn = document.querySelector(".debt-fx-refresh");
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "⏳ دریافت...";
+        }
+        try {
+          const r = await fetch(MARKET_API_URL + "?t=" + Date.now(), {
+            cache: "no-store",
+            headers: { Accept: "application/json" },
+          });
+          if (!r.ok) throw new Error("API");
+          const data = await r.json();
+          const usd = getApiBasePrice(data, "USD_IRR_FREE", { type: "usd" });
+          const gold = getApiBasePrice(data, "GOLD_18K_IRR", { type: "gold" });
+          if (usd?.price) debtRates.usd = usd.price;
+          if (gold?.price) debtRates.gold = gold.price;
+          if (debtRates.usd) state.settings.usdToToman = debtRates.usd;
+          debtRates.updatedAt = new Date().toLocaleString("fa-IR");
+          debtRates.fetchedAt = Date.now();
+          save();
+          updateDebtFxPreview();
+          renderDebts();
+          if (showMessage) toast("نرخ‌های بازار بروزرسانی شد");
+        } catch (e) {
+          debtRates.fetchedAt = Date.now();
+          updateDebtFxPreview();
+          if (showMessage)
+            toast(
+              "دریافت نرخ ناموفق بود؛ آخرین نرخ ذخیره‌شده نمایش داده می‌شود",
+            );
+        } finally {
+          debtRates.busy = false;
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = "↻ بروزرسانی نرخ";
+          }
+        }
+      }
+      function updateDebtFxPreview() {
+        const amountEl = document.getElementById("debtAmount"),
+          currencyEl = document.getElementById("debtCurrency");
+        if (!amountEl || !currencyEl) return;
+        const amount = cleanGroupedNumber(amountEl.value || 0),
+          c = currencyEl.value;
+        const d = { currency: c };
+        const value = debtToToman(d, amount);
+        const val = document.getElementById("debtFxValue"),
+          label = document.getElementById("debtFxLabel"),
+          updated = document.getElementById("debtFxUpdated");
+        if (label)
+          label.textContent = `معادل به ${state.settings.currency} (بر اساس نرخ بازار)`;
+        if (val)
+          val.textContent =
+            amount > 0 && value > 0
+              ? money(value)
+              : "برای محاسبه، مبلغ را وارد کنید";
+        if (updated)
+          updated.textContent =
+            c === "toman" || c === "rial"
+              ? "تبدیل بر اساس واحد انتخابی تنظیمات"
+              : debtRates.updatedAt
+                ? `آخرین نرخ: ${debtRates.updatedAt}`
+                : "در حال دریافت نرخ زنده از API…";
+      }
       function saveDebt(id) {
         const type = document.getElementById("debtType").value;
-        const amount = cleanGroupedNumber(document.getElementById("debtAmount").value);
+        const amount = cleanGroupedNumber(
+          document.getElementById("debtAmount").value,
+        );
         const currency = document.getElementById("debtCurrency").value;
         const title = document.getElementById("debtTitle").value.trim();
         const person = document.getElementById("debtPerson").value.trim();
@@ -3013,42 +4466,85 @@
         const note = document.getElementById("debtNote").value.trim();
         if (!amount) return toast("مبلغ را وارد کنید");
         const old = id ? state.debts.find((x) => x.id === id) : null;
-        if (old && amount < Number(old.paid || 0)) return toast("مبلغ کل نمی‌تواند از مبلغ پرداخت‌شده کمتر باشد");
-        const item = { id: id || Date.now(), type, title: title || (type === "receivable" ? "طلب" : "بدهی"), person, amount, currency, paid: old?.paid || 0, accountId, dueDate, note, createdAt: old?.createdAt || new Date().toISOString() };
-        if (old) Object.assign(old, item); else state.debts.unshift(item);
-        save(); closeSheet(); render(); toast(old ? "تغییرات ذخیره شد" : "ثبت شد");
+        if (old && amount < Number(old.paid || 0))
+          return toast("مبلغ کل نمی‌تواند از مبلغ پرداخت‌شده کمتر باشد");
+        const item = {
+          id: id || Date.now(),
+          type,
+          title: title || (type === "receivable" ? "طلب" : "بدهی"),
+          person,
+          amount,
+          currency,
+          paid: old?.paid || 0,
+          accountId,
+          dueDate,
+          note,
+          createdAt: old?.createdAt || new Date().toISOString(),
+        };
+        if (old) Object.assign(old, item);
+        else state.debts.unshift(item);
+        save();
+        closeSheet();
+        render();
+        toast(old ? "تغییرات ذخیره شد" : "ثبت شد");
       }
       function openDebtPayment(id) {
         const d = state.debts.find((x) => x.id === id);
         if (!d || debtSettled(d)) return;
         openSheet(`<div class="sheet-head"><h3>ثبت پرداخت</h3><button class="close" onclick="closeSheet()">×</button></div>
-          <div class="empty"><b>${esc(d.title)}</b><br><small>مانده: ${debtNativeMoney(d,debtRemaining(d))} · معادل ${money(debtToToman(d,debtRemaining(d)))}</small></div>
-          <div class="field" style="margin-top:14px"><label>${d.type === "receivable" ? "مبلغ دریافتی" : "مبلغ پرداختی"} (${debtCurrencyLabel(d.currency||"toman")})</label><input id="debtPaymentAmount" type="text" inputmode="decimal" placeholder="مبلغ"></div>
+          <div class="empty"><b>${esc(d.title)}</b><br><small>مانده: ${debtNativeMoney(d, debtRemaining(d))} · معادل ${money(debtToToman(d, debtRemaining(d)))}</small></div>
+          <div class="field" style="margin-top:14px"><label>${d.type === "receivable" ? "مبلغ دریافتی" : "مبلغ پرداختی"} (${debtCurrencyLabel(d.currency || "toman")})</label><input id="debtPaymentAmount" type="text" inputmode="decimal" placeholder="مبلغ"></div>
           <div class="field" style="margin-top:10px"><label>توضیح پرداخت</label><input id="debtPaymentNote" placeholder="اختیاری"></div>
           <button class="primary" onclick="saveDebtPayment(${d.id})">ثبت ${d.type === "receivable" ? "دریافت" : "پرداخت"}</button>`);
       }
       function saveDebtPayment(id) {
         const d = state.debts.find((x) => x.id === id);
         if (!d) return;
-        const amount = cleanGroupedNumber(document.getElementById("debtPaymentAmount").value);
+        const amount = cleanGroupedNumber(
+          document.getElementById("debtPaymentAmount").value,
+        );
         const remaining = debtRemaining(d);
-        if (!amount || amount > remaining) return toast("مبلغ پرداخت را درست وارد کنید");
-        const acc = state.accounts.find((a) => String(a.id) === String(d.accountId));
+        if (!amount || amount > remaining)
+          return toast("مبلغ پرداخت را درست وارد کنید");
+        const acc = state.accounts.find(
+          (a) => String(a.id) === String(d.accountId),
+        );
         if (!acc) return toast("حساب مرتبط پیدا نشد");
         const accountAmount = debtToToman(d, amount) / currencyFactor();
-        if (d.type === "payable" && accountAmount > Number(acc.balance || 0)) return toast("موجودی حساب برای این پرداخت کافی نیست");
+        if (d.type === "payable" && accountAmount > Number(acc.balance || 0))
+          return toast("موجودی حساب برای این پرداخت کافی نیست");
         d.paid = Number(d.paid || 0) + amount;
         if (d.type === "receivable") acc.balance += accountAmount;
         else acc.balance -= accountAmount;
-        state.transactions.unshift({ id: Date.now(), type: d.type === "receivable" ? "income" : "expense", amount: accountAmount, date: todayISO(), accountId: acc.id, toAccountId: null, category: d.type === "receivable" ? "دریافت طلب" : "پرداخت بدهی", icon: d.type === "receivable" ? "↗" : "↘", note: document.getElementById("debtPaymentNote").value.trim() || d.title });
-        save(); closeSheet(); render(); toast(d.type === "receivable" ? "دریافت ثبت شد" : "پرداخت ثبت شد");
+        state.transactions.unshift({
+          id: Date.now(),
+          type: d.type === "receivable" ? "income" : "expense",
+          amount: accountAmount,
+          date: todayISO(),
+          accountId: acc.id,
+          toAccountId: null,
+          category: d.type === "receivable" ? "دریافت طلب" : "پرداخت بدهی",
+          icon: d.type === "receivable" ? "↗" : "↘",
+          note:
+            document.getElementById("debtPaymentNote").value.trim() || d.title,
+        });
+        save();
+        closeSheet();
+        render();
+        toast(d.type === "receivable" ? "دریافت ثبت شد" : "پرداخت ثبت شد");
       }
       function deleteDebt(id) {
         const d = state.debts.find((x) => x.id === id);
         if (!d) return;
-        if (!confirm("این مورد حذف شود؟ سوابق پرداخت‌های ثبت‌شده باقی می‌مانند.")) return;
+        if (
+          !confirm("این مورد حذف شود؟ سوابق پرداخت‌های ثبت‌شده باقی می‌مانند.")
+        )
+          return;
         state.debts = state.debts.filter((x) => x.id !== id);
-        save(); closeSheet(); render(); toast("مورد حذف شد");
+        save();
+        closeSheet();
+        render();
+        toast("مورد حذف شد");
       }
 
       /* ===================== SETTINGS / BACKUP ===================== */
@@ -3129,21 +4625,34 @@
 
       /* ===================== SMS AUTOMATION ===================== */
       function toggleSmsAutomation(btn) {
-        state.settings.smsAutomation.enabled = !state.settings.smsAutomation.enabled;
+        state.settings.smsAutomation.enabled =
+          !state.settings.smsAutomation.enabled;
         save();
         btn.classList.toggle("on", state.settings.smsAutomation.enabled);
-        if (state.settings.smsAutomation.enabled && window.AndroidSmsBridge?.requestSmsPermission) {
-          try { window.AndroidSmsBridge.requestSmsPermission(); } catch (e) {}
+        if (
+          state.settings.smsAutomation.enabled &&
+          window.AndroidSmsBridge?.requestSmsPermission
+        ) {
+          try {
+            window.AndroidSmsBridge.requestSmsPermission();
+          } catch (e) {}
         }
       }
 
       function smsAccountOptions(selected) {
-        return state.accounts.map(a => `<option value="${a.id}" ${String(a.id) === String(selected) ? "selected" : ""}>${esc(a.name || "حساب بدون نام")}</option>`).join("");
+        return state.accounts
+          .map(
+            (a) =>
+              `<option value="${a.id}" ${String(a.id) === String(selected) ? "selected" : ""}>${esc(a.name || "حساب بدون نام")}</option>`,
+          )
+          .join("");
       }
 
       function openSmsAutomation() {
         const rules = state.settings.smsAutomation.rules || [];
-        const rows = rules.length ? rules.map((r,i) => smsRuleHtml(r,i)).join("") : `<div class="empty">هنوز هیچ فرستنده‌ای برای ثبت خودکار تعریف نشده است.</div>`;
+        const rows = rules.length
+          ? rules.map((r, i) => smsRuleHtml(r, i)).join("")
+          : `<div class="empty">هنوز هیچ فرستنده‌ای برای ثبت خودکار تعریف نشده است.</div>`;
         openSheet(`<div class="sheet-head"><h3>اتوماسیون پیامک بانکی</h3><button class="close" onclick="closeSheet()">×</button></div>
           <div class="empty" style="line-height:2">برای هر حساب بانکی مشخص کن پیامک‌های کدام شماره یا نام فرستنده متعلق به آن حساب است. بعد از اجازه دسترسی پیامک در اندروید، تراکنش‌ها بدون ثبت دستی ساخته می‌شوند.</div>
           <div id="smsRules">${rows}</div>
@@ -3151,7 +4660,15 @@
           <button class="primary" style="width:100%;margin-top:8px" onclick="saveSmsRules()">ذخیره تنظیمات</button>
           <button class="secondary" style="width:100%;margin-top:8px" onclick="requestSmsPermission()">🔐 اجازه خواندن پیامک</button>
           <div class="sms-test-box field"><label>آزمایش بدون منتظر ماندن برای پیامک</label><textarea id="smsTestBody" placeholder="متن یک پیامک بانکی را اینجا وارد کن..."></textarea><button class="secondary" style="width:100%;margin-top:8px" onclick="testSmsParser()">تشخیص و ثبت آزمایشی</button></div>
-          ${state.settings.smsAutomation.pending?.length ? `<div class="sms-pending"><b>موارد نیازمند بررسی:</b><br>${state.settings.smsAutomation.pending.slice(-5).reverse().map(x => esc(x.reason || "پیامک مبهم")).join("<br>")}</div>` : ""}`);
+          ${
+            state.settings.smsAutomation.pending?.length
+              ? `<div class="sms-pending"><b>موارد نیازمند بررسی:</b><br>${state.settings.smsAutomation.pending
+                  .slice(-5)
+                  .reverse()
+                  .map((x) => esc(x.reason || "پیامک مبهم"))
+                  .join("<br>")}</div>`
+              : ""
+          }`);
       }
 
       function smsRuleHtml(r = {}, i = 0) {
@@ -3166,16 +4683,26 @@
         const box = document.getElementById("smsRules");
         if (!box) return;
         if (box.querySelector(".empty")) box.innerHTML = "";
-        box.insertAdjacentHTML("beforeend", smsRuleHtml({ accountId: state.accounts[0]?.id || "" }, box.querySelectorAll(".sms-rule").length));
+        box.insertAdjacentHTML(
+          "beforeend",
+          smsRuleHtml(
+            { accountId: state.accounts[0]?.id || "" },
+            box.querySelectorAll(".sms-rule").length,
+          ),
+        );
       }
 
       function saveSmsRules() {
-        const rules = [...document.querySelectorAll("#smsRules .sms-rule")].map(row => ({
-          id: row.dataset.smsRule || `${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-          accountId: row.querySelector(".sms-account")?.value,
-          sender: row.querySelector(".sms-sender")?.value.trim(),
-          enabled: true,
-        })).filter(r => r.accountId && r.sender);
+        const rules = [...document.querySelectorAll("#smsRules .sms-rule")]
+          .map((row) => ({
+            id:
+              row.dataset.smsRule ||
+              `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+            accountId: row.querySelector(".sms-account")?.value,
+            sender: row.querySelector(".sms-sender")?.value.trim(),
+            enabled: true,
+          }))
+          .filter((r) => r.accountId && r.sender);
         state.settings.smsAutomation.rules = rules;
         state.settings.smsAutomation.enabled = true;
         save();
@@ -3185,14 +4712,26 @@
 
       function requestSmsPermission() {
         if (window.AndroidSmsBridge?.requestSmsPermission) {
-          try { window.AndroidSmsBridge.requestSmsPermission(); toast("درخواست مجوز پیامک ارسال شد"); } catch(e) { toast("درخواست مجوز ناموفق بود"); }
+          try {
+            window.AndroidSmsBridge.requestSmsPermission();
+            toast("درخواست مجوز پیامک ارسال شد");
+          } catch (e) {
+            toast("درخواست مجوز ناموفق بود");
+          }
         } else {
           toast("این قابلیت در APK اندروید فعال می‌شود");
         }
       }
 
       function normalizeSmsText(s) {
-        return String(s || "").replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d)).replace(/[٬،]/g, ",").replace(/\s+/g," ").trim().toLowerCase();
+        return String(s || "")
+          .replace(/[يى]/g, "ی")
+          .replace(/ك/g, "ک")
+          .replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+          .replace(/[٬،]/g, ",")
+          .replace(/\s+/g, " ")
+          .trim()
+          .toLowerCase();
       }
       function smsAmount(text) {
         const t = normalizeSmsText(text);
@@ -3200,83 +4739,173 @@
         const unitRe = /(\d[\d,\. ]*)\s*(ریال|تومان|irr|rials|toman)/i;
         const m = t.match(unitRe);
         if (!m) return 0;
-        const n = Number(m[1].replace(/[,. ]/g,""));
+        const n = Number(m[1].replace(/[,. ]/g, ""));
         if (!Number.isFinite(n) || n <= 0) return 0;
         return /ریال|irr|rials/i.test(m[2]) ? n / 10 : n;
       }
       function smsType(text) {
         const t = normalizeSmsText(text);
         if (/انتقال|کارت به کارت/.test(t)) return "transfer";
-        if (/برداشت|خرید|پرداخت|خرید اینترنتی|کسر شد|خرج/.test(t)) return "expense";
-        if (/واریز|دریافت|افزایش موجودی|شارژ شد|بستانکار/.test(t)) return "income";
+        if (/برداشت|خرید|پرداخت|خرید اینترنتی|کسر شد|خرج/.test(t))
+          return "expense";
+        if (/واریز|دریافت|افزایش موجودی|شارژ شد|بستانکار/.test(t))
+          return "income";
         return null;
       }
       function smsDate(timestamp) {
         const d = timestamp ? new Date(timestamp) : new Date();
         if (Number.isNaN(d.getTime())) return todayISO();
-        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
       function smsSenderMatches(ruleSender, sender) {
-        const a = normalizeSmsText(ruleSender).replace(/\s/g,"");
-        const b = normalizeSmsText(sender).replace(/\s/g,"");
+        const a = normalizeSmsText(ruleSender).replace(/\s/g, "");
+        const b = normalizeSmsText(sender).replace(/\s/g, "");
         return !!a && (a === b || b.includes(a) || a.includes(b));
       }
       function smsFingerprint(sender, body, timestamp) {
         const raw = `${sender}|${timestamp || ""}|${body}`;
         let h = 2166136261;
-        for (let i=0;i<raw.length;i++) h = Math.imul(h ^ raw.charCodeAt(i), 16777619);
+        for (let i = 0; i < raw.length; i++)
+          h = Math.imul(h ^ raw.charCodeAt(i), 16777619);
         return (h >>> 0).toString(16);
       }
       function findSmsDestination(body, sourceId) {
         const digits = normalizeSmsText(body).match(/\d{4}/g) || [];
-        return state.accounts.find(a => a.id !== sourceId && digits.some(x => String(a.number || "").replace(/\D/g,"").endsWith(x))) || null;
+        return (
+          state.accounts.find(
+            (a) =>
+              a.id !== sourceId &&
+              digits.some((x) =>
+                String(a.number || "")
+                  .replace(/\D/g, "")
+                  .endsWith(x),
+              ),
+          ) || null
+        );
       }
       function processIncomingSms(payload) {
-        if (!state.settings.smsAutomation.enabled || !payload) return {ok:false, reason:"اتوماسیون خاموش است"};
+        if (!state.settings.smsAutomation.enabled || !payload)
+          return { ok: false, reason: "اتوماسیون خاموش است" };
         const body = String(payload.body || payload.text || "").trim();
         const sender = String(payload.sender || payload.address || "").trim();
         const timestamp = payload.timestamp || payload.date || Date.now();
-        if (!body || !sender) return {ok:false, reason:"پیامک ناقص است"};
+        if (!body || !sender) return { ok: false, reason: "پیامک ناقص است" };
         const fp = smsFingerprint(sender, body, timestamp);
-        if (state.settings.smsAutomation.processed.includes(fp)) return {ok:false, duplicate:true};
-        const rule = state.settings.smsAutomation.rules.find(r => r.enabled !== false && smsSenderMatches(r.sender, sender));
-        if (!rule) return {ok:false, reason:"فرستنده برای هیچ حسابی تنظیم نشده است"};
-        const amount = smsAmount(body), type = smsType(body);
+        if (state.settings.smsAutomation.processed.includes(fp))
+          return { ok: false, duplicate: true };
+        const rule = state.settings.smsAutomation.rules.find(
+          (r) => r.enabled !== false && smsSenderMatches(r.sender, sender),
+        );
+        if (!rule)
+          return { ok: false, reason: "فرستنده برای هیچ حسابی تنظیم نشده است" };
+        const amount = smsAmount(body),
+          type = smsType(body);
         if (!amount || !type) {
-          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"مبلغ یا نوع تراکنش از پیامک با اطمینان تشخیص داده نشد"});
-          state.settings.smsAutomation.processed.push(fp); save();
-          return {ok:false, pending:true, reason:"پیامک برای بررسی نگه داشته شد"};
+          state.settings.smsAutomation.pending.push({
+            id: fp,
+            sender,
+            body,
+            timestamp,
+            reason: "مبلغ یا نوع تراکنش از پیامک با اطمینان تشخیص داده نشد",
+          });
+          state.settings.smsAutomation.processed.push(fp);
+          save();
+          return {
+            ok: false,
+            pending: true,
+            reason: "پیامک برای بررسی نگه داشته شد",
+          };
         }
-        const acc = state.accounts.find(a => String(a.id) === String(rule.accountId));
-        if (!acc) return {ok:false, reason:"حساب تنظیم‌شده پیدا نشد"};
-        const dest = type === "transfer" ? findSmsDestination(body, acc.id) : null;
+        const acc = state.accounts.find(
+          (a) => String(a.id) === String(rule.accountId),
+        );
+        if (!acc) return { ok: false, reason: "حساب تنظیم‌شده پیدا نشد" };
+        const dest =
+          type === "transfer" ? findSmsDestination(body, acc.id) : null;
         if (type === "transfer" && !dest) {
-          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"انتقال تشخیص داده شد ولی حساب مقصد مشخص نیست"});
-          state.settings.smsAutomation.processed.push(fp); save();
-          return {ok:false, pending:true, reason:"حساب مقصد انتقال مشخص نیست"};
+          state.settings.smsAutomation.pending.push({
+            id: fp,
+            sender,
+            body,
+            timestamp,
+            reason: "انتقال تشخیص داده شد ولی حساب مقصد مشخص نیست",
+          });
+          state.settings.smsAutomation.processed.push(fp);
+          save();
+          return {
+            ok: false,
+            pending: true,
+            reason: "حساب مقصد انتقال مشخص نیست",
+          };
         }
-        if ((type === "expense" || type === "transfer") && Number(acc.balance) < amount) {
-          state.settings.smsAutomation.pending.push({id:fp, sender, body, timestamp, reason:"موجودی حساب برای این تراکنش کافی نیست"});
-          state.settings.smsAutomation.processed.push(fp); save();
-          return {ok:false, pending:true, reason:"موجودی کافی نیست"};
+        if (
+          (type === "expense" || type === "transfer") &&
+          Number(acc.balance) < amount
+        ) {
+          state.settings.smsAutomation.pending.push({
+            id: fp,
+            sender,
+            body,
+            timestamp,
+            reason: "موجودی حساب برای این تراکنش کافی نیست",
+          });
+          state.settings.smsAutomation.processed.push(fp);
+          save();
+          return { ok: false, pending: true, reason: "موجودی کافی نیست" };
         }
         if (type === "expense") acc.balance -= amount;
         if (type === "income") acc.balance += amount;
-        if (type === "transfer") { acc.balance -= amount; dest.balance += amount; }
-        state.transactions.unshift({id:Date.now(), type, amount, date:smsDate(timestamp), timestamp:new Date(timestamp).toISOString(), accountId:acc.id, toAccountId:dest?.id || null, category:type === "income" ? "دخل پیامکی" : type === "expense" ? "خرج پیامکی" : "انتقال پیامکی", icon:type === "income" ? "↓" : type === "expense" ? "↑" : "⇄", note:`ثبت خودکار از پیامک ${sender}`, smsFingerprint:fp});
+        if (type === "transfer") {
+          acc.balance -= amount;
+          dest.balance += amount;
+        }
+        state.transactions.unshift({
+          id: Date.now(),
+          type,
+          amount,
+          date: smsDate(timestamp),
+          timestamp: new Date(timestamp).toISOString(),
+          accountId: acc.id,
+          toAccountId: dest?.id || null,
+          category:
+            type === "income"
+              ? "دخل پیامکی"
+              : type === "expense"
+                ? "خرج پیامکی"
+                : "انتقال پیامکی",
+          icon: type === "income" ? "↓" : type === "expense" ? "↑" : "⇄",
+          note: `ثبت خودکار از پیامک ${sender}`,
+          smsFingerprint: fp,
+        });
         state.settings.smsAutomation.processed.push(fp);
-        if (state.settings.smsAutomation.processed.length > 500) state.settings.smsAutomation.processed = state.settings.smsAutomation.processed.slice(-500);
-        save(); render();
-        toast(`تراکنش ${type === "income" ? "دخل" : type === "expense" ? "خرج" : "جابه‌جایی"} خودکار ثبت شد`);
-        return {ok:true, type, amount, accountId:acc.id, toAccountId:dest?.id || null};
+        if (state.settings.smsAutomation.processed.length > 500)
+          state.settings.smsAutomation.processed =
+            state.settings.smsAutomation.processed.slice(-500);
+        save();
+        render();
+        toast(
+          `تراکنش ${type === "income" ? "دخل" : type === "expense" ? "خرج" : "جابه‌جایی"} خودکار ثبت شد`,
+        );
+        return {
+          ok: true,
+          type,
+          amount,
+          accountId: acc.id,
+          toAccountId: dest?.id || null,
+        };
       }
       window.onHesabyarSmsReceived = processIncomingSms;
       function testSmsParser() {
         const body = document.getElementById("smsTestBody")?.value.trim();
         if (!body) return toast("متن پیامک را وارد کنید");
         const sender = state.settings.smsAutomation.rules[0]?.sender || "test";
-        const result = processIncomingSms({sender, body, timestamp:Date.now()});
-        if (result.ok) closeSheet(); else toast(result.reason || "پیامک قابل ثبت نیست");
+        const result = processIncomingSms({
+          sender,
+          body,
+          timestamp: Date.now(),
+        });
+        if (result.ok) closeSheet();
+        else toast(result.reason || "پیامک قابل ثبت نیست");
       }
 
       /* ===================== MARKET API ===================== */
@@ -3963,6 +5592,679 @@
         setTimeout(() => loadAssetTechnicalChart(a.id), 40);
       }
 
+      /* ===================== CHECKS ===================== */
+      let checkFilter = "all",
+        installmentFilter = "all";
+      const iconSvg = (name) =>
+        name === "edit"
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg>'
+          : name === "check"
+            ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg>'
+            : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m-11 0 1 14h12l1-14M10 10v6m4-6v6"/></svg>';
+      function setCheckFilter(btn, f) {
+        checkFilter = f;
+        document
+          .querySelectorAll("[data-check-filter]")
+          .forEach((x) =>
+            x.classList.toggle("active", x.dataset.checkFilter === f),
+          );
+        renderChecks();
+      }
+      function checkStatus(c) {
+        return c.status || "pending";
+      }
+      function checkDue(c) {
+        return (
+          c.dueDate && c.dueDate < todayISO() && checkStatus(c) === "pending"
+        );
+      }
+      function renderChecks() {
+        const list = document.getElementById("checkList");
+        if (!list) return;
+        const items = state.checks || [];
+        const pending = items.filter((c) => checkStatus(c) === "pending");
+        document.getElementById("checkReceivedTotal").textContent = money(
+          pending
+            .filter((c) => c.type === "received")
+            .reduce((s, c) => s + Number(c.amount || 0), 0),
+        );
+        document.getElementById("checkPaidTotal").textContent = money(
+          pending
+            .filter((c) => c.type === "paid")
+            .reduce((s, c) => s + Number(c.amount || 0), 0),
+        );
+        document.getElementById("checkOverdueCount").textContent = faNum(
+          pending.filter(checkDue).length,
+        );
+        document.getElementById("moreCheckCount").textContent = faNum(
+          pending.length,
+        );
+        let filtered = items
+          .filter(
+            (c) =>
+              checkFilter === "all" ||
+              (checkFilter === "received" && c.type === "received") ||
+              (checkFilter === "paid" && c.type === "paid") ||
+              (checkFilter === "overdue" && checkDue(c)) ||
+              (checkFilter === "settled" && checkStatus(c) !== "pending"),
+          )
+          .sort((a, b) => {
+            const ap = checkStatus(a) !== "pending",
+              bp = checkStatus(b) !== "pending";
+            if (ap !== bp) return ap ? 1 : -1;
+            return (a.dueDate || "9999").localeCompare(b.dueDate || "9999");
+          });
+        if (!filtered.length) {
+          list.innerHTML =
+            '<div class="empty">هنوز چکی ثبت نشده است؛ با «چک جدید» شروع کنید.</div>';
+          return;
+        }
+        list.innerHTML = filtered
+          .map((c) => {
+            const received = c.type === "received",
+              settled = checkStatus(c) !== "pending",
+              overdue = checkDue(c);
+            const status = settled
+              ? checkStatus(c) === "settled"
+                ? "تعیین‌تکلیف‌شده"
+                : checkStatus(c) === "bounced"
+                  ? "برگشت‌خورده"
+                  : "ثبت‌شده"
+              : overdue
+                ? "سررسید گذشته"
+                : c.dueDate === todayISO()
+                  ? "سررسید امروز"
+                  : "در انتظار";
+            return `<article class="record-card ${received ? "received" : "paid"} ${overdue ? "overdue" : ""}"><div class="record-top"><div><div class="record-title">${esc(c.issuer || "بدون نام صادرکننده")}</div><div class="record-sub">${received ? "چک دریافتی" : "چک پرداختی"}${c.bank ? " · " + esc(c.bank) : ""}</div></div><span class="record-badge ${settled ? "good" : overdue ? "bad" : "warn"}">${status}</span></div><div class="record-amount">${money(c.amount)}</div><div class="record-meta"><span>شماره چک: ${esc(c.number || "—")}</span><span>صیادی: ${esc(c.sayadi || "ثبت نشده")}</span><span>سررسید: ${esc(c.dueDate ? displayDate(c.dueDate) : "نامشخص")}</span>${c.issueDate ? `<span>صدور: ${esc(displayDate(c.issueDate))}</span>` : ""}${c.note ? `<span>${esc(c.note)}</span>` : ""}</div><div class="record-actions"><button class="record-edit" onclick="openCheck(${c.id})">${iconSvg("edit")}ویرایش</button>${!settled ? `<button class="record-primary" onclick="openCheckAction(${c.id},true)">${iconSvg("check")}${received ? "ثبت وصول در حساب" : "ثبت پرداخت از حساب"}</button><button class="record-secondary" onclick="openCheckAction(${c.id},false)">فقط تغییر وضعیت</button>` : `<button class="record-secondary" onclick="reopenCheck(${c.id})">بازگردانی به باز</button>`}</div></article>`;
+          })
+          .join("");
+      }
+      function openCheck(id = null) {
+        const c = id ? state.checks.find((x) => x.id === id) : null;
+        const opts = state.accounts
+          .map(
+            (a) =>
+              `<option value="${a.id}" ${String(a.id) === String(c?.accountId ?? state.accounts[0]?.id) ? "selected" : ""}>${esc(a.name)}</option>`,
+          )
+          .join("");
+        openSheet(
+          `<div class="sheet-head"><h3>${c ? "ویرایش چک" : "ثبت چک جدید"}</h3><button class="close" onclick="closeSheet()">×</button></div><div class="form-grid"><div class="field full"><label>نوع چک</label><select id="checkType"><option value="received" ${c?.type !== "paid" ? "selected" : ""}>چک دریافتی</option><option value="paid" ${c?.type === "paid" ? "selected" : ""}>چک پرداختی</option></select></div><div class="field full"><label>مبلغ چک (${esc(state.settings.currency)})</label><input id="checkAmount" type="text" inputmode="decimal" value="${c ? faNum(c.amount) : ""}" placeholder="مبلغ به واحد تنظیمات"></div><div class="field"><label>شماره چک</label><input id="checkNumber" value="${esc(c?.number || "")}" placeholder="شماره روی چک"></div><div class="field"><label>شناسه صیادی (اختیاری)</label><input id="checkSayadi" inputmode="numeric" value="${esc(c?.sayadi || "")}" placeholder="۱۶ رقم شناسه"></div><div class="field"><label>نام صادرکننده</label><input id="checkIssuer" value="${esc(c?.issuer || "")}" placeholder="نام شخص / شرکت"></div><div class="field"><label>نام بانک</label><input id="checkBank" value="${esc(c?.bank || "")}" placeholder="مثلاً بانک سپه"></div><div class="field"><label>تاریخ صدور</label><input id="checkIssueDate" type="date" value="${esc(c?.issueDate || todayISO())}"></div><div class="field"><label>تاریخ سررسید</label><input id="checkDueDate" type="date" value="${esc(c?.dueDate || "")}"></div><div class="field full"><label>حساب مرتبط برای ثبت وصول / پرداخت</label><select id="checkAccount">${opts}</select><div class="field-hint">این حساب فقط هنگام انتخاب «ثبت در حساب» تغییر می‌کند.</div></div><div class="field full"><label>توضیحات</label><input id="checkNote" value="${esc(c?.note || "")}" placeholder="توضیح اختیاری"></div></div><div class="preview-box"><div><small>مبلغ چک</small><strong id="checkPreviewAmount">—</strong></div><div><small>سررسید</small><strong id="checkPreviewDue">—</strong></div></div><button class="primary" onclick="saveCheck(${id || 0})">${c ? "ذخیره تغییرات" : "ثبت چک"}</button>${c ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteCheck(${c.id})">حذف چک</button>` : ""}`,
+        );
+        const update = () => {
+          const a = cleanGroupedNumber(
+            document.getElementById("checkAmount").value,
+          );
+          document.getElementById("checkPreviewAmount").textContent = a
+            ? money(a)
+            : "مبلغ را وارد کنید";
+          const d = document.getElementById("checkDueDate").value;
+          document.getElementById("checkPreviewDue").textContent = d
+            ? displayDate(d)
+            : "بدون تاریخ سررسید";
+        };
+        document
+          .getElementById("checkAmount")
+          .addEventListener("input", update);
+        document
+          .getElementById("checkDueDate")
+          .addEventListener("change", update);
+        update();
+      }
+      function saveCheck(id) {
+        const type = document.getElementById("checkType").value,
+          amount = cleanGroupedNumber(
+            document.getElementById("checkAmount").value,
+          ),
+          number = document.getElementById("checkNumber").value.trim(),
+          sayadi = document.getElementById("checkSayadi").value.trim(),
+          issuer = document.getElementById("checkIssuer").value.trim(),
+          bank = document.getElementById("checkBank").value.trim(),
+          issueDate = document.getElementById("checkIssueDate").value,
+          dueDate = document.getElementById("checkDueDate").value,
+          accountId =
+            Number(document.getElementById("checkAccount").value) || null,
+          note = document.getElementById("checkNote").value.trim();
+        if (!amount || amount <= 0) return toast("مبلغ چک را درست وارد کنید");
+        if (!number) return toast("شماره چک را وارد کنید");
+        if (!issuer) return toast("نام صادرکننده را وارد کنید");
+        if (!bank) return toast("نام بانک را وارد کنید");
+        if (!issueDate) return toast("تاریخ صدور را انتخاب کنید");
+        if (!dueDate) return toast("تاریخ سررسید را انتخاب کنید");
+        if (dueDate < issueDate)
+          return toast("تاریخ سررسید نمی‌تواند قبل از تاریخ صدور باشد");
+        const old = id ? state.checks.find((x) => x.id === id) : null;
+        const item = {
+          ...(old || {}),
+          id: id || Date.now(),
+          type,
+          amount,
+          number,
+          sayadi,
+          issuer,
+          bank,
+          issueDate,
+          dueDate,
+          accountId,
+          note,
+          status: old?.status || "pending",
+          createdAt: old?.createdAt || new Date().toISOString(),
+        };
+        if (old?.actionTransactionId) {
+          const tx = state.transactions.find(
+            (t) => t.id === old.actionTransactionId,
+          );
+          if (tx) {
+            const prev = state.accounts.find(
+              (a) => String(a.id) === String(tx.accountId),
+            );
+            const next = state.accounts.find(
+              (a) => String(a.id) === String(accountId),
+            );
+            if (!next) return toast("حساب انتخاب‌شده پیدا نشد");
+            const prevProjected = prev
+              ? Number(prev.balance || 0) -
+                (tx.type === "income" ? 1 : -1) * Number(tx.amount || 0)
+              : 0;
+            const nextProjected =
+              prev && String(prev.id) === String(next.id)
+                ? prevProjected
+                : Number(next.balance || 0);
+            if (type === "paid" && nextProjected < amount)
+              return toast("موجودی برای مبلغ جدید کافی نیست");
+            if (prev) prev.balance = prevProjected;
+            next.balance =
+              nextProjected + (type === "received" ? 1 : -1) * amount;
+            tx.type = type === "received" ? "income" : "expense";
+            tx.amount = amount;
+            tx.accountId = next.id;
+            tx.category = type === "received" ? "وصول چک" : "پرداخت چک";
+            tx.note = `چک ${number} · ${issuer}`;
+            item.accountId = next.id;
+          }
+        }
+        if (old) Object.assign(old, item);
+        else state.checks.unshift(item);
+        save();
+        closeSheet();
+        render();
+        toast(old ? "تغییرات چک ذخیره شد" : "چک ثبت شد");
+      }
+      function deleteCheck(id) {
+        const c = state.checks.find((x) => x.id === id);
+        if (!c) return;
+        if (c.actionTransactionId)
+          return toast(
+            "این چک قبلاً به تراکنش متصل شده؛ برای جلوگیری از به‌هم‌خوردن موجودی، حذف مستقیم ممکن نیست.",
+          );
+        state.checks = state.checks.filter((x) => x.id !== id);
+        save();
+        closeSheet();
+        render();
+        toast("چک حذف شد");
+      }
+      function openCheckAction(id, postToAccount) {
+        const c = state.checks.find((x) => x.id === id);
+        if (!c || checkStatus(c) !== "pending") return;
+        const acc = state.accounts
+          .map(
+            (a) =>
+              `<option value="${a.id}" ${String(a.id) === String(c.accountId) ? "selected" : ""}>${esc(a.name)}</option>`,
+          )
+          .join("");
+        openSheet(
+          `<div class="sheet-head"><h3>${postToAccount ? (c.type === "received" ? "ثبت وصول چک" : "ثبت پرداخت چک") : "تغییر وضعیت چک"}</h3><button class="close" onclick="closeSheet()">×</button></div><div class="module-hero"><div><b>${esc(c.issuer || "چک بدون نام")}</b><small>${esc(c.number)} · ${money(c.amount)}<br>سررسید ${esc(displayDate(c.dueDate))}</small></div><span class="module-hero-icon">${iconSvg("check")}</span></div>${postToAccount ? `<div class="field"><label>حساب ${c.type === "received" ? "واریز" : "برداشت"} مبلغ</label><select id="checkActionAccount">${acc}</select></div><div class="field-hint">پس از تأیید، یک تراکنش ${c.type === "received" ? "درآمد" : "هزینه"} ساخته می‌شود و موجودی حساب به‌روزرسانی خواهد شد.</div>` : `<div class="field"><label>وضعیت</label><select id="checkNewStatus"><option value="settled">تعیین‌تکلیف‌شده (بدون تغییر موجودی)</option><option value="bounced">برگشت‌خورده</option></select></div>`}<button class="primary" onclick="confirmCheckAction(${id},${postToAccount})">تأیید و ثبت</button>`,
+        );
+      }
+      function confirmCheckAction(id, post) {
+        const c = state.checks.find((x) => x.id === id);
+        if (!c) return;
+        if (post) {
+          const accountId = Number(
+              document.getElementById("checkActionAccount").value,
+            ),
+            a = state.accounts.find((x) => String(x.id) === String(accountId));
+          if (!a) return toast("حساب معتبر انتخاب کنید");
+          if (c.type === "paid" && Number(a.balance) < Number(c.amount))
+            return toast("موجودی حساب برای پرداخت این چک کافی نیست");
+          a.balance =
+            Number(a.balance || 0) +
+            (c.type === "received" ? 1 : -1) * Number(c.amount);
+          const tx = {
+            id: Date.now(),
+            type: c.type === "received" ? "income" : "expense",
+            amount: Number(c.amount),
+            date: todayISO(),
+            accountId: a.id,
+            toAccountId: null,
+            category: c.type === "received" ? "وصول چک" : "پرداخت چک",
+            icon: c.type === "received" ? "↗" : "↘",
+            note: `چک ${c.number} · ${c.issuer || ""}`,
+          };
+          state.transactions.unshift(tx);
+          c.actionTransactionId = tx.id;
+          c.accountId = a.id;
+          c.status = "settled";
+          c.settledAt = todayISO();
+        } else {
+          c.status = document.getElementById("checkNewStatus").value;
+          c.settledAt = todayISO();
+        }
+        save();
+        closeSheet();
+        render();
+        toast("وضعیت چک ثبت شد");
+      }
+      function reopenCheck(id) {
+        const c = state.checks.find((x) => x.id === id);
+        if (!c) return;
+        if (c.actionTransactionId)
+          return toast(
+            "برای جلوگیری از اختلاف موجودی، ابتدا تراکنش مرتبط را از فهرست تراکنش‌ها بررسی کنید.",
+          );
+        c.status = "pending";
+        delete c.settledAt;
+        save();
+        renderChecks();
+        toast("چک دوباره در فهرست باز قرار گرفت");
+      }
+
+      /* ===================== INSTALLMENTS ===================== */
+      function setInstallmentFilter(btn, f) {
+        installmentFilter = f;
+        document
+          .querySelectorAll("[data-inst-filter]")
+          .forEach((x) =>
+            x.classList.toggle("active", x.dataset.instFilter === f),
+          );
+        renderInstallments();
+      }
+      function installmentLabel(k) {
+        return (
+          {
+            loan: "وام دریافتی",
+            purchase: "خرید قسطی",
+            sale: "فروش قسطی / طلب",
+          }[k] || "اقساط"
+        );
+      }
+      function installmentPaidCount(x) {
+        return Math.min(
+          Number(x.count || 0),
+          Math.max(
+            Number(x.paidInstallments || 0),
+            Array.isArray(x.payments) ? x.payments.length : 0,
+          ),
+        );
+      }
+      function installmentDueDate(x, n) {
+        const parts = (x.firstDueDate || todayISO()).split("-").map(Number);
+        const year = parts[0],
+          month = parts[1] - 1,
+          day = parts[2];
+        const targetMonth = month + n;
+        const first = new Date(year, targetMonth, 1, 12);
+        const lastDay = new Date(
+          first.getFullYear(),
+          first.getMonth() + 1,
+          0,
+          12,
+        ).getDate();
+        const d = new Date(
+          first.getFullYear(),
+          first.getMonth(),
+          Math.min(day, lastDay),
+          12,
+        );
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      }
+      function installmentUnit(x) {
+        return Number(x.total || 0) / Math.max(1, Number(x.count || 1));
+      }
+      function installmentNext(x) {
+        const paid = installmentPaidCount(x);
+        if (paid >= Number(x.count || 0)) return null;
+        return {
+          n: paid + 1,
+          date: installmentDueDate(x, paid),
+          amount: installmentUnit(x),
+        };
+      }
+      function installmentIsOverdue(x) {
+        const n = installmentNext(x);
+        return !!n && n.date < todayISO();
+      }
+      function renderInstallments() {
+        const list = document.getElementById("installmentList");
+        if (!list) return;
+        const items = state.installments || [];
+        const active = items.filter(
+          (x) => installmentPaidCount(x) < Number(x.count || 0),
+        );
+        const overdue = active.filter(installmentIsOverdue);
+        document.getElementById("installmentActiveCount").textContent = faNum(
+          active.length,
+        );
+        document.getElementById("installmentOverdueCount").textContent = faNum(
+          overdue.length,
+        );
+        const next = active
+          .map(installmentNext)
+          .filter(Boolean)
+          .sort((a, b) => a.date.localeCompare(b.date))[0];
+        document.getElementById("installmentNextAmount").textContent = next
+          ? money(next.amount)
+          : "—";
+        document.getElementById("moreInstallmentCount").textContent = faNum(
+          active.length,
+        );
+        const filtered = items
+          .filter(
+            (x) =>
+              installmentFilter === "all" ||
+              x.kind === installmentFilter ||
+              (installmentFilter === "overdue" && installmentIsOverdue(x)),
+          )
+          .sort((a, b) => {
+            const ao = installmentPaidCount(a) >= Number(a.count || 0),
+              bo = installmentPaidCount(b) >= Number(b.count || 0);
+            if (ao !== bo) return ao ? 1 : -1;
+            return (installmentNext(a)?.date || "9999").localeCompare(
+              installmentNext(b)?.date || "9999",
+            );
+          });
+        if (!filtered.length) {
+          list.innerHTML =
+            '<div class="empty">هنوز برنامه قسطی ثبت نشده است؛ از «مورد جدید» شروع کنید.</div>';
+          return;
+        }
+        list.innerHTML = filtered
+          .map((x) => {
+            const paid = installmentPaidCount(x),
+              count = Number(x.count || 1),
+              nextDue = installmentNext(x),
+              done = paid >= count,
+              over = installmentIsOverdue(x),
+              account = state.accounts.find(
+                (a) => String(a.id) === String(x.accountId),
+              );
+            const paidTotal = Math.min(
+              Number(x.total || 0),
+              paid * installmentUnit(x),
+            );
+            const percent = Math.min(100, (paid / count) * 100);
+            return `<article class="record-card ${x.kind === "sale" ? "received" : "paid"} ${over ? "overdue" : ""}"><div class="record-top"><div><div class="record-title">${esc(x.title || installmentLabel(x.kind))}</div><div class="record-sub">${installmentLabel(x.kind)} · ${esc(account?.name || "حساب حذف‌شده")}</div></div><span class="record-badge ${done ? "good" : over ? "bad" : "warn"}">${done ? "تسویه‌شده" : over ? "قسط عقب‌افتاده" : `قسط ${faNum(paid + 1)} از ${faNum(count)}`}</span></div><div class="record-amount">${money(x.total)}</div><div class="record-meta"><span>مبلغ تقریبی هر قسط: ${money(installmentUnit(x))}</span><span>پرداخت‌شده: ${faNum(paid)} از ${faNum(count)} قسط</span><span>اولین سررسید: ${esc(displayDate(x.firstDueDate))}</span>${x.kind === "loan" ? `<span>دریافتی وام: ${money(x.receivedAmount || 0)}</span>` : ""}</div><div style="height:6px;background:var(--surface2);border-radius:99px;overflow:hidden;margin-top:12px"><i style="display:block;height:100%;width:${percent}%;background:${done ? "var(--green)" : "var(--primary)"};border-radius:99px"></i></div>${!done ? `<div class="schedule-line"><span class="schedule-dot" style="background:${over ? "var(--red)" : "var(--primary)"}"></span><div><b>قسط بعدی: ${money(installmentUnit(x))}</b><small>سررسید ${esc(displayDate(nextDue.date))}${over ? " · از موعد گذشته" : ""}</small></div></div>` : ""}<div class="record-actions"><button class="record-edit" onclick="openInstallment(${x.id})">${iconSvg("edit")}ویرایش</button>${!done ? `<button class="record-primary" onclick="openInstallmentAction(${x.id})">${iconSvg("check")}${x.kind === "sale" ? "ثبت دریافت قسط" : "ثبت پرداخت قسط"}</button>` : `<button class="record-secondary" onclick="openInstallment(${x.id})">مشاهده برنامه</button>`}</div></article>`;
+          })
+          .join("");
+      }
+      function openInstallment(id = null) {
+        if (!state.accounts.length) return toast("ابتدا یک حساب بسازید");
+        const x = id ? state.installments.find((y) => y.id === id) : null;
+        const accounts = state.accounts
+          .map(
+            (a) =>
+              `<option value="${a.id}" ${String(a.id) === String(x?.accountId ?? state.accounts[0].id) ? "selected" : ""}>${esc(a.name)}</option>`,
+          )
+          .join("");
+        const kind = x?.kind || "loan";
+        openSheet(
+          `<div class="sheet-head"><h3>${x ? "ویرایش برنامه اقساط" : "ثبت برنامه اقساط"}</h3><button class="close" onclick="closeSheet()">×</button></div><div class="form-grid"><div class="field full"><label>نوع برنامه</label><select id="instKind" onchange="updateInstallmentPreview()"><option value="loan" ${kind === "loan" ? "selected" : ""}>وام دریافتی</option><option value="purchase" ${kind === "purchase" ? "selected" : ""}>خرید قسطی</option><option value="sale" ${kind === "sale" ? "selected" : ""}>فروش قسطی / طلب</option></select></div><div class="field full"><label>عنوان</label><input id="instTitle" value="${esc(x?.title || "")}" placeholder="مثلاً وام بانک یا خرید لپ‌تاپ"></div><div class="field full" id="instReceivedWrap"><label>مبلغ دریافتی وام (واریز به حساب)</label><input id="instReceived" type="text" inputmode="decimal" value="${x ? faNum(x.receivedAmount || 0) : ""}" placeholder="مبلغ واریزی"></div><div class="field full"><label id="instTotalLabel">مبلغ کل بازپرداخت</label><input id="instTotal" type="text" inputmode="decimal" value="${x ? faNum(x.total) : ""}" placeholder="مبلغ کل به ${esc(state.settings.currency)}" oninput="updateInstallmentPreview()"></div><div class="field"><label>تعداد کل اقساط</label><input id="instCount" type="number" min="1" max="600" value="${x ? x.count : 12}" oninput="updateInstallmentPreview()"></div><div class="field" id="instPaidWrap"><label>اقساطی که قبلاً پرداخت شده</label><input id="instPaid" type="number" min="0" value="${x ? x.paidInstallments || 0 : 0}" oninput="updateInstallmentPreview()"></div><div class="field"><label>تاریخ اولین سررسید</label><input id="instFirstDue" type="date" value="${esc(x?.firstDueDate || todayISO())}" onchange="updateInstallmentPreview()"></div><div class="field"><label>حساب مرتبط</label><select id="instAccount">${accounts}</select></div><div class="field full"><label>توضیحات (اختیاری)</label><input id="instNote" value="${esc(x?.note || "")}" placeholder="توضیحات"></div><div class="preview-box"><div><small>مبلغ کل برنامه</small><strong id="instPreviewTotal">—</strong></div><div><small>مبلغ تقریبی هر قسط</small><strong id="instPreviewUnit">—</strong></div><div class="preview-wide" id="instPreviewSchedule">با وارد کردن مبلغ و تعداد، پیش‌نمایش محاسبه می‌شود.</div></div></div><button class="primary" onclick="saveInstallment(${id || 0})">${x ? "ذخیره تغییرات" : "ثبت برنامه"}</button>${x ? `<button class="secondary danger" style="width:100%;margin-top:8px" onclick="deleteInstallment(${x.id})">حذف برنامه</button>` : ""}`,
+        );
+        updateInstallmentPreview();
+      }
+      function updateInstallmentPreview() {
+        const kindEl = document.getElementById("instKind");
+        if (!kindEl) return;
+        const kind = kindEl.value;
+        const receivedWrap = document.getElementById("instReceivedWrap"),
+          paidWrap = document.getElementById("instPaidWrap");
+        if (receivedWrap)
+          receivedWrap.style.display = kind === "loan" ? "" : "none";
+        if (paidWrap)
+          paidWrap.style.display = kind === "purchase" ? "" : "none";
+        const label = document.getElementById("instTotalLabel");
+        if (label)
+          label.textContent =
+            kind === "loan"
+              ? "مبلغ کل بازپرداخت"
+              : kind === "purchase"
+                ? "مبلغ کل قابل پرداخت"
+                : "مبلغ کل قابل دریافت";
+        const total = cleanGroupedNumber(
+            document.getElementById("instTotal")?.value || 0,
+          ),
+          count = Math.max(
+            1,
+            Number(document.getElementById("instCount")?.value || 1),
+          ),
+          paid = Math.max(
+            0,
+            Number(document.getElementById("instPaid")?.value || 0),
+          ),
+          first = document.getElementById("instFirstDue")?.value;
+        const unit = total / count;
+        const t = document.getElementById("instPreviewTotal"),
+          u = document.getElementById("instPreviewUnit"),
+          sch = document.getElementById("instPreviewSchedule");
+        if (t) t.textContent = total ? money(total) : "—";
+        if (u) u.textContent = total ? money(unit) : "—";
+        if (sch) {
+          const due = first ? displayDate(first) : "تعیین نشده";
+          sch.textContent = `${faNum(Math.min(count, paid))} قسط از قبل ثبت‌شده · ${faNum(Math.max(0, count - paid))} قسط باقی‌مانده · اولین سررسید: ${due}`;
+        }
+      }
+      function saveInstallment(id) {
+        const kind = document.getElementById("instKind").value,
+          title = document.getElementById("instTitle").value.trim(),
+          total = cleanGroupedNumber(
+            document.getElementById("instTotal").value,
+          ),
+          count = Number(document.getElementById("instCount").value),
+          paid =
+            kind === "purchase"
+              ? Number(document.getElementById("instPaid").value || 0)
+              : 0,
+          receivedAmount =
+            kind === "loan"
+              ? cleanGroupedNumber(
+                  document.getElementById("instReceived").value || 0,
+                )
+              : 0,
+          firstDueDate = document.getElementById("instFirstDue").value,
+          accountId = Number(document.getElementById("instAccount").value),
+          note = document.getElementById("instNote").value.trim();
+        if (!title) return toast("عنوان برنامه را وارد کنید");
+        if (total <= 0) return toast("مبلغ کل را درست وارد کنید");
+        if (kind === "loan" && receivedAmount <= 0)
+          return toast("مبلغ دریافتی وام را وارد کنید");
+        if (!Number.isInteger(count) || count < 1 || count > 600)
+          return toast("تعداد اقساط باید بین ۱ تا ۶۰۰ باشد");
+        if (paid < 0 || paid > count)
+          return toast("تعداد اقساط پرداخت‌شده معتبر نیست");
+        if (!firstDueDate) return toast("تاریخ اولین سررسید را انتخاب کنید");
+        const old = id ? state.installments.find((y) => y.id === id) : null;
+        if (old && old.kind !== kind)
+          return toast(
+            "برای حفظ سوابق حسابداری، نوع برنامه پس از ثبت قابل تغییر نیست؛ یک برنامه جدید بسازید",
+          );
+        if (old && count < installmentPaidCount(old))
+          return toast("تعداد کل اقساط نمی‌تواند کمتر از اقساط ثبت‌شده باشد");
+        const item = {
+          ...(old || {}),
+          id: id || Date.now(),
+          kind,
+          title,
+          total,
+          count,
+          paidInstallments: old?.payments?.length
+            ? old.paidInstallments || 0
+            : paid,
+          receivedAmount,
+          firstDueDate,
+          accountId,
+          note,
+          createdAt: old?.createdAt || new Date().toISOString(),
+          payments: old?.payments || [],
+        };
+        if (kind === "loan" && !old && receivedAmount > 0) {
+          const a = state.accounts.find(
+            (z) => String(z.id) === String(accountId),
+          );
+          if (!a) return toast("حساب انتخاب‌شده پیدا نشد");
+          a.balance = Number(a.balance || 0) + receivedAmount;
+          const tx = {
+            id: Date.now() + 1,
+            type: "income",
+            amount: receivedAmount,
+            date: todayISO(),
+            accountId: a.id,
+            toAccountId: null,
+            category: "دریافت وام",
+            icon: "↗",
+            note: `دریافت وام: ${title}`,
+          };
+          state.transactions.unshift(tx);
+          item.disbursementTransactionId = tx.id;
+          item.disbursementAccountId = a.id;
+        } else if (
+          old &&
+          old.kind === "loan" &&
+          old.disbursementTransactionId
+        ) {
+          const tx = state.transactions.find(
+            (z) => z.id === old.disbursementTransactionId,
+          );
+          if (tx) {
+            const prev = state.accounts.find(
+              (a) => String(a.id) === String(tx.accountId),
+            );
+            if (prev)
+              prev.balance = Number(prev.balance || 0) - Number(tx.amount || 0);
+            const next = state.accounts.find(
+              (a) => String(a.id) === String(accountId),
+            );
+            if (next) next.balance = Number(next.balance || 0) + receivedAmount;
+            tx.amount = receivedAmount;
+            tx.accountId = accountId;
+            tx.note = `دریافت وام: ${title}`;
+            item.disbursementTransactionId = tx.id;
+            item.disbursementAccountId = accountId;
+          }
+        } else if (old && kind === "loan" && receivedAmount > 0) {
+          const a = state.accounts.find(
+            (z) => String(z.id) === String(accountId),
+          );
+          if (!a) return toast("حساب انتخاب‌شده پیدا نشد");
+          a.balance = Number(a.balance || 0) + receivedAmount;
+          const tx = {
+            id: Date.now() + 1,
+            type: "income",
+            amount: receivedAmount,
+            date: todayISO(),
+            accountId: a.id,
+            toAccountId: null,
+            category: "دریافت وام",
+            icon: "↗",
+            note: `دریافت وام: ${title}`,
+          };
+          state.transactions.unshift(tx);
+          item.disbursementTransactionId = tx.id;
+          item.disbursementAccountId = a.id;
+        }
+        if (old) Object.assign(old, item);
+        else state.installments.unshift(item);
+        save();
+        closeSheet();
+        render();
+        toast(old ? "برنامه اقساط به‌روزرسانی شد" : "برنامه اقساط ثبت شد");
+      }
+      function openInstallmentAction(id) {
+        const x = state.installments.find((y) => y.id === id);
+        if (!x || !installmentNext(x)) return;
+        const n = installmentNext(x),
+          accounts = state.accounts
+            .map(
+              (a) =>
+                `<option value="${a.id}" ${String(a.id) === String(x.accountId) ? "selected" : ""}>${esc(a.name)}</option>`,
+            )
+            .join("");
+        openSheet(
+          `<div class="sheet-head"><h3>${x.kind === "sale" ? "ثبت دریافت قسط" : "ثبت پرداخت قسط"}</h3><button class="close" onclick="closeSheet()">×</button></div><div class="module-hero"><div><b>${esc(x.title)}</b><small>قسط ${faNum(n.n)} از ${faNum(x.count)} · مبلغ تقریبی ${money(n.amount)}<br>سررسید ${esc(displayDate(n.date))}</small></div><span class="module-hero-icon">${iconSvg("check")}</span></div><div class="field"><label>حساب ${x.kind === "sale" ? "دریافت" : "پرداخت"}</label><select id="instActionAccount">${accounts}</select></div><div class="field"><label>مبلغ واقعی قسط</label><input id="instActionAmount" type="text" inputmode="decimal" value="${faNum(n.amount)}"></div><div class="field"><label>تاریخ انجام</label><input id="instActionDate" type="date" value="${todayISO()}"></div><div class="field"><label>یادداشت (اختیاری)</label><input id="instActionNote" placeholder="توضیح پرداخت / دریافت"></div><button class="primary" onclick="confirmInstallmentAction(${id})">ثبت قسط و به‌روزرسانی حساب</button>`,
+        );
+      }
+      function confirmInstallmentAction(id) {
+        const x = state.installments.find((y) => y.id === id);
+        if (!x) return;
+        const amount = cleanGroupedNumber(
+            document.getElementById("instActionAmount").value,
+          ),
+          accountId = Number(
+            document.getElementById("instActionAccount").value,
+          ),
+          date = document.getElementById("instActionDate").value,
+          n = installmentNext(x);
+        if (!n) return;
+        if (amount <= 0) return toast("مبلغ قسط را وارد کنید");
+        const a = state.accounts.find(
+          (z) => String(z.id) === String(accountId),
+        );
+        if (!a) return toast("حساب معتبر انتخاب کنید");
+        const income = x.kind === "sale";
+        if (!income && Number(a.balance || 0) < amount)
+          return toast("موجودی حساب برای این پرداخت کافی نیست");
+        a.balance = Number(a.balance || 0) + (income ? 1 : -1) * amount;
+        const tx = {
+          id: Date.now(),
+          type: income ? "income" : "expense",
+          amount,
+          date,
+          accountId: a.id,
+          toAccountId: null,
+          category: income ? "دریافت قسط" : "پرداخت قسط",
+          icon: income ? "↗" : "↘",
+          note:
+            document.getElementById("instActionNote").value.trim() ||
+            `${x.title} · قسط ${n.n}`,
+        };
+        state.transactions.unshift(tx);
+        x.payments = x.payments || [];
+        x.payments.push({ number: n.n, amount, date, transactionId: tx.id });
+        x.paidInstallments = Math.min(
+          Number(x.count),
+          Number(x.paidInstallments || 0) + 1,
+        );
+        save();
+        closeSheet();
+        render();
+        toast("قسط ثبت شد و موجودی به‌روزرسانی شد");
+      }
+      function deleteInstallment(id) {
+        const x = state.installments.find((y) => y.id === id);
+        if (!x) return;
+        if (x.payments?.length)
+          return toast(
+            "این برنامه پرداخت ثبت‌شده دارد؛ برای حفظ سوابق مالی، حذف آن مجاز نیست.",
+          );
+        if (x.disbursementTransactionId) {
+          const tx = state.transactions.find(
+            (z) => z.id === x.disbursementTransactionId,
+          );
+          if (tx) {
+            const a = state.accounts.find(
+              (z) => String(z.id) === String(tx.accountId),
+            );
+            if (a) a.balance = Number(a.balance || 0) - Number(tx.amount || 0);
+            state.transactions = state.transactions.filter(
+              (z) => z.id !== tx.id,
+            );
+          }
+        }
+        state.installments = state.installments.filter((y) => y.id !== id);
+        save();
+        closeSheet();
+        render();
+        toast("برنامه حذف شد");
+      }
+
       /* ===================== RENDER ===================== */
       function render() {
         document.documentElement.dataset.theme = state.settings.theme;
@@ -3981,7 +6283,7 @@
           ? state.accounts
               .map(
                 (a) =>
-                  `<div class="money-card ${a.style || ""}" onclick="openAccount(${a.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAccount(${a.id})}"><div class="card-top"><span class="bank-name">${esc(a.name)}</span><span class="bank-icon">${a.icon || "💳"}</span></div><div class="card-number">${a.type === "cash" ? "حساب نقدی" : "•••• •••• •••• " + esc(a.number.slice(-4))}</div><div class="card-bottom"><span class="card-balance">${money(a.balance)}</span><span>${esc(a.bank || "")}</span></div></div>`,
+                  `<div class="money-card ${a.style || ""}" data-account-id="${a.id}" draggable="true" onclick="if(!window.accountReorderMode)openAccount(${a.id})" role="button" tabindex="0" aria-label="${esc(a.name)}؛ برای تغییر ترتیب نگه دارید"><div class="card-top"><span class="bank-name">${esc(a.name)}</span><span class="bank-icon">${a.icon || "💳"}</span></div><div class="card-number">${a.type === "cash" ? "حساب نقدی" : "•••• •••• •••• " + esc((a.number || "").slice(-4))}</div><div class="card-bottom"><span class="card-balance">${money(a.balance)}</span><span>${esc(a.bank || "")}</span></div></div>`,
               )
               .join("")
           : `<div class="empty" style="min-width:100%">هنوز حسابی ندارید. از «افزودن حساب» شروع کنید.</div>`;
@@ -4007,12 +6309,165 @@
         renderReports();
         renderBudgets();
         renderDebts();
+        renderChecks();
+        renderInstallments();
+        document.getElementById("moreDebtCount").textContent = faNum(
+          (state.debts || []).filter((d) => !debtSettled(d)).length,
+        );
         document.querySelector(".fab").style.display = document
           .getElementById("home")
           .classList.contains("active")
           ? "block"
           : "none";
       }
+      // مرتب‌سازی حساب‌ها: نگه‌داشتن برای انتخاب، سپس کشیدن یا لمس حساب مقصد در موبایل.
+      window.accountReorderMode = false;
+      let accountHoldTimer = null,
+        heldAccountId = null;
+      const accountStrip = document.getElementById("accounts");
+      function refreshOrderSource() {
+        accountStrip
+          .querySelectorAll(".money-card")
+          .forEach((c) =>
+            c.classList.toggle(
+              "order-source",
+              window.accountReorderMode &&
+                String(c.dataset.accountId) === String(heldAccountId),
+            ),
+          );
+      }
+      function exitAccountReorder() {
+        window.accountReorderMode = false;
+        heldAccountId = null;
+        document.getElementById("accountOrderHint")?.classList.remove("show");
+        accountStrip
+          .querySelectorAll(".money-card")
+          .forEach((c) =>
+            c.classList.remove(
+              "reorder-ready",
+              "order-source",
+              "dragging-account",
+              "drop-account",
+            ),
+          );
+      }
+      accountStrip.addEventListener("pointerdown", (e) => {
+        const card = e.target.closest(".money-card");
+        if (!card) return;
+        const pressedId = card.dataset.accountId;
+        if (window.accountReorderMode) {
+          // نگه‌داشتن دوباره روی حساب انتخاب‌شده، حالت مرتب‌سازی را می‌بندد.
+          if (String(pressedId) === String(heldAccountId)) {
+            accountHoldTimer = setTimeout(() => {
+              exitAccountReorder();
+              toast("مرتب‌سازی پایان یافت");
+            }, 650);
+          }
+          return;
+        }
+        heldAccountId = pressedId;
+        accountHoldTimer = setTimeout(() => {
+          window.accountReorderMode = true;
+          document.getElementById("accountOrderHint")?.classList.add("show");
+          accountStrip
+            .querySelectorAll(".money-card")
+            .forEach((c) => c.classList.add("reorder-ready"));
+          refreshOrderSource();
+          toast("حساب انتخاب شد؛ آن را بکشید یا حساب مقصد را لمس کنید");
+          if (navigator.vibrate) navigator.vibrate([20, 35, 20]);
+        }, 550);
+      });
+      ["pointerup", "pointercancel", "pointerleave"].forEach((ev) =>
+        accountStrip.addEventListener(ev, () => clearTimeout(accountHoldTimer)),
+      );
+      accountStrip.addEventListener("dragstart", (e) => {
+        const card = e.target.closest(".money-card");
+        if (!card || !window.accountReorderMode) {
+          e.preventDefault();
+          return;
+        }
+        // درگ از هر کارت، همان کارت را به‌عنوان مبدأ انتخاب می‌کند.
+        heldAccountId = card.dataset.accountId;
+        refreshOrderSource();
+        card.classList.add("dragging-account");
+        e.dataTransfer.setData("text/plain", heldAccountId);
+        e.dataTransfer.effectAllowed = "move";
+      });
+      accountStrip.addEventListener("dragover", (e) => {
+        if (!window.accountReorderMode) return;
+        e.preventDefault();
+        const target = e.target.closest(".money-card");
+        accountStrip
+          .querySelectorAll(".drop-account")
+          .forEach((c) => c.classList.remove("drop-account"));
+        if (
+          target &&
+          String(target.dataset.accountId) !== String(heldAccountId)
+        )
+          target.classList.add("drop-account");
+      });
+      function moveAccountBeforeTarget(from, to) {
+        if (!from || !to || String(from) === String(to)) return false;
+        const sourceIndex = state.accounts.findIndex(
+          (a) => String(a.id) === String(from),
+        );
+        const targetIndex = state.accounts.findIndex(
+          (a) => String(a.id) === String(to),
+        );
+        if (sourceIndex < 0 || targetIndex < 0) return false;
+        const [moved] = state.accounts.splice(sourceIndex, 1);
+        state.accounts.splice(targetIndex, 0, moved);
+        save();
+        render();
+        if (window.accountReorderMode) {
+          accountStrip
+            .querySelectorAll(".money-card")
+            .forEach((c) => c.classList.add("reorder-ready"));
+          refreshOrderSource();
+        }
+        return true;
+      }
+      accountStrip.addEventListener("drop", (e) => {
+        if (!window.accountReorderMode) return;
+        e.preventDefault();
+        const target = e.target.closest(".money-card"),
+          from = e.dataTransfer.getData("text/plain") || heldAccountId;
+        if (target && moveAccountBeforeTarget(from, target.dataset.accountId)) {
+          heldAccountId = String(from);
+          refreshOrderSource();
+          toast("ترتیب حساب‌ها ذخیره شد");
+        }
+      });
+      accountStrip.addEventListener("dragend", () =>
+        accountStrip
+          .querySelectorAll(".money-card")
+          .forEach((c) =>
+            c.classList.remove("dragging-account", "drop-account"),
+          ),
+      );
+      accountStrip.addEventListener("click", (e) => {
+        if (!window.accountReorderMode) return;
+        const card = e.target.closest(".money-card");
+        if (!card) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const targetId = card.dataset.accountId;
+        if (String(targetId) === String(heldAccountId)) {
+          toast("این حساب انتخاب شده است؛ حساب مقصد را لمس کنید");
+          return;
+        }
+        if (moveAccountBeforeTarget(heldAccountId, targetId)) {
+          heldAccountId = String(targetId);
+          refreshOrderSource();
+          toast("ترتیب حساب‌ها ذخیره شد");
+        }
+      });
+      accountStrip.addEventListener("contextmenu", (e) => {
+        if (window.accountReorderMode) {
+          e.preventDefault();
+          exitAccountReorder();
+        }
+      });
       document.documentElement.dataset.theme = state.settings.theme;
       render();
 
