@@ -496,13 +496,42 @@
         font-size: 12px;
         margin-bottom: 1px;
       }
+      .account-order-hint .order-hint-copy {
+        flex: 1;
+        min-width: 0;
+      }
+      .account-order-cancel {
+        flex: 0 0 auto;
+        align-self: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 11px;
+        border: 1px solid color-mix(in srgb, var(--red) 24%, var(--border));
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--red) 8%, var(--surface));
+        color: var(--red);
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .account-order-cancel svg { width: 15px; height: 15px; }
+      .account-order-cancel:active { transform: scale(.96); }
+      @media (max-width: 430px) {
+        .account-order-hint { gap: 8px; padding: 11px; }
+        .account-order-cancel { padding: 9px; font-size: 10px; }
+        .account-order-cancel span { display: none; }
+      }
       .account-order-hint small {
         display: block;
         color: var(--muted);
         font-size: 11px;
       }
       .money-card {
-        touch-action: pan-y;
+        /* Allow horizontal account-strip scrolling on touch screens. */
+        touch-action: auto;
         user-select: none;
         -webkit-user-select: none;
         transition:
@@ -2572,13 +2601,14 @@
               <path
                 d="M8 5h12M8 12h12M8 19h12M3 5h.01M3 12h.01M3 19h.01"
               /></svg></span
-          ><span
+          ><span class="order-hint-copy"
             ><b>مرتب‌سازی حساب‌ها</b
             ><small
-              >حساب انتخاب‌شده را بکشید روی جای جدید؛ در موبایل، حساب مقصد را
-              لمس کنید. برای پایان، روی حساب انتخاب‌شده دوباره نگه دارید.</small
+              >حساب انتخاب‌شده را بکشید روی جای جدید؛ در موبایل، حساب مقصد را لمس کنید.</small
             ></span
-          >
+          ><button type="button" class="account-order-cancel" onclick="exitAccountReorder(); toast('مرتب‌سازی لغو شد')" aria-label="لغو مرتب‌سازی" title="لغو مرتب‌سازی">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg><span>لغو</span>
+          </button>
         </div>
         <div id="accounts" class="cards-scroll"></div>
         <div class="section-head">
@@ -6283,10 +6313,15 @@
           ? state.accounts
               .map(
                 (a) =>
-                  `<div class="money-card ${a.style || ""}" data-account-id="${a.id}" draggable="true" onclick="if(!window.accountReorderMode)openAccount(${a.id})" role="button" tabindex="0" aria-label="${esc(a.name)}؛ برای تغییر ترتیب نگه دارید"><div class="card-top"><span class="bank-name">${esc(a.name)}</span><span class="bank-icon">${a.icon || "💳"}</span></div><div class="card-number">${a.type === "cash" ? "حساب نقدی" : "•••• •••• •••• " + esc((a.number || "").slice(-4))}</div><div class="card-bottom"><span class="card-balance">${money(a.balance)}</span><span>${esc(a.bank || "")}</span></div></div>`,
+                  `<div class="money-card ${a.style || ""}" data-account-id="${a.id}" draggable="false" onclick="if(!window.accountReorderMode)openAccount(${a.id})" role="button" tabindex="0" aria-label="${esc(a.name)}؛ برای تغییر ترتیب نگه دارید"><div class="card-top"><span class="bank-name">${esc(a.name)}</span><span class="bank-icon">${a.icon || "💳"}</span></div><div class="card-number">${a.type === "cash" ? "حساب نقدی" : "•••• •••• •••• " + esc((a.number || "").slice(-4))}</div><div class="card-bottom"><span class="card-balance">${money(a.balance)}</span><span>${esc(a.bank || "")}</span></div></div>`,
               )
               .join("")
           : `<div class="empty" style="min-width:100%">هنوز حسابی ندارید. از «افزودن حساب» شروع کنید.</div>`;
+        // Native HTML drag is for mouse/trackpad only; on phones we preserve touch scrolling.
+        const canNativeDragAccounts = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+        document.querySelectorAll("#accounts .money-card").forEach((card) => {
+          card.draggable = !!canNativeDragAccounts;
+        });
         document.getElementById("recentTx").innerHTML = state.transactions
           .length
           ? state.transactions.slice(0, 6).map(txHtml).join("")
