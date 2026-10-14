@@ -2172,6 +2172,125 @@
         font-size: 10px;
         color: var(--muted);
       }
+      /* Financial markets explorer */
+      .market-tile .tile-count { background: var(--surface2); color: var(--primary); }
+      .market-refresh { min-height:39px;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;border-radius:13px;background:var(--surface);border:1px solid var(--border);color:var(--primary);font-size:11px;font-weight:800;white-space:nowrap; }
+      .market-refresh svg { width:17px;height:17px;flex:0 0 auto; }
+      .market-refresh.loading svg { animation:market-spin .8s linear infinite; }
+      @keyframes market-spin { to { transform:rotate(360deg); } }
+      .market-updated-caption { color:var(--muted);font-size:10px;line-height:1.8;margin:-3px 2px 10px; }
+      .market-currency-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:12px;border:1px solid var(--border);border-radius:15px;background:linear-gradient(135deg,var(--surface),color-mix(in srgb,var(--primary) 4%,var(--surface)));}
+      .market-currency-heading{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:850;color:var(--text);}
+      .market-currency-heading svg{width:17px;height:17px;color:var(--primary);flex:0 0 auto;}
+      .market-currency-control{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:min(100%,360px);padding:4px;border:1px solid var(--border);border-radius:12px;background:var(--bg);}
+      .market-currency-option{display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:7px 10px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--muted);font:inherit;font-size:11px;font-weight:800;white-space:nowrap;cursor:pointer;transition:background .18s,border-color .18s,color .18s,box-shadow .18s;}
+      .market-currency-option svg{width:16px;height:16px;flex:0 0 auto;}
+      .market-currency-option.active{background:var(--surface);border-color:color-mix(in srgb,var(--primary) 32%,var(--border));color:var(--primary);box-shadow:0 2px 7px #0000000b;}
+      .market-currency-option:focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+      .market-currency-row small{width:100%;font-size:10px;line-height:1.7;color:var(--muted);}
+      @media(max-width:420px){.market-currency-row{gap:9px;padding:10px}.market-currency-control{width:100%}.market-currency-option{font-size:10px;padding:7px 5px;white-space:normal}}
+      .market-detail-actions { grid-column:1/-1;display:flex;gap:7px;padding-bottom:9px;border-bottom:1px solid var(--border); }
+      .market-detail-action { flex:1;min-height:35px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:10px;font-weight:800; }
+      .market-detail-action.active { border-color:var(--primary);background:color-mix(in srgb,var(--primary) 9%,var(--surface));color:var(--primary); }
+      .market-detail-action svg { width:15px;height:15px; }
+      .market-chart-wrap { grid-column:1/-1;padding:12px;border:1px solid var(--border);border-radius:14px;background:var(--surface);min-width:0; }
+      .market-chart-head { display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px; }
+      .market-chart-head b { font-size:12px;display:block; }
+      .market-chart-head small { color:var(--muted);font-size:9px;display:block;margin-top:4px; }
+      .market-chart-current { font-size:12px;font-weight:900;white-space:nowrap; }
+      .market-chart-svg { width:100%;height:auto;display:block;overflow:visible; }
+      .market-chart-legend { display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:9px;margin-top:4px; }
+      .exchange-chart { padding:14px 12px 11px;overflow:hidden;background:var(--surface); }
+      .exchange-chart-top { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px; }
+      .exchange-chart-title { display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:11px;font-weight:900; }
+      .exchange-chart-title small { flex-basis:100%;padding-right:14px;color:var(--muted);font-size:9px;font-weight:500; }
+      .exchange-live-dot { width:7px;height:7px;border-radius:50%;background:#16a879;box-shadow:0 0 0 4px color-mix(in srgb,#16a879 13%,transparent); }
+      .exchange-expand { display:grid;place-items:center;width:31px;height:31px;border-radius:9px;background:var(--surface2);color:var(--muted); }
+      .exchange-expand svg { width:15px;height:15px; }
+      .exchange-price-line { display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px; }
+      .exchange-price-line>div:first-child strong { display:block;font-size:clamp(15px,4vw,20px);font-weight:950;letter-spacing:-.3px;direction:rtl; }
+      .exchange-price-line>div:first-child span { display:block;margin-top:4px;font-size:9px;color:var(--muted); }
+      .exchange-change { text-align:left;direction:ltr;font-size:12px;font-weight:900;white-space:nowrap; }
+      .exchange-change.up { color:#16a879; }.exchange-change.down { color:#e05260; }
+      .exchange-change small { display:block;margin-top:5px;font-size:8px;font-weight:500;color:var(--muted);direction:rtl; }
+      .exchange-chart-canvas { margin:0 -3px; }
+      .exchange-chart .market-chart-svg { width:100%;height:auto;display:block;overflow:visible; }
+      .exchange-chart-axis { display:flex;justify-content:space-between;gap:12px;margin-top:1px;color:var(--muted);font-size:9px;line-height:1.8; }
+      .exchange-chart-axis b { color:var(--text);font-size:10px;font-weight:800; }
+      .exchange-axis-now { text-align:left; }
+      .exchange-chart-foot { display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid var(--border);color:var(--muted);font-size:8px; }
+      .exchange-chart-compact { padding:10px 11px 8px; }
+      .exchange-chart-compact .exchange-chart-top { margin-bottom:8px; }
+      .exchange-chart-compact .exchange-price-line { margin-bottom:4px; }
+      .exchange-chart-compact .exchange-chart-canvas { margin:0; }
+      .exchange-chart-compact .market-chart-svg { max-height:148px; }
+      .exchange-chart-period { color:var(--muted);font-size:8px;white-space:nowrap; }
+      .exchange-range { display:flex;justify-content:space-between;gap:8px;margin-top:7px;color:var(--muted);font-size:9px; }
+      .exchange-range b { color:var(--text);font-size:9px;display:block;margin-top:3px; }
+      .market-technical-chart { margin-top:8px; padding:10px; border:1px solid var(--border); border-radius:14px; background:var(--surface); overflow:hidden; }
+      .market-technical-chart .technical-svg { width:100%; height:auto; display:block; max-height:285px; }
+      .market-technical-chart .tech-legend { flex-wrap:wrap; gap:7px 12px; font-size:10px; }
+      .market-technical-chart .tech-note { margin-top:8px; font-size:10px; line-height:1.7; }
+      .market-fallback-head,.market-fallback-values { display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:11px; }
+      .market-fallback-head { margin:0 0 6px; }
+      .market-fallback-head>div { display:flex; flex-direction:column; gap:3px; }
+      .market-fallback-head small { color:var(--muted); font-size:9px; }
+      .market-fallback-head strong,.market-fallback-values b { color:var(--text); font-size:12px; }
+      .market-fallback-head .up strong { color:#17c58b; }.market-fallback-head .down strong { color:#f05b70; }
+      .market-fallback-svg { width:100%; height:auto; max-height:130px; }
+      .market-fallback-values { color:var(--muted); font-size:10px; margin-top:3px; }
+      @media(max-width:420px){.market-technical-chart{padding:8px}.market-technical-chart .technical-svg{max-height:235px}.market-technical-chart .tech-legend{font-size:9px}}
+      .exchange-chart-compact .exchange-chart-foot { margin-top:7px;padding-top:7px; }
+      .exchange-chart-foot>span:first-child { display:flex;align-items:center;gap:5px; }
+      .exchange-legend-line { display:inline-block;width:13px;height:3px;border-radius:2px; }
+      @media(max-width:380px){.exchange-chart{padding:11px 9px}.exchange-price-line>div:first-child strong{font-size:14px}.exchange-change{font-size:10px}.exchange-chart-foot{font-size:7px}}
+
+      .market-refresh:disabled { opacity:.55; }
+      .market-refresh:disabled { opacity:.55; }
+      .market-search-wrap { position:relative; z-index:8; margin:12px 0 13px; }
+      .market-search { display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:17px;padding:0 13px;min-height:52px;box-shadow:0 5px 16px #00000005; }
+      .market-search:focus-within { border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 10%,transparent); }
+      .market-search svg { width:20px;height:20px;flex:0 0 auto;color:var(--muted); }
+      .market-search input { flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font-size:12px; }
+      .market-search input::placeholder { color:var(--muted); }
+      .market-search button { width:26px;height:26px;border-radius:8px;background:var(--surface2);color:var(--muted);font-size:18px;display:none; }
+      .market-search.has-value button { display:block; }
+      .market-search-results { position:absolute;top:calc(100% + 7px);right:0;left:0;max-height:46vh;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:17px;box-shadow:0 18px 38px #0002;padding:7px; }
+      .market-search-results[hidden] { display:none; }
+      .market-overview { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0; }
+      .market-overview>div { min-width:0;padding:11px 12px;border-radius:15px;background:var(--surface);border:1px solid var(--border); }
+      .market-overview small { display:block;font-size:9px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+      .market-overview b { display:block;font-size:12px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+      .market-filterbar { scrollbar-width:none;padding-bottom:3px; }
+      .market-filterbar::-webkit-scrollbar { display:none; }
+      .market-favorites-section { margin-top:14px;padding:11px;border:1px solid color-mix(in srgb,#e8a329 25%,var(--border));border-radius:19px;background:color-mix(in srgb,#e8a329 4%,var(--surface)); }
+      .market-favorites-section[hidden] { display:none; }
+      .market-favorites-section .market-section-head { margin-top:0; }
+      .market-section-head { display:flex;align-items:center;justify-content:space-between;gap:8px;margin:17px 2px 10px; }
+      .market-section-head b { display:block;font-size:13px; }
+      .market-section-head small { display:block;color:var(--muted);font-size:10px;margin-top:3px; }
+      .market-section-head>span { font-size:10px;color:var(--muted); }
+      .market-list { display:flex;flex-direction:column;gap:8px; }
+      .market-row { display:grid;grid-template-columns:40px minmax(0,1fr) auto 34px;align-items:center;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:17px;transition:border-color .16s,transform .16s; }
+      .market-row.expanded { border-color:color-mix(in srgb,var(--primary) 55%,var(--border)); }
+      .market-row-main { min-width:0;cursor:pointer; }
+      .market-coin-icon { width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--surface2);color:var(--primary);font-weight:800;font-size:12px; }
+      .market-name { font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+      .market-symbol { color:var(--muted);font-size:9px;margin-top:3px;direction:ltr;text-align:right; }
+      .market-pricebox { text-align:left;min-width:0; }
+      .market-price { font-size:11px;font-weight:800;white-space:nowrap; }
+      .market-change { font-size:9px;margin-top:4px;white-space:nowrap; }
+      .market-change.up { color:var(--green); } .market-change.down { color:var(--red); } .market-change.flat { color:var(--muted); }
+      .market-star { width:32px;height:32px;display:grid;place-items:center;border-radius:11px;background:var(--bg);border:1px solid var(--border);color:var(--muted); }
+      .market-star svg { width:17px;height:17px; }
+      .market-star.saved { color:#e8a329;background:color-mix(in srgb,#e8a329 12%,var(--surface));border-color:color-mix(in srgb,#e8a329 28%,var(--border)); }
+      .market-expanded { grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;border-top:1px solid var(--border);padding-top:10px;margin-top:2px; }
+      .market-detail-stat { padding:9px 10px;background:var(--bg);border-radius:11px;min-width:0; }
+      .market-detail-stat small { display:block;color:var(--muted);font-size:9px; }
+      .market-detail-stat b { display:block;font-size:11px;margin-top:4px;overflow-wrap:anywhere; }
+      .market-detail-note { grid-column:1/-1;color:var(--muted);font-size:9px;line-height:1.8; }
+      .market-disclaimer { color:var(--muted);font-size:9px;line-height:1.9;margin:14px 2px 0;padding:11px 12px;border-radius:13px;background:var(--surface2); }
+      @media(max-width:390px) { .market-row { grid-template-columns:35px minmax(0,1fr) auto 30px;gap:7px;padding:10px; } .market-coin-icon { width:35px;height:35px;border-radius:11px; } .market-name { font-size:11px; } .market-price { font-size:10px; } .market-overview>div { padding:9px; } }
       .module-head {
         display: flex;
         align-items: center;
@@ -2839,12 +2958,67 @@
             ><b>بدهی و طلب</b
             ><small>پیگیری مانده بدهی‌ها و طلب‌ها و ثبت پرداخت‌ها</small>
           </button>
+          <button class="more-tile market-tile" onclick="showMoreSection('markets')">
+            <span class="tile-count" id="marketTileCount">بازار زنده</span>
+            <span class="more-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 6-7"/><path d="M16 6h4v4"/></svg></span>
+            <b>بازارهای مالی</b>
+            <small>قیمت لحظه‌ای ارزها، طلا و رمزارزها؛ جست‌وجو، فیلتر و فهرست علاقه‌مندی‌ها</small>
+          </button>
         </div>
         <div class="module-tip">
           یادآوری مهم: در روز سررسید، حساب به‌صورت خودکار تغییر نمی‌کند. پس از
           بررسی واقعی وصول یا پرداخت، آن را ثبت کنید تا موجودی و گزارش‌های مالی
           دقیق بمانند.
         </div>
+      </main>
+
+      <main id="markets" class="page">
+        <div class="module-head">
+          <button class="module-back" onclick="showPage('more')" aria-label="بازگشت">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div><h2>بازارهای مالی</h2><small>قیمت‌ها از همان منبع بازار حساب‌یار دریافت می‌شوند</small></div>
+          <div style="flex:1"></div>
+          <button class="market-refresh" id="marketExplorerRefresh" onclick="loadMarketExplorer(true)" aria-label="بروزرسانی قیمت"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.6 9A7 7 0 0 1 17.3 5L20 8M4 16l2.7 3A7 7 0 0 0 18.4 15"/></svg><span>بروزرسانی قیمت</span></button>
+        </div>
+        <div class="market-search-wrap">
+          <div class="market-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+            <input id="marketSearchInput" type="search" placeholder="جست‌وجوی نام یا نماد؛ مثلاً بیت‌کوین، BTC..." onfocus="openMarketSearch()" oninput="renderMarketSearch()" autocomplete="off">
+            <button id="marketSearchClear" onclick="clearMarketSearch()" aria-label="پاک کردن جست‌وجو">×</button>
+          </div>
+          <div id="marketSearchResults" class="market-search-results" hidden></div>
+        </div>
+        <div class="market-overview">
+          <div><small>دارایی‌های پشتیبانی‌شده</small><b id="marketTotalCount">—</b></div>
+          <div><small>علاقه‌مندی‌ها</small><b id="marketFavoriteCount">۰</b></div>
+          <div><small>آخرین بروزرسانی</small><b id="marketUpdatedAt">در انتظار</b></div>
+        </div>
+        <div id="marketUpdatedCaption" class="market-updated-caption">برای دریافت تازه‌ترین قیمت‌ها، «بروزرسانی قیمت» را بزنید.</div>
+        <div class="market-currency-row">
+          <div class="market-currency-heading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0-18"/></svg><span>واحد نمایش قیمت‌ها</span></div>
+          <div class="market-currency-control" role="group" aria-label="واحد نمایش قیمت بازارها">
+            <button type="button" class="market-currency-option active" data-market-currency="base" onclick="setMarketDisplayCurrency('base')" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg><span id="marketBaseCurrencyLabel">واحد برنامه</span></button>
+            <button type="button" class="market-currency-option" data-market-currency="usd" onclick="setMarketDisplayCurrency('usd')" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6.5c-1-1.1-2.4-1.7-4.4-1.7-2.3 0-4 1.1-4 2.9 0 4.4 8.8 1.7 8.8 6.2 0 1.9-1.8 3.2-4.5 3.2-2 0-3.8-.7-5-2"/></svg><span>دلار آمریکا</span></button>
+          </div>
+          <small id="marketDisplayCurrencyHint">قیمت‌ها با واحد پول تنظیم‌شده نمایش داده می‌شوند.</small>
+        </div>
+        <div class="filterbar market-filterbar" id="marketFilters">
+          <button class="chip active" data-market-filter="popular" onclick="setMarketFilter('popular',this)">محبوب و پرنوسان</button>
+          <button class="chip" data-market-filter="favorites" onclick="setMarketFilter('favorites',this)">★ ذخیره‌شده‌ها</button>
+          <button class="chip" data-market-filter="all" onclick="setMarketFilter('all',this)">همه بازار</button>
+          <button class="chip" data-market-filter="crypto" onclick="setMarketFilter('crypto',this)">رمزارز</button>
+          <button class="chip" data-market-filter="currency" onclick="setMarketFilter('currency',this)">ارزها</button>
+          <button class="chip" data-market-filter="gold" onclick="setMarketFilter('gold',this)">طلا</button>
+          <button class="chip" data-market-filter="volatile" onclick="setMarketFilter('volatile',this)">بیشترین نوسان</button>
+        </div>
+        <div id="marketFavoritesSection" class="market-favorites-section" hidden>
+          <div class="market-section-head"><div><b>★ ذخیره‌شده‌ها</b><small>نمادهای منتخب شما، همیشه در دسترس</small></div><span id="marketFavoritesSectionCount"></span></div>
+          <div id="marketFavoritesList" class="market-list"></div>
+        </div>
+        <div class="market-section-head"><div><b id="marketListTitle">محبوب و پرنوسان</b><small id="marketListSubtitle">بازارهای مهم برای شروع</small></div><span id="marketVisibleCount"></span></div>
+        <div id="marketList" class="market-list"><div class="empty">برای دریافت فهرست بازارها، در حال اتصال به API...</div></div>
+        <div class="market-disclaimer">قیمت‌ها بر اساس داده‌های منتشرشده در API فعلی برنامه‌اند و ممکن است با تأخیر به‌روزرسانی شوند. این صفحه توصیه خرید یا فروش نیست.</div>
       </main>
 
       <main id="checks" class="page">
@@ -3114,6 +3288,8 @@
           includeAssets: false,
           dateMode: "jalali",
           apiLastUpdate: "",
+          marketFavorites: [],
+          marketDisplayCurrency: "base",
           balanceDisplayCurrency: "default",
           usdToToman: null,
           usdRateUpdatedAt: "",
@@ -3443,7 +3619,9 @@
       function inputAmount(n) {
         return cleanGroupedNumber(n) / currencyFactor();
       }
+      let marketTechnicalChartCurrency = null;
       function money(n) {
+        if (marketTechnicalChartCurrency === "usd") return new Intl.NumberFormat("fa-IR", {maximumFractionDigits:4}).format(Number(n) || 0) + " دلار";
         return faNum(displayAmount(n)) + " " + state.settings.currency;
       }
       function esc(s) {
@@ -3480,7 +3658,7 @@
             x.classList.toggle(
               "active",
               x.dataset.page === id ||
-                ((id === "debts" || id === "checks" || id === "installments") &&
+                ((id === "debts" || id === "checks" || id === "installments" || id === "markets") &&
                   x.dataset.page === "more"),
             ),
           );
@@ -3490,6 +3668,7 @@
       }
       function showMoreSection(id) {
         showPage(id);
+        if (id === "markets") loadMarketExplorer(false);
       }
       function openSheet(h) {
         document.getElementById("sheet").innerHTML = h;
@@ -4965,6 +5144,7 @@
 
       function apiSymbol(asset) {
         if (!asset) return null;
+        if (asset.marketSymbol) return String(asset.marketSymbol);
         if (asset.type === "gold") return "GOLD_18K_IRR";
         if (asset.type === "crypto") {
           const c = String(asset.code || "btc").toUpperCase();
@@ -5004,6 +5184,421 @@
         }
         return out;
       }
+
+
+      /* ===================== MARKET EXPLORER ===================== */
+      let marketExplorerRecords = [];
+      let marketExplorerLoadedAt = 0;
+      let marketExplorerFilter = "popular";
+      let marketExpandedSymbol = "";
+      let marketDetailView = "details";
+      let marketSearchIsOpen = false;
+      let marketExplorerBusy = false;
+
+      function marketLabel(item) {
+        const symbol = String(item?.symbol || "").toUpperCase();
+        const raw = item?.name_fa || item?.nameFa || item?.fa_name || item?.title_fa ||
+          item?.name || item?.title || item?.label || "";
+        if (raw && String(raw).toUpperCase() !== symbol) return String(raw);
+        const known = {
+          BTC_IRR:"بیت‌کوین", ETH_IRR:"اتریوم", SOL_IRR:"سولانا", USDT_IRR:"تتر",
+          GOLD_18K_IRR:"طلای ۱۸ عیار", USD_IRR_FREE:"دلار آمریکا", EUR_IRR_FREE:"یورو",
+          GBP_IRR_FREE:"پوند انگلیس", AED_IRR_FREE:"درهم امارات", TRY_IRR_FREE:"لیر ترکیه",
+          CAD_IRR_FREE:"دلار کانادا", NOK_IRR_FREE:"کرون نروژ"
+        };
+        if (known[symbol]) return known[symbol];
+        const code = symbol.replace(/_(IRR|FREE).*$/i, "").replace(/_+/g," ");
+        return code || "دارایی بازار";
+      }
+      function marketKind(item) {
+        const symbol = String(item?.symbol || "").toUpperCase();
+        const name = marketLabel(item).toLowerCase();
+        if (/GOLD|GOLD_|GOLD18|XAU|طلای|سکه|نقره/.test(symbol + " " + name)) return "gold";
+        if (/BTC|ETH|SOL|USDT|BNB|XRP|ADA|DOGE|TON|TRX|DOT|AVAX|SHIB|LTC|LINK|CRYPTO/.test(symbol)) return "crypto";
+        if (/USD|EUR|GBP|AED|TRY|CAD|NOK|CHF|JPY|CNY|دلار|یورو|پوند|درهم|لیر|کرون/.test(symbol + " " + name)) return "currency";
+        return "other";
+      }
+      function marketNumber(v) {
+        if (typeof v === "number") return Number.isFinite(v) ? v : null;
+        if (v == null || v === "") return null;
+        const n = Number(String(v).replace(/[٬,\s]/g,"").replace(/[۰-۹]/g, ch => "۰۱۲۳۴۵۶۷۸۹".indexOf(ch)));
+        return Number.isFinite(n) ? n : null;
+      }
+      function marketPct(item) {
+        let pct = marketNumber(item?.change_pct ?? item?.changePct ?? item?.percent_change ?? item?.percentChange);
+        if (pct === null) {
+          const change = marketNumber(item?.change);
+          const prev = marketNumber(item?.prev_close ?? item?.prevClose ?? item?.previous_close);
+          if (change !== null && prev) pct = change / prev * 100;
+        }
+        return pct;
+      }
+      function marketPrice(item) { return apiNumber(item?.price ?? item?.last ?? item?.value); }
+      function marketFavorites() {
+        if (!Array.isArray(state.settings.marketFavorites)) state.settings.marketFavorites = [];
+        return state.settings.marketFavorites.map(String);
+      }
+      function marketRecordBySymbol(symbol) {
+        return marketExplorerRecords.find(x => String(x.symbol) === String(symbol));
+      }
+      function marketDisplayMode() {
+        return state.settings.marketDisplayCurrency === "usd" ? "usd" : "base";
+      }
+      function marketUsdRate() {
+        const usd = marketExplorerRecords.find(x => /^(USD_IRR_FREE|USD_IRR|USD_TOMAN)$/i.test(String(x.symbol || "")));
+        return marketPrice(usd) || (Number(state.settings.usdToToman) > 0 ? Number(state.settings.usdToToman) : null);
+      }
+      function marketDisplayFactor() {
+        if (marketDisplayMode() === "usd") {
+          const rate = marketUsdRate();
+          return rate > 0 ? 1 / rate : null;
+        }
+        return state.settings.currency === "ریال" ? 10 : 1;
+      }
+      function marketMoney(n) {
+        if (n == null || !Number.isFinite(Number(n))) return "—";
+        const factor = marketDisplayFactor();
+        if (factor == null) return "دریافت نرخ دلار…";
+        const value = Number(n) * factor;
+        const suffix = marketDisplayMode() === "usd" ? "دلار" : state.settings.currency;
+        const digits = marketDisplayMode() === "usd" && Math.abs(value) < 1 ? 4 : 0;
+        return new Intl.NumberFormat("fa-IR", {maximumFractionDigits:digits, minimumFractionDigits:0}).format(value) + " " + suffix;
+      }
+      function setMarketDisplayCurrency(value) {
+        state.settings.marketDisplayCurrency = value === "usd" ? "usd" : "base";
+        save();
+        renderMarketExplorer();
+      }
+      function syncMarketDisplayCurrencyControl() {
+        const hint = document.getElementById("marketDisplayCurrencyHint");
+        const mode = marketDisplayMode();
+        document.querySelectorAll("[data-market-currency]").forEach(button => {
+          const active = button.dataset.marketCurrency === mode;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        const baseLabel = document.getElementById("marketBaseCurrencyLabel");
+        if (baseLabel) baseLabel.textContent = state.settings.currency === "ریال" ? "ریال" : "تومان";
+        if (hint) {
+          hint.textContent = mode === "usd"
+            ? (marketUsdRate() ? "قیمت‌ها با نرخ فعلی دلار محاسبه می‌شوند؛ انتخاب شما ذخیره می‌شود." : "برای تبدیل به دلار، نرخ دلار هنوز از API دریافت نشده است.")
+            : `قیمت‌ها بر اساس واحد تنظیمات برنامه (${state.settings.currency}) نمایش داده می‌شوند.`;
+        }
+      }
+      function marketPctHtml(item) {
+        const pct = marketPct(item);
+        if (pct === null) return '<span class="market-change flat">تغییر: —</span>';
+        const cls = pct > 0 ? "up" : pct < 0 ? "down" : "flat";
+        const prefix = pct > 0 ? "+" : "";
+        const arrow = pct > 0 ? "▲" : pct < 0 ? "▼" : "↔";
+        return `<div class="market-change ${cls}">${arrow} ${prefix}${faNum(Number(pct).toFixed(2))}%</div>`;
+      }
+      function marketIconText(item) {
+        const symbol = String(item?.symbol || "").toUpperCase();
+        if (symbol.startsWith("BTC")) return "₿";
+        if (symbol.startsWith("ETH")) return "Ξ";
+        if (symbol.startsWith("USDT")) return "₮";
+        if (symbol.startsWith("GOLD") || symbol.includes("XAU")) return "Au";
+        if (symbol.startsWith("USD")) return "$";
+        if (symbol.startsWith("EUR")) return "€";
+        if (symbol.startsWith("GBP")) return "£";
+        return symbol.replace(/_.*/, "").slice(0,4) || "◆";
+      }
+      function marketFormatUpdatedAt(timestamp) {
+        if (!timestamp) return {date:"", time:""};
+        const d = new Date(timestamp);
+        const iso = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+        const date = displayDate(iso);
+        const time = d.toLocaleTimeString("fa-IR", {hour:"2-digit", minute:"2-digit", hour12:false});
+        return {date, time};
+      }
+      function marketChartHtml(item) {
+        const current = marketPrice(item);
+        const prev = marketNumber(item?.prev_close ?? item?.prevClose ?? item?.previous_close);
+        const open = marketNumber(item?.open ?? item?.open_price ?? item?.openPrice);
+        const high = marketNumber(item?.high ?? item?.high_price ?? item?.highPrice ?? item?.day_high);
+        const low = marketNumber(item?.low ?? item?.low_price ?? item?.lowPrice ?? item?.day_low);
+        const pct = marketPct(item);
+        const change = marketNumber(item?.change) ?? (current !== null && prev !== null ? current-prev : null);
+        const up = change !== null ? change >= 0 : (pct ?? 0) >= 0;
+        const stroke = up ? '#16a879' : '#e05260';
+        const changeText = pct === null ? (change === null ? '—' : `${change > 0 ? '+' : ''}${faNum(Number(change).toFixed(2))}`) : `${pct > 0 ? '+' : ''}${faNum(Number(pct).toFixed(2))}٪`;
+        const candleOpen = open ?? prev;
+        const hasOhlc = current !== null && candleOpen !== null && high !== null && low !== null && high >= Math.max(candleOpen,current) && low <= Math.min(candleOpen,current);
+        const W=360,H=148,L=8,R=8,T=9,B=19;
+        const baseValues = [current, prev, candleOpen, high, low].filter(v => v !== null && Number.isFinite(v));
+        const min = baseValues.length ? Math.min(...baseValues) : 0;
+        const max = baseValues.length ? Math.max(...baseValues) : 1;
+        const span = max-min || Math.max(Math.abs(max)*0.012,1);
+        const y = v => T+((max-v)/span)*(H-T-B);
+        let grid='';
+        for(let i=0;i<4;i++){
+          const gy=T+i*((H-T-B)/3);
+          grid += `<line x1="${L}" y1="${gy.toFixed(1)}" x2="${W-R}" y2="${gy.toFixed(1)}" stroke="var(--border)" stroke-dasharray="3 5" stroke-width="1"/>`;
+        }
+        let drawing='';
+        if(hasOhlc){
+          const x=W/2, bodyTop=Math.min(y(candleOpen),y(current)), bodyH=Math.max(3,Math.abs(y(candleOpen)-y(current)));
+          drawing=`<line x1="${x}" y1="${y(high)}" x2="${x}" y2="${y(low)}" stroke="${stroke}" stroke-width="2"/><rect x="${x-16}" y="${bodyTop}" width="32" height="${bodyH}" rx="2" fill="${current>=candleOpen?'#16a879':'#e05260'}" opacity=".92"/>`;
+        } else if(current !== null && prev !== null){
+          // Only connect values actually supplied by the API; no synthetic intraday wiggles.
+          const x1=20, x2=W-20, y1=y(prev), y2=y(current);
+          const path=`M ${x1} ${y1} L ${x2} ${y2}`;
+          drawing=`<path d="${path} L ${x2} ${H-B} L ${x1} ${H-B} Z" fill="${stroke}" opacity=".09"/><path d="${path}" fill="none" stroke="${stroke}" stroke-width="2.4" stroke-linecap="round"/><circle cx="${x1}" cy="${y1}" r="3" fill="${stroke}"/><circle cx="${x2}" cy="${y2}" r="4" fill="${stroke}" stroke="var(--surface)" stroke-width="2"/>`;
+        } else if(current !== null){
+          drawing=`<line x1="18" y1="${y(current)}" x2="${W-18}" y2="${y(current)}" stroke="${stroke}" stroke-width="2" stroke-dasharray="4 4"/><circle cx="${W-18}" cy="${y(current)}" r="4" fill="${stroke}"/>`;
+        }
+        const rangeLow = low ?? (prev !== null && current !== null ? Math.min(prev,current) : null);
+        const rangeHigh = high ?? (prev !== null && current !== null ? Math.max(prev,current) : null);
+        const rangeLabel = rangeLow !== null && rangeHigh !== null
+          ? `<div class="exchange-range"><span>کف بازه <b>${marketMoney(rangeLow)}</b></span><span>سقف بازه <b>${marketMoney(rangeHigh)}</b></span></div>`
+          : `<div class="exchange-range"><span>برای نمایش دامنه نوسان، داده سقف و کف لازم است</span></div>`;
+        return `<section class="market-chart-wrap exchange-chart exchange-chart-compact">
+          <div class="exchange-chart-top"><div class="exchange-chart-title"><span class="exchange-live-dot"></span><span>چارت قیمت</span><small>${esc(marketLabel(item))} · ${esc(String(item.symbol||''))}</small></div><span class="exchange-chart-period">${hasOhlc?'کندل موجود در API':'قیمت فعلی / پایانی قبلی'}</span></div>
+          <div class="exchange-price-line"><div><strong>${marketMoney(current)}</strong><span>قیمت فعلی</span></div><div class="exchange-change ${up?'up':'down'}">${up?'↗':'↘'} ${changeText}<small>میزان نوسان نسبت به قیمت قبلی</small></div></div>
+          <div class="exchange-chart-canvas"><svg class="market-chart-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="چارت فشرده قیمت و دامنه نوسان">${grid}${drawing}</svg></div>
+          <div class="exchange-chart-axis"><span>قبلی<br><b>${marketMoney(prev)}</b></span><span class="exchange-axis-now">اکنون<br><b>${marketMoney(current)}</b></span></div>
+          ${rangeLabel}
+          <div class="exchange-chart-foot"><span><i class="exchange-legend-line" style="background:${stroke}"></i>حرکت قیمت</span><span>${hasOhlc?'کندل واقعی منبع':'بدون تاریخچه کندل در API'}</span></div>
+        </section>`;
+      }
+      function marketRowHtml(item, compact = false) {
+        const symbol = String(item.symbol || "");
+        const key = esc(symbol);
+        const saved = marketFavorites().includes(symbol);
+        const expanded = marketExpandedSymbol === symbol && !compact;
+        const price = marketPrice(item);
+        const prev = marketNumber(item.prev_close ?? item.prevClose ?? item.previous_close);
+        const change = marketNumber(item.change);
+        const name = marketLabel(item);
+        const kind = marketKind(item);
+        const kindLabel = kind === "crypto" ? "رمزارز" : kind === "gold" ? "طلا و فلزات" : kind === "currency" ? "ارز" : "بازار";
+        const favoriteSvg = saved
+          ? '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg>';
+        return `<div class="market-row ${expanded ? "expanded" : ""}" data-market-symbol="${key}">
+          <div class="market-coin-icon" aria-hidden="true">${esc(marketIconText(item))}</div>
+          <div class="market-row-main" onclick="toggleMarketDetails('${key}',${compact ? "true" : "false"})" role="button" tabindex="0">
+            <div class="market-name">${esc(name)}</div><div class="market-symbol">${esc(symbol)} · ${kindLabel}</div>
+          </div>
+          <div class="market-pricebox"><div class="market-price">${marketMoney(price)}</div>${marketPctHtml(item)}</div>
+          <button class="market-star ${saved ? "saved" : ""}" onclick="toggleMarketFavorite('${key}',event)" aria-label="${saved ? "حذف از ذخیره‌شده‌ها" : "ذخیره در علاقه‌مندی‌ها"}" title="${saved ? "ذخیره‌شده" : "ذخیره"}">${favoriteSvg}</button>
+          ${expanded ? `<div class="market-expanded">
+            <div class="market-detail-actions">
+              <button class="market-detail-action ${marketDetailView === "details" ? "active" : ""}" onclick="setMarketDetailView('details','${key}',event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg>جزئیات</button>
+              <button class="market-detail-action ${marketDetailView === "chart" ? "active" : ""}" onclick="setMarketDetailView('chart','${key}',event)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 6-7"/></svg>چارت</button>
+            </div>
+            ${marketDetailView === "chart" ? `<div id="marketTechnicalChart" class="tech-chart market-technical-chart"><div class="tech-loading"><span>◌</span><b>در حال دریافت تاریخچه قیمت...</b><small>چارت بر اساس تاریخچه واقعی بازار ساخته می‌شود</small></div></div>` : `<div class="market-detail-stat"><small>قیمت فعلی</small><b>${marketMoney(price)}</b></div>
+            <div class="market-detail-stat"><small>تغییر نسبت به قبل</small><b>${marketPct(item) === null ? "—" : (marketPct(item)>0?"+":"")+faNum(Number(marketPct(item)).toFixed(2))+"٪"}</b></div>
+            <div class="market-detail-stat"><small>قیمت پایانی قبلی</small><b>${marketMoney(prev)}</b></div>
+            <div class="market-detail-stat"><small>میزان تغییر قیمت</small><b>${change === null ? "—" : marketMoney(Math.abs(change))}</b></div>
+            <div class="market-detail-stat"><small>دسته‌بندی</small><b>${kindLabel}</b></div>
+            <div class="market-detail-stat"><small>نماد API</small><b dir="ltr">${esc(symbol)}</b></div>
+            <div class="market-detail-note">قیمت‌ها از فید فعلی حساب‌یار دریافت می‌شوند. داده‌های تاریخی و حجم معاملات فقط در صورت ارائه توسط منبع نمایش داده می‌شوند.</div>`}
+          </div>` : ""}</div>`;
+      }
+      function marketFilteredRecords() {
+        const favs = marketFavorites();
+        let items = [...marketExplorerRecords];
+        if (marketExplorerFilter === "favorites") items = items.filter(x => favs.includes(String(x.symbol)));
+        else if (marketExplorerFilter === "crypto") items = items.filter(x => marketKind(x) === "crypto");
+        else if (marketExplorerFilter === "currency") items = items.filter(x => marketKind(x) === "currency");
+        else if (marketExplorerFilter === "gold") items = items.filter(x => marketKind(x) === "gold");
+        else if (marketExplorerFilter === "volatile") items = items.filter(x => marketPct(x) !== null).sort((a,b) => Math.abs(marketPct(b)||0)-Math.abs(marketPct(a)||0));
+        else if (marketExplorerFilter === "popular") {
+          items = items.filter(x => !favs.includes(String(x.symbol)));
+          const priority = ["BTC_IRR","ETH_IRR","SOL_IRR","USDT_IRR","GOLD_18K_IRR","USD_IRR_FREE","EUR_IRR_FREE"];
+          items.sort((a,b) => {
+            const ai = priority.indexOf(String(a.symbol).toUpperCase()), bi = priority.indexOf(String(b.symbol).toUpperCase());
+            const ar = ai < 0 ? 999 : ai, br = bi < 0 ? 999 : bi;
+            return ar === br ? Math.abs(marketPct(b)||0)-Math.abs(marketPct(a)||0) : ar-br;
+          });
+          const favored = items.filter(x => priority.includes(String(x.symbol).toUpperCase()));
+          const volatile = items.filter(x => !priority.includes(String(x.symbol).toUpperCase())).sort((a,b)=>Math.abs(marketPct(b)||0)-Math.abs(marketPct(a)||0));
+          items = [...favored, ...volatile].slice(0, 18);
+        }
+        return items;
+      }
+      function renderMarketExplorer() {
+        const list = document.getElementById("marketList");
+        if (!list) return;
+        syncMarketDisplayCurrencyControl();
+        const favs = marketFavorites();
+        const favSection = document.getElementById("marketFavoritesSection");
+        const favRecords = marketExplorerRecords.filter(x => favs.includes(String(x.symbol)));
+        if (favSection) favSection.hidden = !favRecords.length || marketExplorerFilter === "favorites";
+        const favList = document.getElementById("marketFavoritesList");
+        if (favList && favSection && !favSection.hidden) {
+          favList.innerHTML = favRecords.map(x => marketRowHtml(x)).join("");
+          document.getElementById("marketFavoritesSectionCount").textContent = faNum(favRecords.length) + " مورد";
+        }
+        const records = marketFilteredRecords();
+        const titles = {popular:"محبوب و پرنوسان",favorites:"علاقه‌مندی‌های من",all:"همه بازارهای پشتیبانی‌شده",crypto:"رمزارزها",currency:"ارزهای رایج",gold:"طلا و فلزات",volatile:"بیشترین نوسان"};
+        const subs = {popular:"بازارهای مهم برای شروع",favorites:"مواردی که با ستاره ذخیره کرده‌اید",all:"تمام نمادهای دریافت‌شده از API",crypto:"قیمت رمزارزهای موجود در فید",currency:"نرخ ارزهای موجود در فید",gold:"قیمت طلا و فلزات پشتیبانی‌شده",volatile:"مرتب‌شده بر اساس قدر مطلق درصد تغییر"};
+        document.getElementById("marketListTitle").textContent = titles[marketExplorerFilter] || "بازارها";
+        document.getElementById("marketListSubtitle").textContent = subs[marketExplorerFilter] || "";
+        document.getElementById("marketVisibleCount").textContent = faNum(records.length) + " مورد";
+        document.getElementById("marketTotalCount").textContent = faNum(marketExplorerRecords.length);
+        document.getElementById("marketFavoriteCount").textContent = faNum(marketFavorites().length);
+        const updated = document.getElementById("marketUpdatedAt");
+        const updatedCaption = document.getElementById("marketUpdatedCaption");
+        if (marketExplorerLoadedAt) {
+          const stamp = marketFormatUpdatedAt(marketExplorerLoadedAt);
+          if (updated) updated.textContent = stamp.time;
+          if (updatedCaption) updatedCaption.textContent = `آخرین دریافت موفق قیمت‌ها: ${stamp.date}، ساعت ${stamp.time} · مطابق تنظیم تقویم برنامه (${state.settings.dateMode === "jalali" ? "شمسی" : "میلادی"})`;
+        } else {
+          if (updated) updated.textContent = "در انتظار";
+          if (updatedCaption) updatedCaption.textContent = "برای دریافت تازه‌ترین قیمت‌ها، «بروزرسانی قیمت» را بزنید.";
+        }
+        const count = document.getElementById("marketTileCount");
+        if (count) count.textContent = marketExplorerRecords.length ? faNum(marketExplorerRecords.length)+" نماد" : "بازار زنده";
+        list.innerHTML = records.length ? records.map(x => marketRowHtml(x)).join("") : `<div class="empty">${marketExplorerFilter === "favorites" ? "هنوز بازاری ذخیره نکرده‌اید؛ کنار هر نماد روی ستاره بزنید." : "موردی در این دسته پیدا نشد."}</div>`;
+        document.querySelectorAll("[data-market-filter]").forEach(btn => btn.classList.toggle("active", btn.dataset.marketFilter === marketExplorerFilter));
+        renderMarketSearch();
+      }
+      async function loadMarketExplorer(force = false) {
+        if (marketExplorerBusy) return;
+        if (!force && marketExplorerRecords.length && Date.now()-marketExplorerLoadedAt < 60000) { renderMarketExplorer(); return; }
+        marketExplorerBusy = true;
+        const btn = document.getElementById("marketExplorerRefresh");
+        if (btn) { btn.disabled = true; btn.classList.add("loading"); }
+        const list = document.getElementById("marketList");
+        if (list && !marketExplorerRecords.length) list.innerHTML = '<div class="empty">در حال دریافت فهرست ارزها و بازارها از API...</div>';
+        try {
+          const response = await fetch(MARKET_API_URL + "?marketExplorer=" + Date.now(), {cache:"no-store",headers:{Accept:"application/json"}});
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          const data = await response.json();
+          const seen = new Map();
+          flattenMarketRecords(data?.data || data, []).forEach(item => {
+            const symbol = String(item?.symbol || "").trim();
+            const price = marketPrice(item);
+            if (!symbol || price === null) return;
+            if (!seen.has(symbol)) seen.set(symbol,item);
+          });
+          marketExplorerRecords = [...seen.values()];
+          if (!marketExplorerRecords.length) throw new Error("No market records");
+          marketExplorerLoadedAt = Date.now();
+          renderMarketExplorer();
+        } catch (err) {
+          console.error("Market explorer API error:",err);
+          if (list) list.innerHTML = `<div class="empty">دریافت فهرست بازارها ناموفق بود.<br><button class="secondary" style="margin-top:10px" onclick="loadMarketExplorer(true)">تلاش دوباره</button><br><small>اتصال اینترنت یا در دسترس بودن API را بررسی کنید.</small></div>`;
+          toast("دریافت بازارها ناموفق بود");
+        } finally {
+          marketExplorerBusy = false;
+          if (btn) { btn.disabled = false; btn.classList.remove("loading"); }
+        }
+      }
+      function setMarketFilter(filter, btn) {
+        marketExplorerFilter = filter;
+        marketExpandedSymbol = "";
+        renderMarketExplorer();
+      }
+      function toggleMarketFavorite(symbol, event) {
+        if (event) { event.preventDefault(); event.stopPropagation(); }
+        const favorites = marketFavorites();
+        const i = favorites.indexOf(String(symbol));
+        if (i >= 0) favorites.splice(i,1); else favorites.unshift(String(symbol));
+        state.settings.marketFavorites = favorites;
+        save();
+        renderMarketExplorer();
+        toast(i >= 0 ? "از علاقه‌مندی‌ها حذف شد" : "به علاقه‌مندی‌ها اضافه شد");
+      }
+      async function loadMarketTechnicalChart(symbol) {
+        const box = document.getElementById("marketTechnicalChart");
+        const item = marketRecordBySymbol(symbol);
+        if (!box || !item) return;
+        const pseudoAsset = {
+          id: "market-" + String(symbol).replace(/[^a-zA-Z0-9_-]/g, "-"),
+          name: marketLabel(item),
+          marketSymbol: String(symbol),
+          type: "market",
+          code: String(symbol)
+        };
+        box.innerHTML = `<div class="tech-loading"><span>◌</span><b>در حال دریافت تاریخچه قیمت...</b><small>در حال آماده‌سازی نمودار نوسانات</small></div>`;
+        const rows = await fetchAssetHistory(pseudoAsset);
+        const current = marketPrice(item);
+        if (!document.getElementById("marketTechnicalChart")) return;
+        if (rows.length >= 2) {
+          const latest = rows[rows.length - 1];
+          // Keep the latest point in sync with the live quote only when its date matches today's data.
+          if (current !== null && latest && latest.date === new Date().toISOString().slice(0,10)) latest.close = current;
+          const usdMode = marketDisplayMode() === "usd";
+          const factor = usdMode ? marketDisplayFactor() : 1;
+          const chartRows = factor == null ? rows : rows.map(row => ({...row, open: row.open == null ? row.open : row.open * factor, high: row.high == null ? row.high : row.high * factor, low: row.low == null ? row.low : row.low * factor, close: row.close == null ? row.close : row.close * factor}));
+          marketTechnicalChartCurrency = usdMode ? "usd" : null;
+          const chartSvg = technicalChartSvg(chartRows, pseudoAsset, 30);
+          marketTechnicalChartCurrency = null;
+          box.innerHTML = chartSvg + `<div class="tech-note">نمودار بر اساس ${Math.min(rows.length,30)} نقطه از تاریخچه دریافتی API است؛ داده‌های موجود منبع نمایش داده می‌شوند.</div>`;
+        } else {
+          const prev = marketNumber(item.prev_close ?? item.prevClose ?? item.previous_close);
+          const pct = marketPct(item);
+          const trend = current != null && prev != null ? (current >= prev ? "up" : "down") : "flat";
+          const color = trend === "up" ? "#17c58b" : trend === "down" ? "#f05b70" : "#9b8cff";
+          const values = [prev, current].filter(v => v !== null && Number.isFinite(v));
+          const lo = values.length ? Math.min(...values) : 0, hi = values.length ? Math.max(...values) : 1;
+          const span = hi-lo || Math.max(Math.abs(hi)*0.01,1);
+          const y = v => 92 - ((v-(lo-span*.12))/(span*1.24))*72;
+          const line = prev !== null && current !== null ? `M 14 ${y(prev)} L 706 ${y(current)}` : `M 14 56 L 706 56`;
+          box.innerHTML = `<div class="market-fallback-head"><div><small>قیمت فعلی</small><strong>${marketMoney(current)}</strong></div><div class="${trend}"><small>تغییر روزانه</small><strong>${pct === null ? "—" : (pct>0?"+":"") + faNum(Number(pct).toFixed(2)) + "٪"}</strong></div></div><svg class="technical-svg market-fallback-svg" viewBox="0 0 720 125" role="img" aria-label="روند قیمت فعلی و قبلی"><defs><linearGradient id="marketFallbackFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".22"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>${[24,52,80,108].map(gy=>`<line class="chart-grid" x1="8" y1="${gy}" x2="712" y2="${gy}"/>`).join("")}${prev !== null && current !== null ? `<path d="${line} L 706 112 L 14 112 Z" fill="url(#marketFallbackFill)"/>` : ""}<path d="${line}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round"/><circle cx="706" cy="${current !== null ? y(current) : 56}" r="4.5" fill="${color}"/></svg><div class="market-fallback-values"><span>قیمت قبلی <b>${marketMoney(prev)}</b></span><span>قیمت فعلی <b>${marketMoney(current)}</b></span></div><div class="tech-note">منبع API برای این نماد تاریخچه چندنقطه‌ای ارائه نکرد؛ برای نمایش نوسانات واقعی بیشتر، به داده تاریخی نیاز است.</div>`;
+        }
+      }
+      function setMarketDetailView(view, symbol, event) {
+        if (event) { event.preventDefault(); event.stopPropagation(); }
+        marketExpandedSymbol = String(symbol);
+        marketDetailView = view === "chart" ? "chart" : "details";
+        renderMarketExplorer();
+        if (marketDetailView === "chart") setTimeout(() => loadMarketTechnicalChart(String(symbol)), 0);
+      }
+      function toggleMarketDetails(symbol, compact = false) {
+        if (compact) {
+          marketExplorerFilter = "all";
+          marketSearchIsOpen = false;
+          const results = document.getElementById("marketSearchResults");
+          if (results) results.hidden = true;
+          const input = document.getElementById("marketSearchInput");
+          if (input) input.blur();
+        }
+        marketExpandedSymbol = marketExpandedSymbol === String(symbol) ? "" : String(symbol);
+        marketDetailView = "details";
+        renderMarketExplorer();
+        if (compact) {
+          const row = document.querySelector(`#marketList .market-row[data-market-symbol="${CSS.escape(String(symbol))}"]`);
+          if (row) row.scrollIntoView({block:"nearest",behavior:"smooth"});
+        }
+      }
+      function openMarketSearch() {
+        marketSearchIsOpen = true;
+        renderMarketSearch();
+      }
+      function clearMarketSearch() {
+        const input = document.getElementById("marketSearchInput");
+        if (input) { input.value = ""; input.focus(); }
+        marketSearchIsOpen = true;
+        renderMarketSearch();
+      }
+      function renderMarketSearch() {
+        const input = document.getElementById("marketSearchInput");
+        const wrap = document.querySelector(".market-search");
+        const results = document.getElementById("marketSearchResults");
+        if (!input || !results) return;
+        const q = input.value.trim().toLocaleLowerCase();
+        wrap?.classList.toggle("has-value",!!q);
+        if (!marketSearchIsOpen) { results.hidden = true; return; }
+        const matched = marketExplorerRecords.filter(item => {
+          const symbol = String(item.symbol || "").toLocaleLowerCase();
+          return !q || symbol.includes(q) || marketLabel(item).toLocaleLowerCase().includes(q);
+        }).slice(0,150);
+        results.innerHTML = matched.length ? matched.map(item => marketRowHtml(item,true)).join("") : '<div class="empty">موردی با این نام یا نماد پیدا نشد.</div>';
+        results.hidden = false;
+      }
+      document.addEventListener("click", event => {
+        const wrap = document.querySelector(".market-search-wrap");
+        if (wrap && !wrap.contains(event.target)) {
+          marketSearchIsOpen = false;
+          const results = document.getElementById("marketSearchResults");
+          if (results) results.hidden = true;
+        }
+      });
 
       function getApiBasePrice(data, symbol, asset) {
         const records = flattenMarketRecords(data?.data || data, []);
@@ -5469,7 +6064,7 @@
         const areaPath =
           pathFor(closes, p) +
           ` L ${p.x(closes.length - 1)} ${p.y(p.lo)} L ${p.x(0)} ${p.y(p.lo)} Z`;
-        const gid = "techGrad" + String(asset.id).replace(/\D/g, "");
+        const gid = "techGrad" + String(asset.id).replace(/[^a-zA-Z0-9_-]/g, "");
         const first = data[0]?.date || "",
           last = data[data.length - 1]?.date || "";
         const pct =
